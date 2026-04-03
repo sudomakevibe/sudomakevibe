@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NewsletterForm from "../components/NewsletterForm.astro";
+---
+
+<BaseLayout>
+  <main class="max-w-5xl mx-auto px-4 py-12">
+    <!-- Hero Section with /home -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2" style="color: var(--accent);">
+        /home
+      </h1>
+      <p class="text-lg" style="color: var(--text-secondary);">
+        Where the command line meets the creative line.
+      </p>
+    </div>
+
+    <!-- Featured Projects + Newsletter Card Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Card 1: Raspberry Pi Homelab -->
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-3"
+          style="color: var(--text-primary);"
+        >
+          Raspberry Pi Homelab
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Complete setup guide with Docker, Tailscale, and self-hosted services.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <!-- Card 2: Local LLM on Pi -->
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-3"
+          style="color: var(--text-primary);"
+        >
+          Local LLM on Pi
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Running Ollama and Llama models on Raspberry Pi 5.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <!-- Card 3: Secure Remote Access -->
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-3"
+          style="color: var(--text-primary);"
+        >
+          Secure Remote Access
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Setting up WireGuard and Tailscale for your homelab.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <!-- Card 4: Newsletter Signup -->
+      <div
+        class="rounded-lg p-6 transition"
+        style="background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%); border: 1px solid var(--accent);"
+      >
+        <h2
+          class="text-xl font-semibold mb-3"
+          style="color: var(--text-primary);"
+        >
+          Stay Updated
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Get new posts and project updates delivered to your inbox.
+        </p>
+        <NewsletterForm />
+      </div>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts");
+const sortedPosts = posts
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="Blog | sudo make vibe"
+  description="Articles on vibe coding, AI, Linux, and Raspberry Pi"
+>
+  <main class="max-w-4xl mx-auto px-4 py-12">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
+        /blog
+      </h1>
+      <p style="color: var(--text-secondary);">
+        Exploring the intersection of creative coding and systems thinking.
+      </p>
+    </div>
+
+    {
+      sortedPosts.length === 0 ? (
+        <p style="color: var(--text-secondary);">No posts yet. Coming soon!</p>
+      ) : (
+        <div class="space-y-12">
+          {sortedPosts.map((post) => (
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              pubDate={post.data.pubDate}
+              tags={post.data.tags}
+              slug={post.slug}
+            />
+          ))}
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>

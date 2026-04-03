@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Projects | sudo make vibe"
+  description="Raspberry Pi projects, homelab setups, and AI experiments"
+>
+  <main class="max-w-4xl mx-auto px-4 py-12">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
+        /projects
+      </h1>
+      <p style="color: var(--text-secondary);">
+        Building things at the intersection of hardware and software.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-2"
+          style="color: var(--text-primary);"
+        >
+          Raspberry Pi Homelab
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Complete setup guide with Docker, Tailscale, and self-hosted services.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-2"
+          style="color: var(--text-primary);"
+        >
+          Local LLM on Pi
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Running Ollama and Llama models on Raspberry Pi 5.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-2"
+          style="color: var(--text-primary);"
+        >
+          Secure Remote Access
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Setting up WireGuard and Tailscale for your homelab.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+
+      <div
+        class="rounded-lg p-6 transition"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <h2
+          class="text-xl font-semibold mb-2"
+          style="color: var(--text-primary);"
+        >
+          Vibe Coding Toolkit
+        </h2>
+        <p class="text-sm mb-4" style="color: var(--text-secondary);">
+          Tools, prompts, and workflows for AI-assisted development.
+        </p>
+        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,51 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+export interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags?: string[];
+}
+
+const { title, description, pubDate, tags = [] } = Astro.props;
+---
+
+<BaseLayout title={`${title} | sudo make vibe`} description={description}>
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <article>
+      <header class="mb-8">
+        {
+          tags && tags.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-4">
+              {tags.map((tag) => (
+                <span
+                  class="px-3 py-1 rounded-full text-sm"
+                  style="background-color: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border);"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
+        <h1 style="color: var(--accent);">{title}</h1>
+        <time class="text-sm mt-2 block" style="color: var(--text-secondary);">
+          {
+            pubDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
+        </time>
+      </header>
+
+      <div class="prose max-w-none" style="color: var(--text-primary);">
+        <slot />
+      </div>
+    </article>
+
+    <!-- Terminal box removed from blog posts -->
+  </main>
+</BaseLayout>

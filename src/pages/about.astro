@@ -1,0 +1,100 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="About | sudo make vibe"
+  description="Learn about the blog and its mission"
+>
+  <main class="max-w-3xl mx-auto px-4 py-12">
+    <div class="mb-12">
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
+        /about
+      </h1>
+    </div>
+
+    <div class="space-y-8">
+      <div
+        class="border-l-4 p-4 mb-8 font-mono"
+        style="border-left-color: var(--accent); background-color: var(--bg-card);"
+      >
+        <span class="text-sm" style="color: var(--accent);">$ whoami</span>
+      </div>
+
+      <p style="color: var(--text-primary);">
+        I'm a developer and tinkerer exploring the intersection of
+        <span style="color: #d33682;">vibe coding</span>,
+        <span style="color: #859900;">AI</span>,
+        <span style="color: #2aa198;">Linux</span>, and
+        <span style="color: #dc322f;">Raspberry Pi</span>.
+      </p>
+
+      <h2
+        class="text-2xl font-semibold mt-8 mb-4"
+        style="color: var(--accent);"
+      >
+        What is vibe coding?
+      </h2>
+      <p style="color: var(--text-primary);">
+        Vibe coding is using AI tools as a creative partner—maintaining flow
+        while leveraging AI to accelerate from idea to implementation. It's not
+        about letting AI do everything, but about reducing friction between
+        thought and code.
+      </p>
+
+      <h2
+        class="text-2xl font-semibold mt-8 mb-4"
+        style="color: var(--accent);"
+      >
+        Why this blog?
+      </h2>
+      <p style="color: var(--text-primary);">
+        I noticed a gap between the creative freedom of "vibe coding" and the
+        discipline of systems engineering. This blog is my attempt to bridge
+        that gap—to show that you can have both creative flow and technical
+        depth.
+      </p>
+
+      <h2
+        class="text-2xl font-semibold mt-8 mb-4"
+        style="color: var(--accent);"
+      >
+        What to expect
+      </h2>
+      <ul
+        class="list-disc list-inside space-y-2"
+        style="color: var(--text-primary);"
+      >
+        <li>
+          <strong>Vibe Coding:</strong> AI-assisted development tools and philosophy
+        </li>
+        <li>
+          <strong>Linux:</strong> Terminal workflows, configs, and open-source tools
+        </li>
+        <li>
+          <strong>Raspberry Pi:</strong> Homelab setups, GPIO projects, edge AI
+        </li>
+        <li>
+          <strong>Cybersecurity:</strong> Secure remote access, best practices
+        </li>
+      </ul>
+
+      <!-- Terminal Box - Kept only on About page -->
+      <div
+        class="p-6 rounded-lg border mt-8 font-mono"
+        style="background-color: var(--bg-card); border-color: var(--border);"
+      >
+        <div>
+          <span style="color: var(--accent);">$</span>
+          <span style="color: var(--accent);">
+            sudo make vibe --creative-environment</span
+          >
+        </div>
+        <div class="mt-2" style="color: var(--text-secondary);">
+          > Building...<br />
+          > Ready. Let's build something interesting.
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

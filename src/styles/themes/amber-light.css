@@ -1,0 +1,17 @@
+/* Amber Light - Warm, Light, Developer-Friendly - Enhanced Contrast */
+:root {
+  --theme-name: "Amber Light";
+  --bg-primary: #f0e6d3;
+  --bg-secondary: #e8dcc8;
+  --bg-card: #f5efdf;
+  --text-primary: #1a140e;
+  --text-secondary: #4a3a28;
+  --accent: #d49436;
+  --accent-hover: #b87a2a;
+  --code-bg: #e0d4c0;
+  --code-text: #c95a0f;
+  --border: #d4c8ae;
+  --selection-bg: #d49436;
+  --selection-text: #f0e6d3;
+  --cursor: #d49436;
+}

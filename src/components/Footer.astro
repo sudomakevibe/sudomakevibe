@@ -1,0 +1,59 @@
+---
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+const currentPath = Astro.url.pathname;
+---
+
+<footer class="border-t py-8 mt-16" style="border-color: var(--border);">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="flex flex-wrap justify-between items-center gap-4">
+      <!-- Navigation Links -->
+      <div class="flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
+        <a
+          href="/"
+          style="color: ${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
+          onmouseenter="this.style.color='${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+          onmouseleave="this.style.color='${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+        >
+          home
+        </a>
+        <a
+          href="/blog"
+          style="color: ${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
+          onmouseenter="this.style.color='${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}'"
+          onmouseleave="this.style.color='${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}'"
+        >
+          blog
+        </a>
+        <a
+          href="/projects"
+          style="color: ${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
+          onmouseenter="this.style.color='${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+          onmouseleave="this.style.color='${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+        >
+          projects
+        </a>
+        <a
+          href="/about"
+          style="color: ${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
+          onmouseenter="this.style.color='${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+          onmouseleave="this.style.color='${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}'"
+        >
+          about
+        </a>
+      </div>
+
+      <!-- Palettes Switcher with dynamic color -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs" style="color: var(--accent);">palettes:</span>
+        <ThemeSwitcher />
+      </div>
+    </div>
+
+    <div
+      class="text-center text-xs mt-6"
+      style="color: var(--text-secondary); opacity: 0.6;"
+    >
+      <p>© {new Date().getFullYear()} sudo make vibe</p>
+    </div>
+  </div>
+</footer>

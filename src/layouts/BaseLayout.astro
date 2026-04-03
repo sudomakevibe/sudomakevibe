@@ -1,0 +1,51 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  noHeader?: boolean;
+  noFooter?: boolean;
+}
+
+const {
+  title = "sudo make vibe",
+  description = "Linux · AI · Raspberry Pi · Cybersecurity — where the command line meets the creative line",
+  noHeader = false,
+  noFooter = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <script>
+      // Clean up invalid themes from localStorage
+      // Valid themes: deep-space, arctic-frost, earthy-glow, amber-light
+      const validThemes = [
+        "deep-space",
+        "arctic-frost",
+        "earthy-glow",
+        "amber-light",
+      ];
+      const savedTheme = localStorage.getItem("blog-theme");
+      if (savedTheme && !validThemes.includes(savedTheme)) {
+        localStorage.setItem("blog-theme", "deep-space");
+      }
+    </script>
+  </head>
+  <body>
+    {!noHeader && <Header />}
+    <slot />
+    {!noFooter && <Footer />}
+  </body>
+</html>

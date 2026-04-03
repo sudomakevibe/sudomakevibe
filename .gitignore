@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+.vercel/
+.netlify/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

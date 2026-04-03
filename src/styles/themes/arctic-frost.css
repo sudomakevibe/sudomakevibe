@@ -1,0 +1,17 @@
+/* Arctic Frost - Cool, Crisp, Modern */
+:root {
+  --theme-name: "Arctic Frost";
+  --bg-primary: #2e3440;
+  --bg-secondary: #3b4252;
+  --bg-card: #3b4252;
+  --text-primary: #e5e9f0;
+  --text-secondary: #d8dee9;
+  --accent: #88c0d0;
+  --accent-hover: #a3be8c;
+  --code-bg: #3b4252;
+  --code-text: #bf616a;
+  --border: #434c5e;
+  --selection-bg: #88c0d0;
+  --selection-text: #2e3440;
+  --cursor: #88c0d0;
+}

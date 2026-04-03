@@ -1,0 +1,252 @@
+/* Import JetBrains Mono */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+/* Base styles (theme variables will be loaded dynamically) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+
+  /* Code blocks - important for light themes */
+  code {
+    font-family: "JetBrains Mono", monospace;
+    background-color: var(--code-bg);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    color: var(--code-text);
+  }
+
+  pre {
+    background-color: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  pre code {
+    background-color: transparent;
+    padding: 0;
+    color: var(--text-primary);
+  }
+
+  /* Lists */
+  ul,
+  ol {
+    color: var(--text-primary);
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left-color: var(--accent);
+    color: var(--text-secondary);
+  }
+
+  /* Tables */
+  table {
+    border-color: var(--border);
+    color: var(--text-primary);
+  }
+
+  th,
+  td {
+    border-color: var(--border);
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+}
+
+@layer components {
+  .cursor-blink {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: var(--cursor);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* Card styles */
+  .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .card:hover {
+    border-color: var(--accent);
+  }
+}
+/* Markdown content styling - ensures all blog post content uses theme colors */
+.prose {
+  color: var(--text-primary);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--accent);
+}
+
+.prose p,
+.prose li,
+.prose blockquote {
+  color: var(--text-primary);
+}
+
+.prose strong {
+  color: var(--text-primary);
+}
+
+.prose a {
+  color: var(--accent);
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose table {
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.prose th,
+.prose td {
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.prose code {
+  color: var(--code-text);
+  background-color: var(--code-bg);
+}
+
+.prose pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.prose pre code {
+  color: var(--text-primary);
+  background-color: transparent;
+}
+/* Markdown content styling - ensures all blog post content uses theme colors */
+.prose {
+  color: var(--text-primary);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--accent);
+}
+
+.prose p,
+.prose li,
+.prose blockquote {
+  color: var(--text-primary);
+}
+
+.prose strong {
+  color: var(--text-primary);
+}
+
+.prose a {
+  color: var(--accent);
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose table {
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+
+.prose th,
+.prose td {
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.prose code {
+  color: var(--code-text);
+  background-color: var(--code-bg);
+}
+
+.prose pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.prose pre code {
+  color: var(--text-primary);
+  background-color: transparent;
+}

@@ -1,0 +1,103 @@
+---
+// ThemeSwitcher Component
+// Allows users to switch between Deep Space, Arctic Frost, Earthy Glow, and Amber Light
+---
+
+<div class="theme-switcher">
+  <div class="flex gap-1">
+    <button
+      id="theme-deep-space"
+      class="theme-btn w-5 h-5 rounded-full border transition-all"
+      style="background-color: #0a0e1a; border-color: var(--border);"
+      title="Deep Space"></button>
+    <button
+      id="theme-arctic-frost"
+      class="theme-btn w-5 h-5 rounded-full border transition-all"
+      style="background-color: #2e3440; border-color: var(--border);"
+      title="Arctic Frost"></button>
+    <button
+      id="theme-earthy-glow"
+      class="theme-btn w-5 h-5 rounded-full border transition-all"
+      style="background-color: #002b36; border-color: var(--border);"
+      title="Earthy Glow"></button>
+    <button
+      id="theme-amber-light"
+      class="theme-btn w-5 h-5 rounded-full border transition-all"
+      style="background-color: #f0e6d3; border-color: #d49436;"
+      title="Amber Light"></button>
+  </div>
+</div>
+
+<script>
+  // Theme switching functionality
+  const themes = {
+    "deep-space": "/src/styles/themes/deep-space.css",
+    "arctic-frost": "/src/styles/themes/arctic-frost.css",
+    "earthy-glow": "/src/styles/themes/earthy-glow.css",
+    "amber-light": "/src/styles/themes/amber-light.css",
+  };
+
+  // Get the current theme from localStorage or default to deep-space
+  let currentTheme = localStorage.getItem("blog-theme") || "deep-space";
+
+  // Function to load a theme
+  function loadTheme(themeName) {
+    // Remove existing theme link if present
+    const existingLink = document.getElementById("dynamic-theme");
+    if (existingLink) {
+      existingLink.remove();
+    }
+
+    // Create new link element for the theme
+    const link = document.createElement("link");
+    link.id = "dynamic-theme";
+    link.rel = "stylesheet";
+    link.href = themes[themeName];
+    document.head.appendChild(link);
+
+    // Update active button styling
+    document.querySelectorAll(".theme-btn").forEach((btn) => {
+      btn.classList.remove("ring-2");
+      btn.style.outline = "none";
+    });
+    const activeBtn = document.getElementById(`theme-${themeName}`);
+    if (activeBtn) {
+      activeBtn.classList.add("ring-2");
+      activeBtn.style.outline = "none";
+    }
+
+    // Save to localStorage
+    localStorage.setItem("blog-theme", themeName);
+  }
+
+  // Load saved theme on page load
+  loadTheme(currentTheme);
+
+  // Add click handlers to theme buttons
+  document
+    .getElementById("theme-deep-space")
+    ?.addEventListener("click", () => loadTheme("deep-space"));
+  document
+    .getElementById("theme-arctic-frost")
+    ?.addEventListener("click", () => loadTheme("arctic-frost"));
+  document
+    .getElementById("theme-earthy-glow")
+    ?.addEventListener("click", () => loadTheme("earthy-glow"));
+  document
+    .getElementById("theme-amber-light")
+    ?.addEventListener("click", () => loadTheme("amber-light"));
+</script>
+
+<style>
+  .theme-btn {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .theme-btn:hover {
+    transform: scale(1.1);
+  }
+  .theme-btn.ring-2 {
+    box-shadow: 0 0 0 2px var(--accent);
+    transform: scale(1.1);
+  }
+</style>
