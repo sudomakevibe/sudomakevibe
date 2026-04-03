@@ -16,6 +16,8 @@ const FORM_ENDPOINT = "https://app.kit.com/forms/2494968262/subscriptions";
     style="background-color: var(--bg-primary); border: 1px solid var(--border); color: var(--text-primary);"
     required
   />
+  <input type="hidden" name="form_id" value="2494968262" />
+  <input type="hidden" name="tags" value="website" />
   <button
     type="submit"
     class="px-6 py-3 rounded-lg font-semibold transition text-sm inline-flex items-center justify-center gap-2"
@@ -62,6 +64,8 @@ const FORM_ENDPOINT = "https://app.kit.com/forms/2494968262/subscriptions";
         headers: { Accept: "application/json" },
       });
 
+      const result = await response.json();
+
       if (response.ok) {
         successMsg.classList.remove("hidden");
         form.reset();
@@ -69,9 +73,8 @@ const FORM_ENDPOINT = "https://app.kit.com/forms/2494968262/subscriptions";
           successMsg.classList.add("hidden");
         }, 5000);
       } else {
-        const errorData = await response.json();
-        console.error("ConvertKit error:", errorData);
-        throw new Error("Submission failed");
+        console.error("ConvertKit error:", result);
+        throw new Error(result.error || "Submission failed");
       }
     } catch (error) {
       console.error("Error:", error);
