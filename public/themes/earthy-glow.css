@@ -1,0 +1,17 @@
+/* Earthy Glow - Warm, Calm, Natural - Enhanced Contrast */
+:root {
+  --theme-name: "Earthy Glow";
+  --bg-primary: #002b36;
+  --bg-secondary: #073642;
+  --bg-card: #073642;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent: #2aa198;
+  --accent-hover: #859900;
+  --code-bg: #073642;
+  --code-text: #cb4b16;
+  --border: #0a4b5e;
+  --selection-bg: #2aa198;
+  --selection-text: #002b36;
+  --cursor: #2aa198;
+}
