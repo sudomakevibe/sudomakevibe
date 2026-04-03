@@ -1,7 +1,6 @@
 /* Import JetBrains Mono */
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
 
-/* Base styles (theme variables will be loaded dynamically) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,7 +54,6 @@
     text-decoration: underline;
   }
 
-  /* Code blocks - important for light themes */
   code {
     font-family: "JetBrains Mono", monospace;
     background-color: var(--code-bg);
@@ -78,30 +76,6 @@
     color: var(--text-primary);
   }
 
-  /* Lists */
-  ul,
-  ol {
-    color: var(--text-primary);
-  }
-
-  /* Blockquotes */
-  blockquote {
-    border-left-color: var(--accent);
-    color: var(--text-secondary);
-  }
-
-  /* Tables */
-  table {
-    border-color: var(--border);
-    color: var(--text-primary);
-  }
-
-  th,
-  td {
-    border-color: var(--border);
-  }
-
-  /* Selection */
   ::selection {
     background-color: var(--selection-bg);
     color: var(--selection-text);
@@ -127,74 +101,8 @@
       opacity: 0;
     }
   }
-
-  /* Card styles */
-  .card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    transition: border-color 0.2s ease;
-  }
-
-  .card:hover {
-    border-color: var(--accent);
-  }
-}
-/* Markdown content styling - ensures all blog post content uses theme colors */
-.prose {
-  color: var(--text-primary);
 }
 
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
-  color: var(--accent);
-}
-
-.prose p,
-.prose li,
-.prose blockquote {
-  color: var(--text-primary);
-}
-
-.prose strong {
-  color: var(--text-primary);
-}
-
-.prose a {
-  color: var(--accent);
-}
-
-.prose a:hover {
-  color: var(--accent-hover);
-}
-
-.prose table {
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-.prose th,
-.prose td {
-  border-color: var(--border);
-  color: var(--text-primary);
-}
-
-.prose code {
-  color: var(--code-text);
-  background-color: var(--code-bg);
-}
-
-.prose pre {
-  background-color: var(--code-bg);
-  border: 1px solid var(--border);
-}
-
-.prose pre code {
-  color: var(--text-primary);
-  background-color: transparent;
-}
 /* Markdown content styling - ensures all blog post content uses theme colors */
 .prose {
   color: var(--text-primary);
