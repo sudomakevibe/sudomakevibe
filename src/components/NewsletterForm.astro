@@ -1,11 +1,3 @@
----
-// TEMPORARY: Direct API key for no-pop-up experience
-// Replace with your actual V4 API key
-const API_KEY = "kit_206f411e36ccbc8eee4797412dfc9c62";
-const FORM_ID = "9259710";
-const API_URL = "https://api.kit.com/v4";
----
-
 <form
   class="flex flex-col sm:flex-row justify-center gap-3"
   id="newsletter-form"
@@ -49,9 +41,6 @@ const API_URL = "https://api.kit.com/v4";
   const form = document.getElementById("newsletter-form");
   const successMsg = document.getElementById("success-message");
   const errorMsg = document.getElementById("error-message");
-  const FORM_ID = "9259710";
-  const API_KEY = "kit_206f411e36ccbc8eee4797412dfc9c62";
-  const API_URL = "https://api.kit.com/v4";
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -62,49 +51,26 @@ const API_URL = "https://api.kit.com/v4";
     const email = document.getElementById("email_address").value;
 
     try {
-      // Step 1: Create subscriber as 'inactive'
-      const createResponse = await fetch(`${API_URL}/subscribers`, {
+      // Call YOUR serverless function, NOT ConvertKit directly
+      const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Kit-Api-Key": API_KEY,
         },
-        body: JSON.stringify({
-          email_address: email,
-          state: "inactive",
-        }),
+        body: JSON.stringify({ email }),
       });
 
-      if (!createResponse.ok) {
-        const errorData = await createResponse.json();
-        throw new Error(errorData.errors?.[0] || "Failed to create subscriber");
-      }
+      const data = await response.json();
 
-      // Step 2: Add subscriber to form (this triggers confirmation email)
-      const formResponse = await fetch(
-        `${API_URL}/forms/${FORM_ID}/subscribers`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Kit-Api-Key": API_KEY,
-          },
-          body: JSON.stringify({
-            email_address: email,
-          }),
-        },
-      );
-
-      if (formResponse.ok) {
+      if (response.ok) {
         successMsg.classList.remove("hidden");
         form.reset();
         setTimeout(() => successMsg.classList.add("hidden"), 5000);
       } else {
-        const errorData = await formResponse.json();
-        throw new Error(errorData.errors?.[0] || "Failed to add to form");
+        throw new Error(data.error || "Submission failed");
       }
     } catch (error) {
-      console.error("ConvertKit error:", error);
+      console.error("Error:", error);
       errorMsg.classList.remove("hidden");
       setTimeout(() => errorMsg.classList.add("hidden"), 5000);
     }

@@ -1,17 +1,24 @@
-import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
+import tailwind from "@astrojs/tailwind";
+import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: 'https://sudomakevibe.com',
+  site: "https://sudomakevibe.com",
   integrations: [mdx(), tailwind(), sitemap()],
-  trailingSlash: 'ignore',
+  trailingSlash: "ignore",
   markdown: {
-    syntaxHighlight: 'shiki',
+    syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: 'dracula',
+      theme: "dracula",
       wrap: true,
+    },
+  },
+  vite: {
+    server: {
+      proxy: {
+        "/api": "http://localhost:4321",
+      },
     },
   },
 });
