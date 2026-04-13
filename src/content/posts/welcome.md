@@ -18,7 +18,7 @@ My name is Farooq. I have spent over 25 years in enterprise networking technolog
 
 A while back, I started watching something that bothered me. AI-generated code was being celebrated as finished work. Scripts that worked once. Containers that did not scale. Systems that collapsed the moment they touched real conditions. Everyone was talking about the speed of AI. Not many people were talking about what happens after the prompt window closes.
 
-So I built a homelab on a couple of Raspberry Pi 5s and some old Lenovo laptops. Installed Fedora, Ubuntu, and Kali servers. Set up a K3s cluster. Added a Kali node for security research. Started running Ollama for local inference and InstructLab for model customisation. Started breaking things on purpose to understand how they actually work.
+So I built a homelab on a couple of Raspberry Pi 5s and some old Lenovo laptops. Installed Fedora, Ubuntu, and Kali servers. Set up a K3s cluster. Added a Kali node for security research. Started running Ollama for local inference and InstructLab for model customization. Started breaking things on purpose to understand how they actually work.
 
 Then I built this site to document what I am learning along the way.
 

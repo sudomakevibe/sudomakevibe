@@ -8,7 +8,7 @@ draft: false
 
 I have been stuck in a loop.
 
-For months I debated the best way to share what I am learning as I build out my Raspberry Pi 5 homelab. The pressure to start a podcast is real. We live in a world of 1.5x speed, multitasking, and passive consumption. But as I sat down to configure my first K3s cluster, I realised something fundamental.
+For months I debated the best way to share what I am learning as I build out my Raspberry Pi 5 homelab. The pressure to start a podcast is real. We live in a world of 1.5x speed, multitasking, and passive consumption. But as I sat down to configure my first K3s cluster, I realized something fundamental.
 
 **High-fidelity work requires high-fidelity documentation.**
 
@@ -24,11 +24,11 @@ Here is why I am trading the microphone for the Markdown editor.
 
 ## The auditory illusion of learning
 
-We have all been there. You are at the gym or commuting, listening to a brilliant technical deep dive into K3s networking or local LLM quantisation. You feel like you are levelling up.
+We have all been there. You are at the gym or commuting, listening to a brilliant technical deep dive into K3s networking or local LLM quantization. You feel like you are leveling up.
 
 Then you get home. You open your laptop, hands hovering over the keyboard, and nothing. The information is trapped in a waveform. You remember the vibe of the solution but you do not remember the syntax. You find yourself scrubbing through audio like a digital archaeologist, hitting the back-15-seconds button over and over because you were distracted by a lane change or a text message.
 
-A podcast is a stream. A blog is a map. When you are navigating a kernel panic or debugging a failing pod, you do not need a stream. You need a map you can pin to your second monitor.
+A podcast is a stream. A blog is a map. When you are navigating a kernel panic or debugging a failing pod, you do not need a stream. You need a map that you can pin to your second monitor.
 
 A question was asked on LinkedIn in response to my post on this topic — why not just do both? Honest answer — I find myself rewinding podcasts constantly because I was distracted by something else while listening. That is not a criticism of podcasts. It is an honest admission that for the kind of deep technical work this site covers, distraction is the enemy of the build.
 

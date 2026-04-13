@@ -28,7 +28,7 @@ That is why generation is the beginning of the process, not the end of it. The p
 
 Real systems are not defined by how they are generated. They are defined by how they behave under real conditions — how they run consistently under load, how they recover when something fails, how they can be inspected and debugged when something goes wrong, and how they can be secured against the threats that appear the moment anything touches a network.
 
-That kind of behaviour does not emerge from a prompt. It requires Linux fundamentals, an understanding of containerisation and orchestration, networking awareness, and the kind of defensive thinking that comes from having seen things break in production.
+That kind of behavior does not emerge from a prompt. It requires Linux fundamentals, an understanding of containerization and orchestration, networking awareness, and the kind of defensive thinking that comes from having seen things break in production.
 
 ## The workflow
 

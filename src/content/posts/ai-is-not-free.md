@@ -25,7 +25,7 @@ When you are generating scripts, iterating on configs, asking for debugging help
 
 ## Subscription vs API — a distinction that matters
 
-A note on subscriptions before going further. Flat monthly plans like ChatGPT Plus or Claude Pro hide your token consumption entirely. They feel free beyond the monthly fee. That invisibility is its own form of false confidence — you cannot optimise a cost you cannot see.
+A note on subscriptions before going further. Flat monthly plans like ChatGPT Plus or Claude Pro hide your token consumption entirely. They feel free beyond the monthly fee. That invisibility is its own form of false confidence — you cannot optimize a cost you cannot see.
 
 The API, whatever its complexity, at least tells you what you are spending. You have visibility into which models you are calling, how many tokens each interaction consumes, and where the waste is accumulating. That visibility is not a punishment. It is the information you need to make good decisions.
 
@@ -51,7 +51,7 @@ Most providers offer context caching at substantial discounts — DeepSeek charg
 
 Token pricing is the meter on the taxi. It is not the total fare.
 
-Cloud-dependent AI introduces a fragmentation tax — a series of layered costs that surprise organisations once they move from a pilot to a production rollout.
+Cloud-dependent AI introduces a fragmentation tax — a series of layered costs that surprise organizations once they move from a pilot to a production rollout.
 
 **Data egress fees.** If your AI is hosted on one cloud but your data lives on another, you pay a toll for every gigabyte that moves between them.
 
@@ -93,7 +93,7 @@ AI systems generate responses with consistent fluency regardless of whether they
 
 The danger is not that AI gets things wrong. Every tool gets things wrong. The danger is that AI gets things wrong in a way that feels like it got things right.
 
-Consider a generated database query that works perfectly in development — correct syntax, returns expected results, passes every test you run. Six months later it brings down production under load because the AI optimised for correctness, not for what happens when ten thousand users hit it simultaneously. Nobody caught it because it looked right. That is not a testing failure. That is false confidence — and it scales with your deployment.
+Consider a generated database query that works perfectly in development — correct syntax, returns expected results, passes every test you run. Six months later it brings down production under load because the AI optimized for correctness, not for what happens when ten thousand users hit it simultaneously. Nobody caught it because it looked right. That is not a testing failure. That is false confidence — and it scales with your deployment.
 
 Developers who trust generated output without verification are not moving faster. They are accumulating invisible risk that will eventually become visible — at the worst possible time.
 
@@ -113,7 +113,7 @@ Routing tasks to the right model tier is one of the highest-leverage cost optimi
 
 ## The open source alternative
 
-Ollama on a Raspberry Pi 5 does not have an API bill. InstructLab lets you customise models on your own data without sending that data to a third party. The inference is slower on consumer hardware. The models are smaller. But the cost structure is fundamentally different.
+Ollama on a Raspberry Pi 5 does not have an API bill. InstructLab lets you customize models on your own data without sending that data to a third party. The inference is slower on consumer hardware. The models are smaller. But the cost structure is fundamentally different.
 
 For a homelab or a small team building internal tools, a well-prompted local model handles the majority of development tasks at a fraction of the cost of a cloud API — with complete visibility and no surprise invoices.
 
@@ -164,7 +164,7 @@ If the cost argument resonates, the manifesto covers the broader philosophy of w
 >
 > Everything in this post applies whether you are running Ollama on a Raspberry Pi 5 or vLLM on an NVIDIA L40S cluster. The discipline is identical. The hardware is not.
 >
-> The homelab is not a toy. It is the training ground. Learn the concepts on hardware you own and can break without consequences. Understand inference, context management, model behaviour, and cost at small scale. When those concepts are solid, the path to an enterprise-grade, open source, on-prem AI stack is a natural progression — not a reinvention.
+> The homelab is not a toy. It is the training ground. Learn the concepts on hardware you own and can break without consequences. Understand inference, context management, model behavior, and cost at small scale. When those concepts are solid, the path to an enterprise-grade, open source, on-prem AI stack is a natural progression — not a reinvention.
 >
 > That conversation is coming. For now, start with the Pi.
 
