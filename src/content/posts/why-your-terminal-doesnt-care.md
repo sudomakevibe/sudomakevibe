@@ -26,7 +26,7 @@ Here is why I am trading the microphone for the Markdown editor.
 
 We have all been there. You are at the gym or commuting, listening to a brilliant technical deep dive into K3s networking or local LLM quantization. You feel like you are leveling up.
 
-Then you get home. You open your laptop, hands hovering over the keyboard, and nothing. The information is trapped in a waveform. You remember the vibe of the solution but you do not remember the syntax. You find yourself scrubbing through audio like a digital archaeologist, hitting the back-15-seconds button over and over because you were distracted by a lane change or a text message.
+Then you get home. You open your laptop, hands hovering over the keyboard, and nothing. The information is trapped in a waveform. You remember the vibe of the solution but you do not remember the syntax. You find yourself scrubbing through audio like a digital archaeologist, hitting the "back-15-seconds" button over and over because you were distracted by a lane change or a text message.
 
 A podcast is a stream. A blog is a map. When you are navigating a kernel panic or debugging a failing pod, you do not need a stream. You need a map that you can pin to your second monitor.
 
