@@ -1,0 +1,7 @@
+---
+// Redirect /manifesto → /blog/manifesto
+// Works in both Astro dev server and Vercel production.
+---
+<meta http-equiv="refresh" content="0;url=/blog/manifesto" />
+<link rel="canonical" href="/blog/manifesto" />
+<script>window.location.replace("/blog/manifesto");</script>

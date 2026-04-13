@@ -5,13 +5,52 @@ export interface Props {
   title: string;
   description: string;
   pubDate: Date;
+  updatedDate?: Date;
   tags?: string[];
+  image?: string;
+  readingTime?: string;
 }
 
-const { title, description, pubDate, tags = [] } = Astro.props;
+const { title, description, pubDate, updatedDate, tags = [], image, readingTime } = Astro.props;
+
+const siteUrl = "https://sudomakevibe.com";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImageURL = new URL(image || "/og-default.png", siteUrl).toString();
+
+const blogPostingJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description,
+  url: canonicalURL,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate && { dateModified: updatedDate.toISOString() }),
+  image: ogImageURL,
+  author: {
+    "@type": "Person",
+    name: "sudo make vibe",
+    url: siteUrl,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "sudo make vibe",
+    url: siteUrl,
+  },
+  keywords: tags.join(", "),
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": canonicalURL,
+  },
+};
 ---
 
-<BaseLayout title={`${title} | sudo make vibe`} description={description}>
+<BaseLayout
+  title={`${title} | sudo make vibe`}
+  description={description}
+  ogImage={image || "/og-default.png"}
+  ogType="article"
+  jsonLd={blogPostingJsonLd}
+>
   <main class="max-w-3xl mx-auto px-4 py-12">
     <article>
       <header class="mb-8">
@@ -19,33 +58,126 @@ const { title, description, pubDate, tags = [] } = Astro.props;
           tags && tags.length > 0 && (
             <div class="flex flex-wrap gap-2 mb-4">
               {tags.map((tag) => (
-                <span
-                  class="px-3 py-1 rounded-full text-sm"
-                  style="background-color: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border);"
+                <a
+                  href={`/tags/${tag}`}
+                  class="post-tag"
+                  style="text-decoration: none;"
                 >
-                  #{tag}
-                </span>
+                  <span
+                    class="px-3 py-1 rounded-full text-sm"
+                    style="background-color: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border); display: inline-block;"
+                  >
+                    #{tag}
+                  </span>
+                </a>
               ))}
             </div>
           )
         }
         <h1 style="color: var(--accent);">{title}</h1>
-        <time class="text-sm mt-2 block" style="color: var(--text-secondary);">
-          {
-            pubDate.toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })
-          }
-        </time>
+        <div class="flex items-center gap-4 mt-2">
+          <time
+            datetime={pubDate.toISOString()}
+            class="text-sm"
+            style="color: var(--text-secondary);"
+          >
+            {
+              pubDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            }
+          </time>
+          {readingTime && (
+            <span class="text-sm font-mono" style="color: var(--text-secondary);">
+              · {readingTime}
+            </span>
+          )}
+        </div>
       </header>
 
       <div class="prose max-w-none" style="color: var(--text-primary);">
         <slot />
       </div>
     </article>
-
-    <!-- Terminal box removed from blog posts -->
   </main>
 </BaseLayout>
+
+<style>
+  .post-tag span:hover {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+
+  /* Code blocks — match site theme */
+  .prose pre {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--accent) !important;
+    font-family: var(--font-mono, monospace) !important;
+    padding: 1rem 1.25rem !important;
+  }
+
+  .prose code {
+    background-color: var(--bg-card) !important;
+    color: var(--accent) !important;
+    border-radius: 4px !important;
+    padding: 0.1em 0.4em !important;
+    font-size: 0.9em !important;
+  }
+
+  .prose pre code {
+    background: none !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    color: inherit !important;
+  }
+
+  /* Headings */
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    color: var(--accent) !important;
+  }
+
+  /* Links */
+  .prose a {
+    color: var(--accent) !important;
+  }
+
+  /* Blockquotes */
+  .prose blockquote {
+    border-left-color: var(--accent) !important;
+    color: var(--text-secondary) !important;
+    background-color: var(--bg-card) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 0 6px 6px 0 !important;
+  }
+
+  /* Tables */
+  .prose table {
+    color: var(--text-primary) !important;
+  }
+
+  .prose thead {
+    border-bottom-color: var(--border) !important;
+  }
+
+  .prose thead th {
+    color: var(--text-secondary) !important;
+  }
+
+  .prose tbody tr {
+    border-bottom-color: var(--border) !important;
+  }
+
+  /* Horizontal rule */
+  .prose hr {
+    border-color: var(--border) !important;
+  }
+
+  /* Strong */
+  .prose strong {
+    color: var(--text-primary) !important;
+  }
+</style>

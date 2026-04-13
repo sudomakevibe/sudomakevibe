@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+
+  // Collect every unique tag across all published posts
+  const allTags = [
+    ...new Set(
+      posts
+        .filter((p) => !p.data.draft)
+        .flatMap((p) => p.data.tags)
+    ),
+  ];
+
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => !p.data.draft && p.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`#${tag} | sudo make vibe`}
+  description={`All posts tagged #${tag} on sudo make vibe — Linux, AI, Raspberry Pi, Kubernetes, Cybersecurity.`}
+>
+  <main class="max-w-4xl mx-auto px-4 py-12">
+    <div class="mb-12">
+      <a
+        href="/tags"
+        class="text-sm font-mono mb-4 inline-block"
+        style="color: var(--text-secondary); text-decoration: none;"
+      >
+        ← all tags
+      </a>
+      <h1 class="text-4xl font-bold mb-3" style="color: var(--accent);">
+        #{tag}
+      </h1>
+      <p style="color: var(--text-secondary);">
+        {posts.length} post{posts.length !== 1 ? "s" : ""}
+      </p>
+    </div>
+
+    <div class="space-y-12">
+      {posts.map((post) => (
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          pubDate={post.data.pubDate}
+          tags={post.data.tags}
+          slug={post.slug}
+          readingTime={post.data.readingTime}
+        />
+      ))}
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Start Here | sudo make vibe"
+  description="New to sudo make vibe? Start here. A guide to the philosophy, the lab, and where to begin."
+>
+  <main class="max-w-3xl mx-auto px-4 py-12">
+
+    <!-- Page heading -->
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold mb-3" style="color: var(--accent);">/start-here</h1>
+      <p class="text-lg" style="color: var(--text-secondary);">If you're new, start here.</p>
+    </div>
+
+    <div class="space-y-10" style="color: var(--text-primary);">
+
+      <!-- Intro -->
+      <div>
+        <p class="mb-4">Most content about AI, Linux, and cloud is either too abstract or too polished to be useful. This site takes a different approach.</p>
+        <p class="mb-4"><strong style="color: var(--accent);">sudo make vibe</strong> is about turning AI-generated ideas into real systems.</p>
+        <p class="mb-1" style="color: var(--text-secondary);">Not demos. Not screenshots. Not "it worked once."</p>
+        <p>Systems that run, break, get debugged, and improve.</p>
+      </div>
+
+      <!-- How this works -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4" style="color: var(--accent);">How this actually works</h2>
+        <div
+          class="p-4 rounded-lg font-mono text-sm mb-6"
+          style="background-color: var(--bg-card); border: 1px solid var(--border);"
+        >
+          <span style="color: var(--accent);">prompt</span>
+          <span style="color: var(--text-secondary);"> → </span>
+          <span style="color: var(--accent);">script</span>
+          <span style="color: var(--text-secondary);"> → </span>
+          <span style="color: var(--accent);">container</span>
+          <span style="color: var(--text-secondary);"> → </span>
+          <span style="color: var(--accent);">cluster</span>
+          <span style="color: var(--text-secondary);"> → </span>
+          <span style="color: var(--accent);">system</span>
+        </div>
+        <p class="mb-4">AI can generate the first draft. It cannot guarantee correctness, reliability, or security.</p>
+        <p class="mb-3">That's where:</p>
+        <ul class="space-y-1 ml-4" style="color: var(--text-secondary);">
+          <li><span style="color: var(--accent);">→</span> Linux fundamentals</li>
+          <li><span style="color: var(--accent);">→</span> containerization</li>
+          <li><span style="color: var(--accent);">→</span> Kubernetes</li>
+          <li><span style="color: var(--accent);">→</span> defensive thinking</li>
+        </ul>
+        <p class="mt-4 font-mono text-sm" style="color: var(--text-secondary);">
+          If it doesn't run outside the prompt window, it doesn't count.
+        </p>
+      </div>
+
+      <!-- Where to begin -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-6" style="color: var(--accent);">Where to begin</h2>
+
+        <div class="space-y-6">
+
+          <!-- Step 1 -->
+          <div
+            class="p-6 rounded-lg"
+            style="background-color: var(--bg-card); border: 1px solid var(--border);"
+          >
+            <div class="flex items-start gap-4">
+              <span class="font-mono text-2xl font-bold shrink-0" style="color: var(--accent);">1.</span>
+              <div>
+                <h3 class="text-lg font-semibold mb-1" style="color: var(--text-primary);">Understand the philosophy</h3>
+                <p class="text-sm mb-3" style="color: var(--text-secondary);">
+                  Start with the foundation. Why "vibe coding" without systems thinking leads to fragile outputs — and how to fix that.
+                </p>
+                <a
+                  href="/what-sudo-make-vibe-means"
+                  class="text-sm font-mono"
+                  style="color: var(--accent);"
+                >→ What "sudo make vibe" actually means</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div
+            class="p-6 rounded-lg"
+            style="background-color: var(--bg-card); border: 1px solid var(--border);"
+          >
+            <div class="flex items-start gap-4">
+              <span class="font-mono text-2xl font-bold shrink-0" style="color: var(--accent);">2.</span>
+              <div>
+                <h3 class="text-lg font-semibold mb-1" style="color: var(--text-primary);">See the system</h3>
+                <p class="text-sm mb-3" style="color: var(--text-secondary);">
+                  Everything here runs somewhere. A home lab built on Raspberry Pi, containers, and open source tooling is where ideas get tested before they become content.
+                </p>
+                <a
+                  href="/manifesto"
+                  class="text-sm font-mono"
+                  style="color: var(--accent);"
+                >→ The home lab behind this site</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div
+            class="p-6 rounded-lg"
+            style="background-color: var(--bg-card); border: 1px solid var(--border);"
+          >
+            <div class="flex items-start gap-4">
+              <span class="font-mono text-2xl font-bold shrink-0" style="color: var(--accent);">3.</span>
+              <div>
+                <h3 class="text-lg font-semibold mb-1" style="color: var(--text-primary);">Start building</h3>
+                <p class="text-sm mb-3" style="color: var(--text-secondary);">
+                  This is where theory meets reality.
+                </p>
+                <ul class="text-sm space-y-1 mb-3" style="color: var(--text-secondary);">
+                  <li><span style="color: var(--accent);">→</span> AI-assisted scripts</li>
+                  <li><span style="color: var(--accent);">→</span> Dockerized services</li>
+                  <li><span style="color: var(--accent);">→</span> Kubernetes experiments</li>
+                  <li><span style="color: var(--accent);">→</span> Security hardening with Kali and Linux tools</li>
+                </ul>
+                <a
+                  href="/projects"
+                  class="text-sm font-mono"
+                  style="color: var(--accent);"
+                >→ Latest builds and experiments</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- What you'll notice -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4" style="color: var(--accent);">What you'll notice quickly</h2>
+        <ul class="space-y-2 ml-4 mb-4" style="color: var(--text-secondary);">
+          <li><span style="color: var(--accent);">→</span> Things don't always work on the first try</li>
+          <li><span style="color: var(--accent);">→</span> AI outputs need correction</li>
+          <li><span style="color: var(--accent);">→</span> Infrastructure decisions matter</li>
+          <li><span style="color: var(--accent);">→</span> Security is not optional</li>
+        </ul>
+        <p class="mb-2"><strong>This is intentional.</strong></p>
+        <p style="color: var(--text-secondary);">You're seeing the system — not just the result.</p>
+      </div>
+
+      <!-- 10 minutes -->
+      <div
+        class="p-6 rounded-lg"
+        style="background-color: var(--bg-card); border: 1px solid var(--accent);"
+      >
+        <h2 class="text-xl font-semibold mb-4" style="color: var(--accent);">If you only have 10 minutes</h2>
+        <ul class="space-y-2" style="color: var(--text-secondary);">
+          <li>
+            <a href="/manifesto" style="color: var(--accent);">→ Read the manifesto</a>
+          </li>
+          <li>
+            <a href="/projects" style="color: var(--accent);">→ Look at one build</a>
+          </li>
+          <li>
+            <span style="color: var(--accent);">→</span> Decide if you want to build like this
+          </li>
+        </ul>
+      </div>
+
+      <!-- Final note -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4" style="color: var(--accent);">Final note</h2>
+        <p class="mb-4">This site assumes one thing:</p>
+        <p
+          class="font-mono text-sm p-4 rounded-lg"
+          style="background-color: var(--bg-card); border-left: 4px solid var(--accent); color: var(--text-secondary);"
+        >
+          You don't just want to use tools. You want to understand and control the system behind them.
+        </p>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>

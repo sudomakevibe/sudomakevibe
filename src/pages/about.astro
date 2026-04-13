@@ -1,100 +1,163 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const socialLinks = [
+  { label: "github",   href: "https://github.com/sudomakevibe",            description: "code, configs, homelab repos" },
+  { label: "x",        href: "https://x.com/sudomakevibe",                 description: "posts, threads, quick builds" },
+  { label: "linkedin", href: "https://www.linkedin.com/in/farooqganai/",   description: "farooq ganai — professional profile" },
+  { label: "mastodon", href: "https://mastodon.social/@sudomakevibe",       description: "@sudomakevibe@mastodon.social", rel: "me" },
+  { label: "reddit",   href: "https://reddit.com/u/sudomakevibe",           description: "r/homelab · r/selfhosted · r/linux" },
+  { label: "dev.to",   href: "https://dev.to/sudomakevibe",                 description: "cross-posted articles" },
+  { label: "rss",      href: "/rss.xml",                                    description: "subscribe via feed reader" },
+];
 ---
 
 <BaseLayout
   title="About | sudo make vibe"
-  description="Learn about the blog and its mission"
+  description="Farooq Ganai — 25+ years in enterprise networking technology, homelab builder, and the person behind sudo make vibe."
 >
   <main class="max-w-3xl mx-auto px-4 py-12">
     <div class="mb-12">
-      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
-        /about
-      </h1>
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">/about</h1>
     </div>
 
     <div class="space-y-8">
+
+      <!-- whoami -->
       <div
-        class="border-l-4 p-4 mb-8 font-mono"
+        class="border-l-4 p-4 font-mono"
         style="border-left-color: var(--accent); background-color: var(--bg-card);"
       >
-        <span class="text-sm" style="color: var(--accent);">$ whoami</span>
+        <div class="mb-2" style="color: var(--accent);">$ whoami</div>
+        <div style="color: var(--text-primary);">farooq ganai</div>
+        <div style="color: var(--text-secondary);">telco delivery executive · red hat · greater toronto area</div>
+        <div style="color: var(--text-secondary);">25+ years · enterprise technology · open source · linux tinkerer · homelab builder</div>
       </div>
 
-      <p style="color: var(--text-primary);">
-        I'm a developer and tinkerer exploring the intersection of
-        <span style="color: #d33682;">vibe coding</span>,
-        <span style="color: #859900;">AI</span>,
-        <span style="color: #2aa198;">Linux</span>, and
-        <span style="color: #dc322f;">Raspberry Pi</span>.
-      </p>
-
-      <h2
-        class="text-2xl font-semibold mt-8 mb-4"
-        style="color: var(--accent);"
-      >
-        What is vibe coding?
-      </h2>
-      <p style="color: var(--text-primary);">
-        Vibe coding is using AI tools as a creative partner—maintaining flow
-        while leveraging AI to accelerate from idea to implementation. It's not
-        about letting AI do everything, but about reducing friction between
-        thought and code.
-      </p>
-
-      <h2
-        class="text-2xl font-semibold mt-8 mb-4"
-        style="color: var(--accent);"
-      >
-        Why this blog?
-      </h2>
-      <p style="color: var(--text-primary);">
-        I noticed a gap between the creative freedom of "vibe coding" and the
-        discipline of systems engineering. This blog is my attempt to bridge
-        that gap—to show that you can have both creative flow and technical
-        depth.
-      </p>
-
-      <h2
-        class="text-2xl font-semibold mt-8 mb-4"
-        style="color: var(--accent);"
-      >
-        What to expect
-      </h2>
-      <ul
-        class="list-disc list-inside space-y-2"
-        style="color: var(--text-primary);"
-      >
-        <li>
-          <strong>Vibe Coding:</strong> AI-assisted development tools and philosophy
-        </li>
-        <li>
-          <strong>Linux:</strong> Terminal workflows, configs, and open-source tools
-        </li>
-        <li>
-          <strong>Raspberry Pi:</strong> Homelab setups, GPIO projects, edge AI
-        </li>
-        <li>
-          <strong>Cybersecurity:</strong> Secure remote access, best practices
-        </li>
-      </ul>
-
-      <!-- Terminal Box - Kept only on About page -->
+      <!-- Origin story -->
       <div
-        class="p-6 rounded-lg border mt-8 font-mono"
+        class="border-l-4 p-4 font-mono"
+        style="border-left-color: var(--border); background-color: var(--bg-card);"
+      >
+        <div class="mb-3" style="color: var(--accent);">$ cat origin-story.txt</div>
+        <div class="space-y-3 text-sm" style="color: var(--text-primary); line-height: 1.7;">
+          <p>
+            I've spent over 25 years in enterprise networking technology; starting as a systems engineer at Cisco, working some of the largest service provider and financial services accounts in the world, and eventually moving into customer success at Red Hat in Canada. I've seen what happens when infrastructure works at scale. More importantly, I've seen what happens when it doesn't.
+          </p>
+          <p>
+            The frustration that started this blog was specific. I kept watching AI-generated code get celebrated as finished work; scripts that worked once, containers that didn't scale, systems that collapsed under real conditions. Everyone was talking about the speed of AI. Nobody was talking about what happens after the prompt window closes.
+          </p>
+          <p>
+            I wanted to document a different approach. One grounded in 25 years of learning what it actually takes to build systems that run in production, at scale, under pressure, in the hands of real customers.
+          </p>
+          <p>
+            So I built a homelab on a couple of Raspberry Pi 5s and old Lenovo laptops. Then I built this site to document what I'm learning along the way.
+          </p>
+        </div>
+      </div>
+
+      <!-- Homelab -->
+      <div
+        class="border-l-4 p-4 font-mono"
+        style="border-left-color: var(--border); background-color: var(--bg-card);"
+      >
+        <div class="mb-3" style="color: var(--accent);">$ ls ~/homelab</div>
+        <div class="space-y-1 text-sm" style="color: var(--text-secondary);">
+          <div><span style="color: var(--accent);">→</span> raspberry-pi-5/       <span style="color: var(--text-secondary);">  # micro-datacenter, always on</span></div>
+          <div><span style="color: var(--accent);">→</span> k3s-cluster/          <span style="color: var(--text-secondary);">  # kubernetes at the edge</span></div>
+          <div><span style="color: var(--accent);">→</span> kali-node/            <span style="color: var(--text-secondary);">  # security research and hardening</span></div>
+          <div><span style="color: var(--accent);">→</span> devops/               <span style="color: var(--text-secondary);">  # ci/cd pipelines and automation</span></div>
+          <div><span style="color: var(--accent);">→</span> wireguard/            <span style="color: var(--text-secondary);">  # secure remote access</span></div>
+          <div><span style="color: var(--accent);">→</span> ollama/               <span style="color: var(--text-secondary);">  # on-prem AI inference engine on pi-5</span></div>
+          <div><span style="color: var(--accent);">→</span> joplin/               <span style="color: var(--text-secondary);">  # sovereign knowledge base</span></div>
+          <div><span style="color: var(--accent);">→</span> instructlab/          <span style="color: var(--text-secondary);">  # open-source on-prem LLM customization for RAG</span></div>
+        </div>
+        <div class="mt-3 text-sm" style="color: var(--text-secondary);">Not everything works. That's the point.</div>
+      </div>
+
+      <!-- Philosophy -->
+      <div
+        class="border-l-4 p-4 font-mono"
+        style="border-left-color: var(--border); background-color: var(--bg-card);"
+      >
+        <div class="mb-3" style="color: var(--accent);">$ cat philosophy.md</div>
+        <div class="space-y-3 text-sm" style="color: var(--text-primary); line-height: 1.7;">
+          <p>
+            Twenty-five years of enterprise technology taught me one thing above all else: the gap between a demo and a production system is where most projects fail. AI changes how fast you can get to the demo. It does not close that gap.
+          </p>
+          <p>
+            Linux, systems thinking, open source, and engineering discipline — these are what close the gap. That's what gets built here.
+          </p>
+        </div>
+        <div class="mt-3 text-sm">
+          <a href="/blog/manifesto" style="color: var(--accent); text-decoration: none;">→ read the full manifesto</a>
+        </div>
+      </div>
+
+      <!-- Credentials -->
+      <div
+        class="border-l-4 p-4 font-mono"
+        style="border-left-color: var(--border); background-color: var(--bg-card);"
+      >
+        <div class="mb-3" style="color: var(--accent);">$ cat credentials.txt</div>
+        <div class="space-y-1 text-sm" style="color: var(--text-secondary);">
+          <div><span style="color: var(--accent);">→</span> MBA · Western University (Ivey Business School)</div>
+          <div><span style="color: var(--accent);">→</span> Full Stack Developer · Toronto Metropolitan University</div>
+          <div><span style="color: var(--accent);">→</span> Certificate in DevOps · York University</div>
+          <div><span style="color: var(--accent);">→</span> Cloud Computing Strategy · York University</div>
+          <div><span style="color: var(--accent);">→</span> Accelerating Leadership with AI · Ivey Business School</div>
+          <div><span style="color: var(--accent);">→</span> Six Sigma Green Belt · Schulich School of Business</div>
+          <div><span style="color: var(--accent);">→</span> ITIL Foundation · British Computer Society</div>
+          <div><span style="color: var(--accent);">→</span> Federal Security Clearance · Government of Canada</div>
+        </div>
+      </div>
+
+      <!-- Find me online -->
+      <div
+        class="p-6 rounded-lg font-mono text-sm"
+        style="background-color: var(--bg-card); border: 1px solid var(--border);"
+      >
+        <div class="mb-4" style="color: var(--accent);">$ find /me -name "online"</div>
+        <div class="space-y-3">
+          {socialLinks.map((social) => (
+            <div class="flex items-start gap-3">
+              <span style="color: var(--accent);">→</span>
+              <a
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel={social.href.startsWith("http") ? `noopener noreferrer${social.rel ? " " + social.rel : ""}` : undefined}
+                class="social-link"
+                style="color: var(--text-primary); text-decoration: none; min-width: 100px; display: inline-block;"
+              >
+                {social.label}
+              </a>
+              <span style="color: var(--text-secondary);">{social.description}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Terminal box -->
+      <div
+        class="p-6 rounded-lg border font-mono"
         style="background-color: var(--bg-card); border-color: var(--border);"
       >
         <div>
           <span style="color: var(--accent);">$</span>
-          <span style="color: var(--accent);">
-            sudo make vibe --creative-environment</span
-          >
+          <span style="color: var(--accent);"> sudo make vibe --creative-environment</span>
         </div>
         <div class="mt-2" style="color: var(--text-secondary);">
           > Building...<br />
           > Ready. Let's build something interesting.
         </div>
       </div>
+
     </div>
   </main>
 </BaseLayout>
+
+<style>
+  .social-link:hover {
+    color: var(--accent) !important;
+  }
+</style>

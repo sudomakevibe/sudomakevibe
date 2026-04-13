@@ -1,5 +1,32 @@
-/* Import JetBrains Mono */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+/* Self-hosted JetBrains Mono — files live in /public/fonts/ */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -145,16 +172,45 @@
 }
 
 .prose code {
-  color: var(--code-text);
-  background-color: var(--code-bg);
+  color: var(--code-text) !important;
+  background-color: var(--code-bg) !important;
 }
 
 .prose pre {
-  background-color: var(--code-bg);
-  border: 1px solid var(--border);
+  background-color: var(--code-bg) !important;
+  border: 1px solid var(--border) !important;
 }
 
 .prose pre code {
-  color: var(--text-primary);
-  background-color: transparent;
+  color: var(--code-text) !important;
+  background-color: transparent !important;
+}
+
+/* Kill any syntax highlighting spans inside prose code blocks */
+.prose pre code span,
+.prose pre span {
+  color: var(--code-text) !important;
+}
+
+/* Plain text code blocks — matches start-here page style */
+.code-block-plain {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  margin: 1rem 0;
+}
+
+/* Theme switching transition — applied by ThemeSwitcher only during
+   a palette switch, removed immediately after so page loads are instant */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease !important;
 }

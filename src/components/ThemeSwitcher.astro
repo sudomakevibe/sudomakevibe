@@ -1,103 +1,140 @@
 ---
-// ThemeSwitcher Component
-// Allows users to switch between Deep Space, Arctic Frost, Earthy Glow, and Amber Light
+// ThemeSwitcher — pill card with active theme name display and tooltips.
+// All theme variables are inlined in BaseLayout so switching is instant.
 ---
 
-<div class="theme-switcher">
-  <div class="flex gap-1">
+<div class="theme-switcher-pill" id="theme-switcher-pill">
+  <span class="theme-label-prefix">palettes:</span>
+  <span class="theme-active-name" id="theme-active-name"></span>
+  <div class="theme-swatches">
     <button
-      id="theme-deep-space"
-      class="theme-btn w-5 h-5 rounded-full border transition-all"
-      style="background-color: #0a0e1a; border-color: var(--border);"
-      title="Deep Space"></button>
+      id="theme-sudo-dark"
+      class="theme-btn"
+      style="background-color: #0b1623;"
+      title="Sudo Dark"
+      aria-label="Sudo Dark theme"
+    ></button>
+    <button
+      id="theme-sudo-light"
+      class="theme-btn"
+      style="background-color: #f4f8fb; border-color: #a8c4d8;"
+      title="Sudo Light"
+      aria-label="Sudo Light theme"
+    ></button>
     <button
       id="theme-arctic-frost"
-      class="theme-btn w-5 h-5 rounded-full border transition-all"
-      style="background-color: #2e3440; border-color: var(--border);"
-      title="Arctic Frost"></button>
+      class="theme-btn"
+      style="background-color: #2e3440;"
+      title="Arctic Frost"
+      aria-label="Arctic Frost theme"
+    ></button>
     <button
       id="theme-earthy-glow"
-      class="theme-btn w-5 h-5 rounded-full border transition-all"
-      style="background-color: #002b36; border-color: var(--border);"
-      title="Earthy Glow"></button>
-    <button
-      id="theme-amber-light"
-      class="theme-btn w-5 h-5 rounded-full border transition-all"
-      style="background-color: #f0e6d3; border-color: #d49436;"
-      title="Amber Light"></button>
+      class="theme-btn"
+      style="background-color: #002b36;"
+      title="Earthy Glow"
+      aria-label="Earthy Glow theme"
+    ></button>
   </div>
 </div>
 
 <script>
-  // Theme switching functionality
-  const themes = {
-    "deep-space": "/themes/deep-space.css",
-    "arctic-frost": "/themes/arctic-frost.css",
-    "earthy-glow": "/themes/earthy-glow.css",
-    "amber-light": "/themes/amber-light.css",
+  const valid = ["sudo-dark", "sudo-light", "arctic-frost", "earthy-glow"];
+
+  const themeNames: Record<string, string> = {
+    "sudo-dark":    "sudo dark",
+    "sudo-light":   "sudo light",
+    "arctic-frost": "arctic frost",
+    "earthy-glow":  "earthy glow",
   };
 
-  // Get the current theme from localStorage or default to deep-space
-  let currentTheme = localStorage.getItem("blog-theme") || "deep-space";
+  const backgrounds: Record<string, string> = {
+    "sudo-dark":    "#0b1623",
+    "sudo-light":   "#f4f8fb",
+    "arctic-frost": "#2e3440",
+    "earthy-glow":  "#002b36",
+  };
 
-  // Function to load a theme
-  function loadTheme(themeName) {
-    // Remove existing theme link if present
-    const existingLink = document.getElementById("dynamic-theme");
-    if (existingLink) {
-      existingLink.remove();
-    }
-
-    // Create new link element for the theme
-    const link = document.createElement("link");
-    link.id = "dynamic-theme";
-    link.rel = "stylesheet";
-    link.href = themes[themeName];
-    document.head.appendChild(link);
-
-    // Update active button styling
-    document.querySelectorAll(".theme-btn").forEach((btn) => {
-      btn.classList.remove("ring-2");
-      btn.style.outline = "none";
-    });
-    const activeBtn = document.getElementById(`theme-${themeName}`);
-    if (activeBtn) {
-      activeBtn.classList.add("ring-2");
-      activeBtn.style.outline = "none";
-    }
-
-    // Save to localStorage
+  function applyTheme(themeName: string) {
+    document.documentElement.classList.add("theme-transitioning");
+    document.documentElement.setAttribute("data-theme", themeName);
+    document.documentElement.style.backgroundColor = backgrounds[themeName] || "#0b1623";
     localStorage.setItem("blog-theme", themeName);
+
+    // Update active name display
+    const nameEl = document.getElementById("theme-active-name");
+    if (nameEl) nameEl.textContent = themeNames[themeName] || themeName;
+
+    // Update active swatch ring
+    document.querySelectorAll(".theme-btn").forEach((btn) => {
+      btn.classList.remove("active");
+    });
+    document.getElementById(`theme-${themeName}`)?.classList.add("active");
+
+    window.setTimeout(() => {
+      document.documentElement.classList.remove("theme-transitioning");
+    }, 250);
   }
 
-  // Load saved theme on page load
-  loadTheme(currentTheme);
+  // Apply saved theme on load
+  const saved = localStorage.getItem("blog-theme") || "sudo-dark";
+  const current = valid.includes(saved) ? saved : "sudo-dark";
+  applyTheme(current);
 
-  // Add click handlers to theme buttons
-  document
-    .getElementById("theme-deep-space")
-    ?.addEventListener("click", () => loadTheme("deep-space"));
-  document
-    .getElementById("theme-arctic-frost")
-    ?.addEventListener("click", () => loadTheme("arctic-frost"));
-  document
-    .getElementById("theme-earthy-glow")
-    ?.addEventListener("click", () => loadTheme("earthy-glow"));
-  document
-    .getElementById("theme-amber-light")
-    ?.addEventListener("click", () => loadTheme("amber-light"));
+  // Wire up buttons
+  valid.forEach((theme) => {
+    document
+      .getElementById(`theme-${theme}`)
+      ?.addEventListener("click", () => applyTheme(theme));
+  });
 </script>
 
 <style>
+  .theme-switcher-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+
+  .theme-label-prefix {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .theme-active-name {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--text-secondary);
+    min-width: 72px;
+  }
+
+  .theme-swatches {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
   .theme-btn {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    padding: 0;
   }
+
   .theme-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
   }
-  .theme-btn.ring-2 {
+
+  .theme-btn.active {
     box-shadow: 0 0 0 2px var(--accent);
-    transform: scale(1.1);
+    transform: scale(1.15);
   }
 </style>

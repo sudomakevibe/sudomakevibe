@@ -6,16 +6,41 @@ import "../styles/global.css";
 export interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
   noHeader?: boolean;
   noFooter?: boolean;
+  jsonLd?: object;
 }
 
 const {
   title = "sudo make vibe",
   description = "Linux · AI · Raspberry Pi · Cybersecurity — where the command line meets the creative line",
+  ogImage = "/og-default.png",
+  ogType = "website",
   noHeader = false,
   noFooter = false,
+  jsonLd,
 } = Astro.props;
+
+const siteUrl = "https://sudomakevibe.com";
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL(ogImage, siteUrl);
+
+const defaultJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "sudo make vibe",
+  url: siteUrl,
+  description,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${siteUrl}/blog?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const structuredData = jsonLd ?? defaultJsonLd;
 ---
 
 <!doctype html>
@@ -23,24 +48,134 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <script>
-      // Clean up invalid themes from localStorage
-      // Valid themes: deep-space, arctic-frost, earthy-glow, amber-light
-      const validThemes = [
-        "deep-space",
-        "arctic-frost",
-        "earthy-glow",
-        "amber-light",
-      ];
-      const savedTheme = localStorage.getItem("blog-theme");
-      if (savedTheme && !validThemes.includes(savedTheme)) {
-        localStorage.setItem("blog-theme", "deep-space");
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:site_name" content="sudo make vibe" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="alternate" type="application/rss+xml" title="sudo make vibe RSS Feed" href="/rss.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <!--
+      FOUR THEMES INLINED — no network fetch, no flash.
+      Sudo Dark + Sudo Light are the brand palettes.
+      Arctic Frost (Nord) + Earthy Glow (Solarized) are kept as
+      well-researched community favourites with Phase 1 fixes applied.
+    -->
+    <style>
+      /* ── Sudo Dark — brand palette, warm navy ─────────────────── */
+      /* accent boosted #2c7da0→#3d8ab5 (AA Large→AA)             */
+      /* border strengthened for card edge visibility               */
+      [data-theme="sudo-dark"] {
+        --bg-primary:    #0b1623;
+        --bg-secondary:  #0d1a2a;
+        --bg-card:       #112033;
+        --text-primary:  #bdd0e0;
+        --text-secondary:#7a9bb5;
+        --accent:        #3d8ab5;
+        --accent-hover:  #5aadd4;
+        --code-bg:       #071018;
+        --code-text:     #7dd3fc;
+        --border:        #2a4d6e;
+        --selection-bg:  #3d8ab5;
+        --selection-text:#bdd0e0;
+        --cursor:        #3d8ab5;
       }
+
+      /* ── Sudo Light — brand palette, cool white ───────────────── */
+      /* accent darkened #2c7da0→#236a8a for light bg (AA Large→AA)*/
+      /* secondary darkened for better hierarchy on light           */
+      /* border strengthened for card edge visibility               */
+      [data-theme="sudo-light"] {
+        --bg-primary:    #f4f8fb;
+        --bg-secondary:  #eaf1f7;
+        --bg-card:       #e8f0f7;
+        --text-primary:  #0f2033;
+        --text-secondary:#3d6070;
+        --accent:        #236a8a;
+        --accent-hover:  #1a5a78;
+        --code-bg:       #ddeaf4;
+        --code-text:     #1e5f7a;
+        --border:        #a8c4d8;
+        --selection-bg:  #236a8a;
+        --selection-text:#f4f8fb;
+        --cursor:        #236a8a;
+      }
+
+      /* ── Arctic Frost — Nord-based, contrast optimised ────────── */
+      /* accent boosted #5e9fd4→#6aaee0 (AA Large→AA)              */
+      /* secondary lightened for card readability                   */
+      /* border strengthened for card edge visibility               */
+      [data-theme="arctic-frost"] {
+        --bg-primary:    #2e3440;
+        --bg-secondary:  #353c4a;
+        --bg-card:       #424c5e;
+        --text-primary:  #ccd2dc;
+        --text-secondary:#a8b4c0;
+        --accent:        #6aaee0;
+        --accent-hover:  #85c4ee;
+        --code-bg:       #2a3140;
+        --code-text:     #d08770;
+        --border:        #566070;
+        --selection-bg:  #6aaee0;
+        --selection-text:#ccd2dc;
+        --cursor:        #6aaee0;
+      }
+
+      /* ── Earthy Glow — Solarized-based, contrast optimised ────── */
+      /* text-primary lightened #839496→#93a1a1 (low AA→solid AA)  */
+      /* text-secondary lightened #657b83→#7a9199 (FAIL→AA)        */
+      /* accent boosted #268bd2→#3498d8 (AA Large→AA)              */
+      /* border strengthened for card edge visibility               */
+      [data-theme="earthy-glow"] {
+        --bg-primary:    #002b36;
+        --bg-secondary:  #00313e;
+        --bg-card:       #0a3444;
+        --text-primary:  #93a1a1;
+        --text-secondary:#7a9199;
+        --accent:        #3498d8;
+        --accent-hover:  #4aaee4;
+        --code-bg:       #001f2a;
+        --code-text:     #56b6c2;
+        --border:        #1a5068;
+        --selection-bg:  #3498d8;
+        --selection-text:#002b36;
+        --cursor:        #3498d8;
+      }
+    </style>
+
+    <!-- FOUC prevention: synchronous before first paint -->
+    <script is:inline>
+      (function () {
+        var valid = ["sudo-dark", "sudo-light", "arctic-frost", "earthy-glow"];
+        var saved = localStorage.getItem("blog-theme");
+        var theme = valid.includes(saved) ? saved : "sudo-dark";
+        document.documentElement.setAttribute("data-theme", theme);
+        var backgrounds = {
+          "sudo-dark":    "#0b1623",
+          "sudo-light":   "#f4f8fb",
+          "arctic-frost": "#2e3440",
+          "earthy-glow":  "#002b36",
+        };
+        document.documentElement.style.backgroundColor = backgrounds[theme] || "#0b1623";
+      })();
     </script>
   </head>
   <body>

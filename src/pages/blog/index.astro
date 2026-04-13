@@ -3,40 +3,97 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import BlogCard from "../../components/BlogCard.astro";
 import { getCollection } from "astro:content";
 
+function calculateReadingTime(text: string): string {
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return `${minutes} min read`;
+}
+
 const posts = await getCollection("posts");
-const sortedPosts = posts
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sortedPosts = await Promise.all(
+  posts
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .map(async (post) => {
+      const { Content } = await post.render();
+      const readingTime = post.data.readingTime || calculateReadingTime(post.body);
+      return { ...post, readingTime };
+    })
+);
+
+const coreTags = [
+  "linux",
+  "kubernetes",
+  "raspberry-pi",
+  "vibecoding",
+  "cybersecurity",
+  "ai",
+  "homelab",
+  "open-source",
+];
 ---
 
 <BaseLayout
   title="Blog | sudo make vibe"
-  description="Articles on vibe coding, AI, Linux, and Raspberry Pi"
+  description="Real builds. Real failures. Real lessons. Where AI-generated ideas become production systems."
 >
   <main class="max-w-4xl mx-auto px-4 py-12">
-    <div class="mb-12">
-      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
-        /blog
-      </h1>
-      <p style="color: var(--text-secondary);">
-        Exploring the intersection of creative coding and systems thinking.
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-3" style="color: var(--accent);">/blog</h1>
+      <p class="mb-1" style="color: var(--text-secondary);">
+        Real builds. Real failures. Real lessons.
       </p>
+      <p style="color: var(--text-secondary);">
+        Where AI-generated ideas become production systems.
+      </p>
+    </div>
+
+    <!-- Core tag filters -->
+    <div class="flex flex-wrap gap-2 mb-10">
+      {coreTags.map((tag) => (
+        <a
+          href={`/tags/${tag}`}
+          class="text-xs font-mono px-3 py-1 rounded-full transition-all"
+          style="background-color: var(--bg-card); color: var(--text-secondary); text-decoration: none; border: 1px solid var(--border);"
+          onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--accent)';"
+          onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-secondary)';"
+        >
+          #{tag}
+        </a>
+      ))}
+      <a
+        href="/tags"
+        class="text-xs font-mono px-3 py-1 rounded-full"
+        style="color: var(--text-secondary); text-decoration: none; border: 1px solid transparent;"
+        onmouseover="this.style.color='var(--accent)';"
+        onmouseout="this.style.color='var(--text-secondary)';"
+      >
+        all tags →
+      </a>
     </div>
 
     {
       sortedPosts.length === 0 ? (
         <p style="color: var(--text-secondary);">No posts yet. Coming soon!</p>
       ) : (
-        <div class="space-y-12">
-          {sortedPosts.map((post) => (
-            <BlogCard
-              title={post.data.title}
-              description={post.data.description}
-              pubDate={post.data.pubDate}
-              tags={post.data.tags}
-              slug={post.slug}
-            />
-          ))}
+        <div>
+          <!-- Post count -->
+          <p class="text-xs font-mono mb-8" style="color: var(--text-secondary);">
+            {sortedPosts.length} post{sortedPosts.length !== 1 ? "s" : ""}
+          </p>
+          <div class="space-y-12">
+            {sortedPosts.map((post) => (
+              <BlogCard
+                title={post.data.title}
+                description={post.data.description}
+                pubDate={post.data.pubDate}
+                tags={post.data.tags}
+                slug={post.slug}
+                readingTime={post.readingTime}
+              />
+            ))}
+          </div>
         </div>
       )
     }

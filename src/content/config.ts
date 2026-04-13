@@ -10,6 +10,10 @@ const posts = defineCollection({
     tags: z.array(z.string()),
     image: z.string().optional(),
     draft: z.boolean().default(false),
+    // Populated by remark-reading-time plugin at build time.
+    // Add to package.json devDependencies: "remark-reading-time": "^2.0.0"
+    // and register in astro.config.mjs: markdown: { remarkPlugins: [remarkReadingTime] }
+    readingTime: z.string().optional(),
   }),
 });
 

@@ -1,15 +1,24 @@
 ---
 const currentPath = Astro.url.pathname;
+
+// Strip trailing slash for consistent comparison — Astro adds it on static builds
+const path = currentPath === "/" ? "/" : currentPath.replace(/\/$/, "");
+
+const navLinks = [
+  { href: "/", label: "~/home", active: path === "/" },
+  { href: "/start-here", label: "~/start-here", active: path === "/start-here" },
+  { href: "/blog", label: "~/blog", active: path === "/blog" || path.startsWith("/blog/") },
+  { href: "/projects", label: "~/projects", active: path === "/projects" },
+  { href: "/about", label: "~/about", active: path === "/about" },
+];
 ---
 
 <header
   class="border-b py-4 sticky top-0 z-50"
   style="background-color: var(--bg-primary); border-color: var(--border); backdrop-filter: blur(8px);"
 >
-  <div
-    class="max-w-6xl mx-auto px-4 flex flex-wrap justify-between items-center gap-4"
-  >
-    <a href="/" class="text-xl font-mono group" style="text-decoration: none;">
+  <div class="max-w-6xl mx-auto px-4 flex flex-wrap justify-between items-center gap-4">
+    <a href="/" class="text-xl font-mono" style="text-decoration: none;">
       <span style="color: #2c7da0;">$</span>
       <span style="color: var(--accent);"> sudo make</span>
       <span style="color: var(--accent);"> vibe</span><span
@@ -18,38 +27,16 @@ const currentPath = Astro.url.pathname;
     </a>
 
     <nav class="flex flex-wrap gap-4 md:gap-6 text-sm font-mono">
-      <a
-        href="/"
-        style="color: ${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
-        onmouseenter="this.style.color='${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-        onmouseleave="this.style.color='${currentPath === '/' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-      >
-        ~/home
-      </a>
-      <a
-        href="/blog"
-        style="color: ${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
-        onmouseenter="this.style.color='${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}'"
-        onmouseleave="this.style.color='${currentPath === '/blog' || currentPath.startsWith('/blog/') ? 'var(--accent)' : 'var(--text-secondary)'}'"
-      >
-        ~/blog
-      </a>
-      <a
-        href="/projects"
-        style="color: ${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
-        onmouseenter="this.style.color='${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-        onmouseleave="this.style.color='${currentPath === '/projects' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-      >
-        ~/projects
-      </a>
-      <a
-        href="/about"
-        style="color: ${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}; text-decoration: none; transition: none;"
-        onmouseenter="this.style.color='${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-        onmouseleave="this.style.color='${currentPath === '/about' ? 'var(--accent)' : 'var(--text-secondary)'}'"
-      >
-        ~/about
-      </a>
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="nav-link"
+          data-active={link.active ? "true" : "false"}
+          style={`color: ${link.active ? "var(--accent)" : "var(--text-secondary)"}; text-decoration: none;`}
+        >
+          {link.label}
+        </a>
+      ))}
     </nav>
   </div>
 </header>
@@ -65,12 +52,16 @@ const currentPath = Astro.url.pathname;
   }
 
   @keyframes blink {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .nav-link:hover {
+    color: var(--accent) !important;
+    text-decoration: none;
+  }
+
+  .nav-link[data-active="true"] {
+    color: var(--accent) !important;
   }
 </style>

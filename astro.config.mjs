@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import tailwind from "@astrojs/tailwind";
 import sitemap from "@astrojs/sitemap";
+import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 
 export default defineConfig({
   site: "https://sudomakevibe.com",
@@ -13,6 +14,7 @@ export default defineConfig({
       theme: "dracula",
       wrap: true,
     },
+    remarkPlugins: [remarkReadingTime],
   },
   vite: {
     server: {

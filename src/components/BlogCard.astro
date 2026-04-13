@@ -5,23 +5,24 @@ export interface Props {
   pubDate: Date;
   tags: string[];
   slug: string;
+  readingTime?: string;
 }
 
-const { title, description, pubDate, tags, slug } = Astro.props;
+const { title, description, pubDate, tags, slug, readingTime } = Astro.props;
 ---
 
 <article
-  class="border-l-4 pl-6 hover:border-accent-hover transition group"
+  class="border-l-4 pl-6 transition-all"
   style="border-color: var(--accent);"
 >
-  <a href={`/blog/${slug}`} class="block group">
+  <a href={`/blog/${slug}`} class="block group" style="text-decoration: none;">
     <h2
-      class="text-xl md:text-2xl font-bold mb-2 transition"
+      class="text-xl md:text-2xl font-bold mb-2"
       style="color: var(--accent);"
     >
       {title}
     </h2>
-    <div class="flex flex-wrap gap-3 text-xs md:text-sm mb-3">
+    <div class="flex flex-wrap items-center gap-3 text-xs md:text-sm mb-3">
       <time style="color: var(--text-secondary);">
         {
           pubDate.toLocaleDateString("en-US", {
@@ -31,6 +32,9 @@ const { title, description, pubDate, tags, slug } = Astro.props;
           })
         }
       </time>
+      {readingTime && (
+        <span class="font-mono" style="color: var(--text-secondary);">· {readingTime}</span>
+      )}
       <div class="flex gap-2" style="color: var(--text-secondary);">
         {tags.slice(0, 3).map((tag) => <span>#{tag}</span>)}
       </div>

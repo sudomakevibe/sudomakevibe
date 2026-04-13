@@ -1,85 +1,162 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projects = [
+  {
+    title: "sudo make vibe",
+    subtitle: "Building sudomakevibe.com from idea to production",
+    description: "Astro, Vercel, self-hosted fonts, RSS, OG tags, a custom theme system, and every fix along the way. The meta-project — documenting how the documentation platform was built.",
+    status: "active",
+    tags: ["astro", "vercel", "tailwind", "open-source", "spaceship", "vscode", "git", "github"],
+    slug: null,
+  },
+  {
+    title: "sudo make homelab",
+    subtitle: "The physical and logical foundation everything runs on",
+    description: "Pi 5s, Lenovo laptops, K3s cluster, Kali node, Ollama inference, InstructLab, and the network that ties it together. What broke, what worked, and what I'd do differently.",
+    status: "in-progress",
+    tags: ["raspberry-pi", "kubernetes", "homelab", "fedora", "ubuntu", "kali", "workstation-pro", "virtualbox", "virt-manager"],
+    slug: null,
+  },
+  {
+    title: "sudo make homelab secure",
+    subtitle: "WireGuard, SSH hardening, and zero exposed ports",
+    description: "Getting into the homelab from anywhere without punching holes in the firewall. WireGuard tunneling, SSH hardening, and the paranoid checklist that keeps it locked down.",
+    status: "planned",
+    tags: ["wireguard", "cybersecurity", "linux", "networking", "netbird", "openziti", "ansible", "opentofu", "packer"],
+    slug: null,
+  },
+  {
+    title: "sudo make vibe --toolkit",
+    subtitle: "The AI-assisted workflow that actually ships to production",
+    description: "The prompts, tools, review process, and discipline that turns AI-generated output into something you'd actually run in production. An opinionated workflow, not a hype piece.",
+    status: "planned",
+    tags: ["vibecoding", "ai", "cursor", "copilot", "claude", "ollama", "deepseek", "chatgpt", "grok", "kimi", "instructlab"],
+    slug: null,
+  },
+  {
+    title: "sudo make homelab ai",
+    subtitle: "Running local LLMs on the homelab — inference, fine-tuning, and RAG without the cloud",
+    description: "Ollama for inference, InstructLab for fine-tuning, and a RAG pipeline — all running on Pi 5 hardware. No cloud APIs, no data leaving the network. Just open-source AI on owned infrastructure.",
+    status: "planned",
+    tags: ["ollama", "instructlab", "raspberry-pi", "ai", "llm", "rag", "open-source"],
+    slug: null,
+  },
+  {
+    title: "sudo make homelab observe",
+    subtitle: "Monitoring, logging, and alerting — knowing when things break before they do",
+    description: "How do you know your homelab is healthy? Prometheus, Grafana, and log aggregation on a K3s cluster. Observability as a discipline, not an afterthought.",
+    status: "planned",
+    tags: ["prometheus", "grafana", "linux", "homelab", "kubernetes", "aiops", "open-source"],
+    slug: null,
+  },
+];
+
+const statusConfig: Record<string, { label: string; dot: string; text: string }> = {
+  "active": {
+    label: "active",
+    dot: "#3d8ab5",
+    text: "#3d8ab5",
+  },
+  "in-progress": {
+    label: "in progress",
+    dot: "#d49436",
+    text: "#d49436",
+  },
+  "planned": {
+    label: "planned",
+    dot: "#7a9bb5",
+    text: "#7a9bb5",
+  },
+};
 ---
 
 <BaseLayout
   title="Projects | sudo make vibe"
-  description="Raspberry Pi projects, homelab setups, and AI experiments"
+  description="Homelab builds, infrastructure projects, and AI experiments — documented with real configs, real failures, and real lessons learned."
 >
   <main class="max-w-4xl mx-auto px-4 py-12">
     <div class="mb-12">
-      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">
-        /projects
-      </h1>
+      <h1 class="text-4xl font-bold mb-4" style="color: var(--accent);">/projects</h1>
       <p style="color: var(--text-secondary);">
-        Building things at the intersection of hardware and software.
+        Each project is a detailed writeup — challenges, successes, and lessons learned.
+        Not everything works on the first try. That's the point.
       </p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <div
-        class="rounded-lg p-6 transition"
-        style="background-color: var(--bg-card); border: 1px solid var(--border);"
-      >
-        <h2
-          class="text-xl font-semibold mb-2"
-          style="color: var(--text-primary);"
-        >
-          Raspberry Pi Homelab
-        </h2>
-        <p class="text-sm mb-4" style="color: var(--text-secondary);">
-          Complete setup guide with Docker, Tailscale, and self-hosted services.
-        </p>
-        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
-      </div>
+      {projects.map((project) => {
+        const status = statusConfig[project.status];
+        return (
+          <div
+            class="rounded-lg p-6 flex flex-col"
+            style="background-color: var(--bg-card); border: 1px solid var(--border);"
+          >
+            <!-- Status badge -->
+            <div class="flex items-center gap-2 mb-4">
+              <span
+                class="inline-block w-2 h-2 rounded-full"
+                style={`background-color: ${status.dot};`}
+              ></span>
+              <span class="text-xs font-mono" style={`color: ${status.text};`}>
+                {status.label}
+              </span>
+            </div>
 
-      <div
-        class="rounded-lg p-6 transition"
-        style="background-color: var(--bg-card); border: 1px solid var(--border);"
-      >
-        <h2
-          class="text-xl font-semibold mb-2"
-          style="color: var(--text-primary);"
-        >
-          Local LLM on Pi
-        </h2>
-        <p class="text-sm mb-4" style="color: var(--text-secondary);">
-          Running Ollama and Llama models on Raspberry Pi 5.
-        </p>
-        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
-      </div>
+            <!-- Title -->
+            <h2
+              class="text-lg font-bold mb-1 font-mono"
+              style="color: var(--accent);"
+            >
+              {project.title}
+            </h2>
 
-      <div
-        class="rounded-lg p-6 transition"
-        style="background-color: var(--bg-card); border: 1px solid var(--border);"
-      >
-        <h2
-          class="text-xl font-semibold mb-2"
-          style="color: var(--text-primary);"
-        >
-          Secure Remote Access
-        </h2>
-        <p class="text-sm mb-4" style="color: var(--text-secondary);">
-          Setting up WireGuard and Tailscale for your homelab.
-        </p>
-        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
-      </div>
+            <!-- Subtitle -->
+            <p
+              class="text-sm mb-3 font-mono"
+              style="color: var(--text-secondary);"
+            >
+              {project.subtitle}
+            </p>
 
-      <div
-        class="rounded-lg p-6 transition"
-        style="background-color: var(--bg-card); border: 1px solid var(--border);"
-      >
-        <h2
-          class="text-xl font-semibold mb-2"
-          style="color: var(--text-primary);"
-        >
-          Vibe Coding Toolkit
-        </h2>
-        <p class="text-sm mb-4" style="color: var(--text-secondary);">
-          Tools, prompts, and workflows for AI-assisted development.
-        </p>
-        <span class="text-xs" style="color: var(--accent);">coming soon →</span>
-      </div>
+            <!-- Description -->
+            <p
+              class="text-sm mb-4 flex-grow"
+              style="color: var(--text-primary); line-height: 1.6;"
+            >
+              {project.description}
+            </p>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag) => (
+                <a
+                  href={`/tags/${tag}`}
+                  class="text-xs font-mono px-2 py-1 rounded"
+                  style="background-color: var(--bg-secondary); color: var(--text-secondary); text-decoration: none; border: 1px solid var(--border);"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </div>
+
+            <!-- Link -->
+            {project.slug ? (
+              <a
+                href={`/blog/${project.slug}`}
+                class="text-sm font-mono"
+                style="color: var(--accent); text-decoration: none;"
+              >
+                → read the writeup
+              </a>
+            ) : (
+              <span class="text-xs font-mono" style="color: var(--border);">
+                writeup coming
+              </span>
+            )}
+          </div>
+        );
+      })}
     </div>
   </main>
 </BaseLayout>
