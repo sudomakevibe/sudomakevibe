@@ -20,26 +20,19 @@ const socialLinks = [
   { label: "reddit",   href: "https://reddit.com/u/sudomakevibe" },
   { label: "dev.to",   href: "https://dev.to/sudomakevibe" },
   { label: "rss",      href: "/rss.xml" },
-  // --- Uncomment when ready ---
-  // { label: "linkedin", href: "https://linkedin.com/in/sudomakevibe" },
-  // { label: "discord",  href: "https://discord.gg/sudomakevibe" },
-  // { label: "hashnode", href: "https://sudomakevibe.hashnode.dev" },
-  // { label: "hackster", href: "https://hackster.io/sudomakevibe" },
-  // { label: "hackaday", href: "https://hackaday.io/sudomakevibe" },
 ];
 ---
 
-<footer class="border-t py-8 mt-16" style="border-color: var(--border);">
-  <div class="max-w-6xl mx-auto px-4">
+<footer class="mt-16 py-10 px-4" style="border-top: 1px solid var(--border);">
+  <div class="max-w-6xl mx-auto">
 
-    <!-- Nav links -->
-    <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
-      <div class="flex flex-wrap gap-4 md:gap-6 text-sm font-mono">
+    <!-- Nav + Palette -->
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+      <div class="flex flex-wrap gap-6 text-sm font-mono">
         {navLinks.map((link) => (
           <a
             href={link.href}
-            class="footer-link"
-            data-active={link.active ? "true" : "false"}
+            class="footer-nav-link"
             style={`color: ${link.active ? "var(--accent)" : "var(--text-secondary)"}; text-decoration: none;`}
           >
             {link.label}
@@ -52,15 +45,18 @@ const socialLinks = [
       </div>
     </div>
 
-    <!-- Social links — text only, terminal native -->
-    <div class="flex flex-wrap justify-center gap-2 items-center font-mono text-sm mb-6">
+    <!-- Social links -->
+    <div
+      class="flex flex-wrap justify-center gap-2 items-center font-mono text-sm py-5 mb-6"
+      style="border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border);"
+    >
       {socialLinks.map((social, i) => (
         <>
           <a
             href={social.href}
             target={social.href.startsWith("http") ? "_blank" : undefined}
             rel={social.href.startsWith("http") ? `noopener noreferrer${social.rel ? " " + social.rel : ""}` : undefined}
-            class="social-link"
+            class="footer-social-link"
             style="color: var(--text-secondary); text-decoration: none;"
           >
             {social.label}
@@ -72,25 +68,39 @@ const socialLinks = [
       ))}
     </div>
 
-    <!-- Copyright -->
-    <div
-      class="text-xs font-mono"
-      style="color: var(--text-secondary); opacity: 0.5;"
-    >
-      <p>© {new Date().getFullYear()} Farooq Ganai · Code: <a href="https://github.com/sudomakevibe/sudomakevibe/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary); text-decoration: none;">MIT License</a> · Content: All Rights Reserved</p>
+    <!-- Copyright + License -->
+    <div class="flex flex-wrap justify-between items-center gap-2 text-xs font-mono">
+      <div>
+        <span style="color: var(--text-secondary);">© {new Date().getFullYear()} </span>
+        <span style="color: var(--accent);">Farooq Ganai</span>
+        <span style="color: var(--text-secondary);"> · sudomakevibe.com</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span style="color: var(--text-secondary);">Code: </span>
+        <a
+          href="https://github.com/sudomakevibe/sudomakevibe/blob/main/LICENSE"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="color: var(--accent); text-decoration: none;"
+          class="footer-license-link"
+        >MIT License</a>
+        <span style="color: var(--border);">·</span>
+        <span style="color: var(--text-secondary);">Content: </span>
+        <span style="color: var(--accent);">All Rights Reserved</span>
+      </div>
     </div>
 
   </div>
 </footer>
 
 <style>
-  .footer-link:hover {
+  .footer-nav-link:hover {
     color: var(--accent) !important;
   }
-  .footer-link[data-active="true"] {
+  .footer-social-link:hover {
     color: var(--accent) !important;
   }
-  .social-link:hover {
-    color: var(--accent) !important;
+  .footer-license-link:hover {
+    text-decoration: underline !important;
   }
 </style>
