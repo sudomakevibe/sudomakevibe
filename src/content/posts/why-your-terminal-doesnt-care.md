@@ -72,7 +72,7 @@ This is not a tutorial site with clean happy-path examples that always work on t
 
 Not everything will be polished. That is intentional — because real systems are not built in a straight line, and anyone who tells you otherwise is selling something.
 
-If you want the full picture of what gets built here, the [welcome post](/blog/welcome-to-sudo-make-vibe) covers it. This post is just the answer to the question of why it is written down at all.
+If you want the full picture of what gets built here, the [welcome post](/blog/welcome) covers it. This post is just the answer to the question of why it is written down at all.
 
 ## The mission
 
