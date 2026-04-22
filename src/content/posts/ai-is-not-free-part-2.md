@@ -133,14 +133,8 @@ Part one of this series covered the measurable costs: tokens, APIs, shadow infra
 
 → [Read the manifesto](/blog/manifesto)
 
-→ [See the homelab build](/projects)
-
 ---
 
-> **From homelab to enterprise**
+> **Coming in part three**
 >
-> Everything in this post applies whether you are running Ollama on a Raspberry Pi 5 or vLLM on an NVIDIA L40S cluster. The discipline is identical. The hardware is not.
->
-> The homelab is not a toy. It is the training ground. Learn the concepts on hardware you own and can break without consequences. Understand inference, context management, model behavior, and cost at small scale. When those concepts are solid, the path to an enterprise-grade, open source, on-prem AI stack is a natural progression — not a reinvention.
->
-> In regulated industries the stakes multiply. Data residency, audit trails, and sovereignty requirements turn the human-in-the-middle discipline from a best practice into a non-negotiable. That post is next.
+> Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-middle discipline from a best practice into a non-negotiable. That post is coming.
