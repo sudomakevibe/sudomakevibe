@@ -135,6 +135,16 @@ Part one of this series covered the measurable costs: tokens, APIs, shadow infra
 
 ---
 
+## Further reading
+
+If you want to go deeper into the research and thinking behind this post:
+
+- Shen and Tamkin, ["How AI Impacts Skill Formation"](https://arxiv.org/abs/2601.20245) (arXiv, 2026) — a randomized controlled trial of 52 software engineers. Those who used AI completed coding tasks at similar speeds but scored 17% lower on follow-up comprehension quizzes.
+- Simon Willison, ["Hallucinations in code are the least dangerous form of LLM mistakes"](https://simonwillison.net/2025/Mar/2/hallucinations-in-code/) — the counter-intuitive argument that obvious hallucinations are the best kind of LLM failure, because they fail loudly. The dangerous ones are the plausible outputs that pass review.
+- Ward Cunningham's original [technical debt metaphor](https://martinfowler.com/bliki/TechnicalDebt.html), via Martin Fowler. Coined in 1992 to explain the cost of shipping not-quite-right code. Still the clearest framing of the problem thirty years later.
+
+---
+
 > **Coming in part three**
 >
 > Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-middle discipline from a best practice into a non-negotiable. That post is coming.
