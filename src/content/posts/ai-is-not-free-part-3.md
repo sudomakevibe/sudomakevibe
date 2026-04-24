@@ -101,10 +101,6 @@ The Underwriter is the pillar that fills this gap. It is the one pillar with no 
 
 The Telco use case is the SIM swap scenario this post opened with. When the fraud model misses the swap, the Ledger proves what the model did, and the Underwriter pays for what it cost. Neither pillar alone resolves the liability. Both together do.
 
-### Three obvious, three more
-
-The three above are the architecture at its simplest. Infrastructure that does not leak. Governance that catches drift. Insurance for the day despite all of that, something still goes wrong. They handle the failure modes that are obvious from the start. What they do not handle is everything that can still go wrong even when infrastructure, governance, and insurance are all in place. Three more scenarios surface when you push on what else can fail. Where did the training data come from, and was it anonymized before it got to the model. How do you train across regional silos without pooling data you are not allowed to pool. When opposing counsel subpoenas the decision trail, what do you hand over. The next three pillars answer those scenarios.
-
 ## The three gap-fillers
 
 ### The Redactor — privacy layer — *the redaction clerk*
