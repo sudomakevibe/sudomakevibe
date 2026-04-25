@@ -38,28 +38,24 @@ The scenario above is not exotic. It is the shape of AI in every regulated indus
 
 The question is what carries the risk the model cannot carry alone. That is an architecture question. The rest of this post walks through six pillars that answer it, one distinction between indemnification and insurance that procurement teams often miss, and a framework for choosing between commercial and open-source paths.
 
-## Think of your company as a private bank
+## The architecture, in six pillars
 
-Gold coins are your network data, customer records, call logs. Insurance policies are the commercial contracts you signed with every enterprise and consumer on your books. Living wills are the emergency protocols that decide where a 911 call is routed and how fast help arrives.
+The architecture has six load-bearing pillars. Each pillar is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each pillar has a technical name and a one-line function. Miss a pillar and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
 
-The architecture to protect those things has six load-bearing pillars. Each pillar is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each pillar has a technical name, a one-line function, and a bank-analogy nickname. Miss a pillar and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
+- **The Vault** — sovereign infrastructure. Where the model runs.
+- **The Inspector** — model governance. Whether the model is still behaving.
+- **The Underwriter** — third-party performance insurance. Who pays when the model is wrong.
+- **The Redactor** — privacy layer. What the model sees.
+- **The Courier** — federated learning orchestration. Where the data moves, and does not.
+- **The Ledger** — immutable decision trace. What the decision was, reconstructed years later.
 
-- **The Vault** — sovereign infrastructure. Where the model runs. *The reinforced room.*
-- **The Inspector** — model governance. Whether the model is still behaving. *The integrity auditor.*
-- **The Underwriter** — third-party performance insurance. Who pays when the model is wrong. *The insurance policy.*
-- **The Redactor** — privacy layer. What the model sees. *The redaction clerk.*
-- **The Courier** — federated learning orchestration. Where the data moves, and does not. *The ghost courier.*
-- **The Ledger** — immutable decision trace. What the decision was, reconstructed years later. *The black box recorder.*
+When I went looking for a complete reference architecture for regulated AI, I did not find one. That may be the limit of what I have personally encountered in the vendor landscape. It may also be that the landscape itself is fragmented — no single vendor owns the complete AI stack, and no single source assembles the full picture. The AI stack has become deep and layered: model providers, inference platforms, governance, privacy, federation, decision trace, insurance. A Telco executive under pressure to deploy has to make a coherent decision across all of that on a timeline measured in quarters. Either way, I did not find what I needed. So I worked through the architecture one scenario at a time, asking what could fail and what the business could not afford to let fail.
 
-I did not design six pillars by accident. I worked through the architecture one scenario at a time, asking what could fail and what the business could not afford to let fail. Six scenarios came out of that exercise. Three were obvious from the start: where does it run, is it still behaving, what happens when it breaks despite those precautions. Three required more pushing: what if the training data contains PII, what if the data cannot pool across jurisdictions, what if the decision has to be reconstructed years after it was made. All six are in the architecture. Ordering them obvious-first is how I present them; it is not how I arrived at them.
-
-The technical name in each pillar heading does the work. The nickname is the spine that keeps the architecture memorable for readers who do not spend their week thinking about MLOps.
-
-Start with the three obvious scenarios.
+The six pillars split into two groups: three obvious from the start, three that surface when you push further.
 
 ## The three originals
 
-### The Vault — sovereign infrastructure — *the reinforced room*
+### The Vault — sovereign infrastructure
 
 The first question a regulator, an auditor, or opposing counsel will ask is where the model runs.
 
@@ -73,7 +69,7 @@ The Telco use case that makes the Vault non-negotiable is Next Generation 911. C
 
 Without the Vault, the architecture has no ground to stand on.
 
-### The Inspector — model governance — *the integrity auditor*
+### The Inspector — model governance
 
 A model drifts. Not eventually. Continuously.
 
@@ -87,7 +83,7 @@ The Telco use case is fraud detection. The model that caught last quarter's SIM 
 
 The Inspector is how you answer "is it still behaving" without waiting for someone outside the building to answer it for you.
 
-### The Underwriter — third-party performance insurance — *the insurance policy*
+### The Underwriter — third-party performance insurance
 
 The third pillar is the one most technical teams forget until the lawyers find it for them.
 
@@ -103,7 +99,7 @@ The Telco use case is the SIM swap scenario this post opened with. When the frau
 
 ## The three gap-fillers
 
-### The Redactor — privacy layer — *the redaction clerk*
+### The Redactor — privacy layer
 
 The first scenario was what happens when the training data contains personally identifiable information.
 
@@ -119,7 +115,7 @@ The Telco use case is customer call transcripts used to train a churn model — 
 
 The Redactor is the reason the rest of the pipeline is allowed to see anything at all.
 
-### The Courier — federated learning orchestration — *the ghost courier*
+### The Courier — federated learning orchestration
 
 The second scenario was what happens when the data the Redactor did not redact was also not allowed to move across jurisdictions.
 
@@ -133,7 +129,7 @@ The Telco use case is the churn model again, this time across provincial custome
 
 The Courier moves the learning. The data stays where the law says it has to stay.
 
-### The Ledger — immutable decision trace — *the black box recorder*
+### The Ledger — immutable decision trace
 
 The third scenario was what happens when a decision has to be reconstructed years after it was made — by a regulator, an auditor, or opposing counsel.
 
