@@ -46,15 +46,15 @@ The framing comes from networking. I spent years working with the seven-layer OS
 
 ## The architecture, in seven layers
 
-The architecture has seven load-bearing layers. Each layer is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each layer has a technical name and a one-line function. Miss a layer and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
+The architecture has seven layers, none of them optional. Each layer is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each layer has a technical name and a one-line function. Miss a layer and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
 
 1. **The Builder** — design and deployment capability. Who designs, integrates, and operates the rest.
 2. **The Vault** — sovereign infrastructure. Where the model runs.
-3. **The Inspector** — model governance. Whether the model is still behaving.
-4. **The Underwriter** — third-party performance insurance. Who pays when the model is wrong.
-5. **The Redactor** — privacy layer. What the model sees.
-6. **The Courier** — federated learning orchestration. Where the data moves, and does not.
-7. **The Ledger** — immutable decision trace. What the decision was, reconstructed years later.
+3. **The Redactor** — privacy layer. What the model sees.
+4. **The Courier** — federated learning orchestration. Where the data moves, and does not.
+5. **The Inspector** — model governance. Whether the model is still behaving.
+6. **The Ledger** — immutable decision trace. What the decision was, reconstructed years later.
+7. **The Underwriter** — third-party performance insurance. Who pays when the model is wrong.
 
 Start with the Builder — the layer the other six depend on.
 
@@ -86,34 +86,6 @@ The Telco use case that makes the Vault non-negotiable is Next Generation 911. C
 
 Without the Vault, the architecture has no ground to stand on.
 
-### The Inspector — model governance
-
-A model drifts. Not eventually. Continuously.
-
-The training data was a snapshot. The production traffic is a stream. The gap between them widens every day. Attacker tactics evolve. Customer demographics shift. The feature distribution the model was validated against is not the feature distribution the model sees in production by week twelve. If nobody is watching the drift, the model is quietly becoming a different model than the one governance approved.
-
-The Inspector watches. Drift detection across features and outputs. Bias monitoring across protected classes. Fairness audits against the regulatory standard that applies to the jurisdiction. Model cards or AI Factsheets that document the model's intended use, its known limitations, its training data provenance, and its performance on the last validation run. The Inspector tells you the model in production is still the model you approved, and tells you first, before a customer complaint, before a regulator's letter, before opposing counsel's discovery request.
-
-IBM watsonx.governance is the commercial reference. The open-source realization is MLflow Model Registry for lifecycle tracking, plus AIF360 for fairness metrics, plus a drift monitor such as Evidently or Radicalbit. Three tools instead of one, which matters, because each integration seam is a place the governance story can break under audit.
-
-The Telco use case is fraud detection. The model that caught last quarter's SIM swap patterns will not catch next quarter's, because the adversary reads the same security blogs the defenders do. Drift in the fraud model is not a bug; it is a given. The Inspector catches the drift before it becomes a settlement.
-
-The Inspector is how you answer "is it still behaving" without waiting for someone outside the building to answer it for you.
-
-### The Underwriter — third-party performance insurance
-
-The Underwriter is the layer most technical teams forget until the lawyers find it for them.
-
-Several major foundation model vendors now offer some form of intellectual property indemnification as part of their enterprise contracts. The specific terms, scope, and limits vary by vendor and by product tier. The indemnity language looks reassuring on a procurement slide. It covers the lawsuit that says your training data was stolen. It covers the lawsuit that says a copyrighted work was reproduced in the model's output.
-
-It does not cover the lawsuit that says the model was wrong.
-
-None of the following is in the indemnity: performance failures, hallucinations, bodily injury from a misrouted emergency call, financial loss from fraud the model failed to catch, or consequential damages downstream of model output.
-
-The Underwriter is the layer that fills this gap. It is the one layer with no open-source equivalent, because insurance is not an open-source category. Armilla AI is the category-defining example: Toronto-based, the first Lloyd's of London coverholder dedicated exclusively to AI liability (since 2024), underwritten by Chaucer and Axis Capital, Lloyd's-backed coverage raised to twenty-five million dollars aggregate in January 2026. The policy affirmatively covers AI model error, AI output liability, AI agent failures, non-breach privacy leakage, AI-driven property damage, and AI regulatory violations. Those are the exact categories the foundation model vendor indemnity explicitly excludes.
-
-The Telco use case is the SIM swap scenario this post opened with. When the fraud model misses the swap, the Ledger proves what the model did, and the Underwriter pays for what it cost. Neither layer alone resolves the liability. Both together do.
-
 ### The Redactor — privacy layer
 
 The scenario here is what happens when the training data contains personally identifiable information.
@@ -144,6 +116,20 @@ The Telco use case is the churn model again, this time across provincial custome
 
 The Courier moves the learning. The data stays where the law says it has to stay.
 
+### The Inspector — model governance
+
+A model drifts. Not eventually. Continuously.
+
+The training data was a snapshot. The production traffic is a stream. The gap between them widens every day. Attacker tactics evolve. Customer demographics shift. The feature distribution the model was validated against is not the feature distribution the model sees in production by week twelve. If nobody is watching the drift, the model is quietly becoming a different model than the one governance approved.
+
+The Inspector watches. Drift detection across features and outputs. Bias monitoring across protected classes. Fairness audits against the regulatory standard that applies to the jurisdiction. Model cards or AI Factsheets that document the model's intended use, its known limitations, its training data provenance, and its performance on the last validation run. The Inspector tells you the model in production is still the model you approved, and tells you first, before a customer complaint, before a regulator's letter, before opposing counsel's discovery request.
+
+IBM watsonx.governance is the commercial reference. The open-source realization is MLflow Model Registry for lifecycle tracking, plus AIF360 for fairness metrics, plus a drift monitor such as Evidently or Radicalbit. Three tools instead of one, which matters, because each integration seam is a place the governance story can break under audit.
+
+The Telco use case is fraud detection. The model that caught last quarter's SIM swap patterns will not catch next quarter's, because the adversary reads the same security blogs the defenders do. Drift in the fraud model is not a bug; it is a given. The Inspector catches the drift before it becomes a settlement.
+
+The Inspector is how you answer "is it still behaving" without waiting for someone outside the building to answer it for you.
+
 ### The Ledger — immutable decision trace
 
 The scenario here is what happens when a decision has to be reconstructed years after it was made — by a regulator, an auditor, or opposing counsel.
@@ -157,6 +143,20 @@ On the commercial side, the market has several serious offerings: Credo AI, Arth
 On the open-source side, the realization is typically a composition: OpenSearch for the searchable store, LlamaIndex or a similar layer for decision retrieval, and custom middleware to wire inputs and outputs into a consistent schema. This is a layer where the open-source path requires real engineering. The immutability guarantee, the tamper-proof part, is where the engineering gets most exacting. It is not enough for the logs to exist. They have to be provably unmodified, with a cryptographic chain of custody a regulator will accept.
 
 The Telco use case is the SIM swap decision trail. When the arbitration demand arrives years later, the Ledger is what the Telco's lawyer argues from. The model's inputs at the moment of the decision. The confidence score. The threshold that was in effect. The agent's override or non-override. The regulatory environment the Telco was operating under when the threshold was set. Without the Ledger, the Telco has a story. With the Ledger, the Telco has evidence.
+
+### The Underwriter — third-party performance insurance
+
+The Underwriter is the layer most technical teams forget until the lawyers find it for them.
+
+Several major foundation model vendors now offer some form of intellectual property indemnification as part of their enterprise contracts. The specific terms, scope, and limits vary by vendor and by product tier. The indemnity language looks reassuring on a procurement slide. It covers the lawsuit that says your training data was stolen. It covers the lawsuit that says a copyrighted work was reproduced in the model's output.
+
+It does not cover the lawsuit that says the model was wrong.
+
+None of the following is in the indemnity: performance failures, hallucinations, bodily injury from a misrouted emergency call, financial loss from fraud the model failed to catch, or consequential damages downstream of model output.
+
+The Underwriter is the layer that fills this gap. It is the one layer with no open-source equivalent, because insurance is not an open-source category. Armilla AI is the category-defining example: Toronto-based, the first Lloyd's of London coverholder dedicated exclusively to AI liability (since 2024), underwritten by Chaucer and Axis Capital, Lloyd's-backed coverage raised to twenty-five million dollars aggregate in January 2026. The policy affirmatively covers AI model error, AI output liability, AI agent failures, non-breach privacy leakage, AI-driven property damage, and AI regulatory violations. Those are the exact categories the foundation model vendor indemnity explicitly excludes.
+
+The Telco use case is the SIM swap scenario this post opened with. When the fraud model misses the swap, the Ledger proves what the model did, and the Underwriter pays for what it cost. Neither layer alone resolves the liability. Both together do.
 
 Which brings us to a question almost nobody asks out loud.
 
@@ -241,16 +241,6 @@ This section catalogs every source, product, regulation, and factual claim refer
 - **Commercial**: [Red Hat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift)
 - **Open-source**: [OKD](https://www.okd.io/) (community distribution of Kubernetes powering OpenShift), [Rook](https://rook.io/) (cloud-native storage orchestrator), [Ceph](https://ceph.io/) (distributed storage).
 
-### The Inspector — model governance
-
-- **Commercial**: [IBM watsonx.governance](https://www.ibm.com/products/watsonx-governance)
-- **Open-source**: [MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html), [AIF360](https://aif360.res.ibm.com/) (AI Fairness 360, IBM Research), [Evidently](https://www.evidentlyai.com/) (ML monitoring and drift detection), [Radicalbit](https://radicalbit.io/) (AI observability).
-
-### The Underwriter — third-party performance insurance
-
-- **Commercial**: [Armilla AI](https://www.armilla.ai/) (coverage details verified on the Armilla and Lloyd's pages linked above).
-- **Open-source**: Not applicable. Insurance is not an open-source category.
-
 ### The Redactor — privacy layer
 
 - **Commercial**: [Private AI](https://www.private-ai.com/)
@@ -261,10 +251,20 @@ This section catalogs every source, product, regulation, and factual claim refer
 - **Commercial**: [Integrate.ai](https://www.integrate.ai/) (Toronto), [Devron](https://www.devron.ai/), [Flower Labs Enterprise](https://flower.ai/enterprise/) (the commercial offering from the team that maintains the open-source Flower framework).
 - **Open-source**: [Flower](https://flower.ai/) (the open-source federated learning framework, maintained by Flower Labs), [NVIDIA FLARE](https://nvidia.github.io/NVFlare/), [PySyft](https://github.com/OpenMined/PySyft).
 
+### The Inspector — model governance
+
+- **Commercial**: [IBM watsonx.governance](https://www.ibm.com/products/watsonx-governance)
+- **Open-source**: [MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html), [AIF360](https://aif360.res.ibm.com/) (AI Fairness 360, IBM Research), [Evidently](https://www.evidentlyai.com/) (ML monitoring and drift detection), [Radicalbit](https://radicalbit.io/) (AI observability).
+
 ### The Ledger — immutable decision trace
 
 - **Commercial** (category; the post names these as examples rather than a pick): [Credo AI](https://www.credo.ai/), [Arthur AI](https://www.arthur.ai/), [Axonis.ai](https://www.axonis.ai/), [Quantexa](https://www.quantexa.com/), [Palantir](https://www.palantir.com/), [Integrate.ai](https://www.integrate.ai/).
 - **Open-source** (composition pattern, not a single project): [OpenSearch](https://opensearch.org/) for the searchable store, [LlamaIndex](https://www.llamaindex.ai/) for decision retrieval, plus custom middleware for the tamper-proof chain of custody.
+
+### The Underwriter — third-party performance insurance
+
+- **Commercial**: [Armilla AI](https://www.armilla.ai/) (coverage details verified on the Armilla and Lloyd's pages linked above).
+- **Open-source**: Not applicable. Insurance is not an open-source category.
 
 ### Previous posts in this series
 
