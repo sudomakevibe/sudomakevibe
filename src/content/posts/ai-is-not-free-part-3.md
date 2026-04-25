@@ -1,6 +1,6 @@
 ---
 title: "AI is not free — the architecture regulated industries cannot skip"
-description: "Six pillars that decide whether regulated AI deploys or sits on the shelf. Indemnity covers the model's provenance. Insurance covers the model's performance. Regulated AI needs both."
+description: "Seven layers that decide whether regulated AI deploys or sits on the shelf. Indemnity covers the model's provenance. Insurance covers the model's performance. Regulated AI needs both."
 pubDate: 2026-05-06T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
 draft: true
@@ -8,9 +8,9 @@ draft: true
 
 ## A brief disclosure before the post begins
 
-I work at Red Hat as a Telco Delivery Executive based in the Greater Toronto Area. This post is written for a specific reader: the Telco leader whose business is under pressure to deploy AI for the productivity and cost-reduction gains it promises, and who has not yet decided on the architecture that will carry that deployment. Public companies measure bottom-line impact in quarters. Regulated deployments measure consequences in years. The architecture below is one practitioner's synthesis of the pillars that make the gap survivable.
+I work at Red Hat as a Telco Delivery Executive based in the Greater Toronto Area. This post is written for a specific reader: the Telco leader whose business is under pressure to deploy AI for the productivity and cost-reduction gains it promises, and who has not yet decided on the architecture that will carry that deployment. Public companies measure bottom-line impact in quarters. Regulated deployments measure consequences in years. The architecture below is one practitioner's synthesis of the layers that make the gap survivable.
 
-Red Hat appears later in this post as one option for one of the six pillars I am going to walk through. Every other vendor I name, commercial and open-source alike, is an example I encountered during research for this series. Some I have worked with directly. Others I have not. None of what follows is an endorsement, a recommendation, or a commercial comparison. The architecture is the point. The vendor names are there so the architecture does not float.
+Red Hat appears later in this post as one option for one of the seven layers I am going to walk through. Every other vendor I name, commercial and open-source alike, is an example I encountered during research for this series. Some I have worked with directly. Others I have not. None of what follows is an endorsement, a recommendation, or a commercial comparison. The architecture is the point. The vendor names are there so the architecture does not float.
 
 Now the post.
 
@@ -36,24 +36,41 @@ The scenario above is not exotic. It is the shape of AI in every regulated indus
 
 **The decision is not yours alone.** Regulators, courts, and customers will re-examine every AI-assisted decision after the fact. The question is not "did the model make the right call." The question is "can you prove, months or years later, why it made the call it made." A model that cannot produce a defensible decision trace is, for regulated purposes, a model that cannot be deployed.
 
-The question is what carries the risk the model cannot carry alone. That is an architecture question. The rest of this post walks through six pillars that answer it, one distinction between indemnification and insurance that procurement teams often miss, and a framework for choosing between commercial and open-source paths.
+The question is what carries the risk the model cannot carry alone. That is an architecture question. The rest of this post walks through seven layers that answer it, one distinction between indemnification and insurance that procurement teams often miss, and a framework for choosing between commercial and open-source paths.
 
-## The architecture, in six pillars
-
-The architecture has six load-bearing pillars. Each pillar is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each pillar has a technical name and a one-line function. Miss a pillar and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
-
-- **The Vault** — sovereign infrastructure. Where the model runs.
-- **The Inspector** — model governance. Whether the model is still behaving.
-- **The Underwriter** — third-party performance insurance. Who pays when the model is wrong.
-- **The Redactor** — privacy layer. What the model sees.
-- **The Courier** — federated learning orchestration. Where the data moves, and does not.
-- **The Ledger** — immutable decision trace. What the decision was, reconstructed years later.
+## Why the seven layers
 
 When I went looking for a complete reference architecture for regulated AI, I did not find one. That may be the limit of what I have personally encountered in the vendor landscape. It may also be that the landscape itself is fragmented — no single vendor owns the complete AI stack, and no single source assembles the full picture. The AI stack has become deep and layered: model providers, inference platforms, governance, privacy, federation, decision trace, insurance. A Telco executive under pressure to deploy has to make a coherent decision across all of that on a timeline measured in quarters. Either way, I did not find what I needed. So I worked through the architecture one scenario at a time, asking what could fail and what the business could not afford to let fail.
 
-The six pillars split into two groups: three obvious from the start, three that surface when you push further.
+The framing comes from networking. I spent years working with the seven-layer OSI model, which organized data communications as a stack of dependent abstractions — each layer solving one problem, built on the layer below, abstracting away from the layer above. That model made a complex system legible. When I looked at the regulated-AI deployment problem and saw the same kind of vertical dependency, the same kind of layer-by-layer separation of concerns, I drew on the same organizing principle.
 
-## The three originals
+## The architecture, in seven layers
+
+The architecture has seven load-bearing layers. Each layer is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each layer has a technical name and a one-line function. Miss a layer and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
+
+1. **The Builder** — design and deployment capability. Who designs, integrates, and operates the rest.
+2. **The Vault** — sovereign infrastructure. Where the model runs.
+3. **The Inspector** — model governance. Whether the model is still behaving.
+4. **The Underwriter** — third-party performance insurance. Who pays when the model is wrong.
+5. **The Redactor** — privacy layer. What the model sees.
+6. **The Courier** — federated learning orchestration. Where the data moves, and does not.
+7. **The Ledger** — immutable decision trace. What the decision was, reconstructed years later.
+
+Start with the Builder — the layer the other six depend on.
+
+## The layers, one at a time
+
+### The Builder — design and deployment capability
+
+Before the first layer can hold, someone has to build it. The Builder is the layer that covers the human and organizational capability to design, integrate, operate, and sustain the other six layers over their full lifecycle.
+
+Three distinct capabilities sit inside this layer. The first is pre-deployment discovery — the assessment, vendor evaluation, reference architecture work, and pilot design that happens before any procurement commitment. The second is integration engineering — the architects, ML platform engineers, security reviewers, and regulatory liaisons who wire the six layers into a coherent deployment. The third is operations — the team that runs the deployed architecture day-to-day, responds to incidents, feeds the Inspector with tuning data, maintains the Ledger's integrity guarantees, and carries the architecture through audit and incident cycles.
+
+The Builder does not map cleanly onto a commercial-versus-open-source choice the way the other six layers do. The question is not which vendor to buy from. The question is in-house versus external. An in-house Builder is an engineering team, architecture function, and operations practice built inside the Telco itself. An external Builder is a systems integrator, consulting firm, or managed service provider that owns design and deployment on the Telco's behalf. Most real deployments are hybrid — in-house ownership of architecture and operations, external help on specific technical layers where the Telco lacks depth.
+
+The Telco use case is the moment a procurement discussion goes beyond a single vendor. An AI governance platform procured without an integration plan becomes shelfware. An insurance coverholder engaged without a claims-response team becomes a policy nobody can cash in. The Builder is what turns a set of purchased or assembled layers into a deployed, defensible architecture.
+
+The Builder is the layer the other six cannot realize without. A Vault without a team to operate it is a data center. An Inspector without engineers to tune it is a dashboard nobody reads. A Ledger without operational discipline around it is a database with no chain of custody. The technical layers are necessary. The Builder is what makes them load-bearing.
 
 ### The Vault — sovereign infrastructure
 
@@ -85,7 +102,7 @@ The Inspector is how you answer "is it still behaving" without waiting for someo
 
 ### The Underwriter — third-party performance insurance
 
-The third pillar is the one most technical teams forget until the lawyers find it for them.
+The Underwriter is the layer most technical teams forget until the lawyers find it for them.
 
 Several major foundation model vendors now offer some form of intellectual property indemnification as part of their enterprise contracts. The specific terms, scope, and limits vary by vendor and by product tier. The indemnity language looks reassuring on a procurement slide. It covers the lawsuit that says your training data was stolen. It covers the lawsuit that says a copyrighted work was reproduced in the model's output.
 
@@ -93,19 +110,17 @@ It does not cover the lawsuit that says the model was wrong.
 
 None of the following is in the indemnity: performance failures, hallucinations, bodily injury from a misrouted emergency call, financial loss from fraud the model failed to catch, or consequential damages downstream of model output.
 
-The Underwriter is the pillar that fills this gap. It is the one pillar with no open-source equivalent, because insurance is not an open-source category. Armilla AI is the category-defining example: Toronto-based, the first Lloyd's of London coverholder dedicated exclusively to AI liability (since 2024), underwritten by Chaucer and Axis Capital, Lloyd's-backed coverage raised to twenty-five million dollars aggregate in January 2026. The policy affirmatively covers AI model error, AI output liability, AI agent failures, non-breach privacy leakage, AI-driven property damage, and AI regulatory violations. Those are the exact categories the foundation model vendor indemnity explicitly excludes.
+The Underwriter is the layer that fills this gap. It is the one layer with no open-source equivalent, because insurance is not an open-source category. Armilla AI is the category-defining example: Toronto-based, the first Lloyd's of London coverholder dedicated exclusively to AI liability (since 2024), underwritten by Chaucer and Axis Capital, Lloyd's-backed coverage raised to twenty-five million dollars aggregate in January 2026. The policy affirmatively covers AI model error, AI output liability, AI agent failures, non-breach privacy leakage, AI-driven property damage, and AI regulatory violations. Those are the exact categories the foundation model vendor indemnity explicitly excludes.
 
-The Telco use case is the SIM swap scenario this post opened with. When the fraud model misses the swap, the Ledger proves what the model did, and the Underwriter pays for what it cost. Neither pillar alone resolves the liability. Both together do.
-
-## The three gap-fillers
+The Telco use case is the SIM swap scenario this post opened with. When the fraud model misses the swap, the Ledger proves what the model did, and the Underwriter pays for what it cost. Neither layer alone resolves the liability. Both together do.
 
 ### The Redactor — privacy layer
 
-The first scenario was what happens when the training data contains personally identifiable information.
+The scenario here is what happens when the training data contains personally identifiable information.
 
 Not "is your training data licensed." That is the provenance question the Vault and the indemnity story already answer. The sharper question is "did your training data contain personally identifiable information about real customers, and if it did, did you de-identify before the model saw it." Regulators ask this question with teeth, and courts have started asking it as a discovery matter when an AI decision is challenged downstream. The answer "we deleted the raw data after training" is not an answer. The training happened. The PII was present when it happened. The model's weights are downstream artifacts of data it was not supposed to memorize.
 
-The Redactor is the pillar that moves de-identification upstream of the training pipeline. PII detection at the ingestion boundary. Redaction, pseudonymization, or synthetic substitution before any data reaches the model. The output of the Redactor is anonymous intelligence. Data that preserves the statistical signal the model needs while stripping the identity the law protects.
+The Redactor is the layer that moves de-identification upstream of the training pipeline. PII detection at the ingestion boundary. Redaction, pseudonymization, or synthetic substitution before any data reaches the model. The output of the Redactor is anonymous intelligence. Data that preserves the statistical signal the model needs while stripping the identity the law protects.
 
 On the commercial side, Private AI (Toronto-based) is a strong reference. Fifty-plus entity types across text, audio, image, and video. On-premises deployment. Support for non-English and region-specific PII that general-purpose services often miss, including Canadian Social Insurance Numbers, provincial health card numbers, and the variants of address formatting that foreign models routinely mis-tag.
 
@@ -117,11 +132,11 @@ The Redactor is the reason the rest of the pipeline is allowed to see anything a
 
 ### The Courier — federated learning orchestration
 
-The second scenario was what happens when the data the Redactor did not redact was also not allowed to move across jurisdictions.
+The scenario here is what happens when the data the Redactor did not redact was also not allowed to move across jurisdictions.
 
 A Canadian Telco with customers in every province faces a data residency problem that de-identification does not solve. Quebec Law 25 restricts cross-border transfer of personal information. British Columbia and Alberta have their own provincial privacy regimes. Federal Crown assets have their own sovereignty requirements. Even inside Canada, a model that trains on the pooled data of all provincial customer bases is a model that just moved provincial data across jurisdictions the Telco is specifically prohibited from pooling.
 
-The Courier is the pillar that trains the model without pooling the data. Federated learning orchestration means the model's training logic runs inside each regional silo, on data that never leaves. The gradients, which are the directional updates the model computes from the local data, travel to a central aggregator. The aggregator combines the gradients. A new model version is distributed back to each silo for the next training round. Raw data never moves. The learning does.
+The Courier is the layer that trains the model without pooling the data. Federated learning orchestration means the model's training logic runs inside each regional silo, on data that never leaves. The gradients, which are the directional updates the model computes from the local data, travel to a central aggregator. The aggregator combines the gradients. A new model version is distributed back to each silo for the next training round. Raw data never moves. The learning does.
 
 On the commercial side, Integrate.ai is a Toronto-based option. Devron and Flower Labs Enterprise are two others. On the open-source side, Flower is the most widely adopted framework, NVIDIA FLARE is the enterprise-scale reference, and PySyft continues to develop as the research-forward option. Each has different trade-offs on orchestration overhead, communication efficiency, and integration with existing ML infrastructure.
 
@@ -131,15 +146,15 @@ The Courier moves the learning. The data stays where the law says it has to stay
 
 ### The Ledger — immutable decision trace
 
-The third scenario was what happens when a decision has to be reconstructed years after it was made — by a regulator, an auditor, or opposing counsel.
+The scenario here is what happens when a decision has to be reconstructed years after it was made — by a regulator, an auditor, or opposing counsel.
 
-Every AI-assisted decision produces a record. Inputs. Model version. Output. Timestamp. Confidence score. Reviewer, if a human was in the loop. Override, if a human overruled the model. The Ledger is the pillar that captures that record at the moment the decision happens, writes it to tamper-proof storage, and makes it queryable by regulators, auditors, and opposing counsel.
+Every AI-assisted decision produces a record. Inputs. Model version. Output. Timestamp. Confidence score. Reviewer, if a human was in the loop. Override, if a human overruled the model. The Ledger is the layer that captures that record at the moment the decision happens, writes it to tamper-proof storage, and makes it queryable by regulators, auditors, and opposing counsel.
 
 Consider an AI layer transcribing a 911 caller's description and routing the dispatch, whether to paramedics, fire, or police, based on the transcript. Life-safety stakes are measured in minutes. When the inquest asks why the call was routed where it was routed, the Ledger is the only defensible answer. A decision that cannot be reconstructed is, in an inquest, a decision that should not have been made.
 
 On the commercial side, the market has several serious offerings: Credo AI, Arthur AI, Axonis.ai, Quantexa, Palantir, Integrate.ai. The point of naming them together is that this is a category, not a single pick. Different offerings emphasize different axes: some are stronger on the governance workflow, some on the immutability guarantees, some on the integration with existing SIEM and logging infrastructure.
 
-On the open-source side, the realization is typically a composition: OpenSearch for the searchable store, LlamaIndex or a similar layer for decision retrieval, and custom middleware to wire inputs and outputs into a consistent schema. This is a pillar where the open-source path requires real engineering. The immutability guarantee, the tamper-proof part, is where the engineering gets most exacting. It is not enough for the logs to exist. They have to be provably unmodified, with a cryptographic chain of custody a regulator will accept.
+On the open-source side, the realization is typically a composition: OpenSearch for the searchable store, LlamaIndex or a similar layer for decision retrieval, and custom middleware to wire inputs and outputs into a consistent schema. This is a layer where the open-source path requires real engineering. The immutability guarantee, the tamper-proof part, is where the engineering gets most exacting. It is not enough for the logs to exist. They have to be provably unmodified, with a cryptographic chain of custody a regulator will accept.
 
 The Telco use case is the SIM swap decision trail. When the arbitration demand arrives years later, the Ledger is what the Telco's lawyer argues from. The model's inputs at the moment of the decision. The confidence score. The threshold that was in effect. The agent's override or non-override. The regulatory environment the Telco was operating under when the threshold was set. Without the Ledger, the Telco has a story. With the Ledger, the Telco has evidence.
 
@@ -169,15 +184,15 @@ Indemnity protects the model's provenance. Insurance protects the model's perfor
 
 The commercial-versus-open-source question does not have one answer. It has three.
 
-**Team maturity.** Open-source pillars demand ML platform engineers, MLOps capability, and security review capacity that can stand up to an external audit. Commercial pillars demand procurement capacity and an annual invoice. Neither path is free. The cost just lives in different columns on the balance sheet, and the column matters. Capital expenditure, operating expenditure, and engineering payroll are three different conversations with three different executives.
+**Team maturity.** Open-source layers demand ML platform engineers, MLOps capability, and security review capacity that can stand up to an external audit. Commercial layers demand procurement capacity and an annual invoice. Neither path is free. The cost just lives in different columns on the balance sheet, and the column matters. Capital expenditure, operating expenditure, and engineering payroll are three different conversations with three different executives.
 
-**Timeline.** If the deployment is eighteen months away, open-source is a real option. The engineering time to build and validate is available, and the team can develop real capability in each pillar before it is load-bearing. If the deployment is closer than that, commercial shortens the path to an auditable baseline, because the commercial vendor has already done the validation work and has a support contract that covers audit response when the architecture does have to perform in front of a regulator, an auditor, or opposing counsel. Speed to defensibility is a variable most technical teams underweight.
+**Timeline.** If the deployment is eighteen months away, open-source is a real option. The engineering time to build and validate is available, and the team can develop real capability in each layer before it has to hold. If the deployment is closer than that, commercial shortens the path to an auditable baseline, because the commercial vendor has already done the validation work and has a support contract that covers audit response when the architecture does have to perform in front of a regulator, an auditor, or opposing counsel. Speed to defensibility is a variable most technical teams underweight.
 
 **Indemnification posture.** Commercial vendors give you something to point at when a regulator or counterparty asks who stands behind this. Open-source requires the organization itself to stand behind it. Some organizations can. Many cannot. The question is not whether the open-source option is technically adequate; the question is whether the organization has the internal legal and engineering posture to defend it when challenged.
 
-Most real deployments end up hybrid. Commercial where the clock is tightest, typically the Vault and the Underwriter. Open-source where the team has genuine capability, typically the Inspector and the Ledger. Mixed in the middle for the Redactor and the Courier. The architecture does not care how each pillar is realized. It cares that each pillar is realized.
+Most real deployments end up hybrid. Commercial where the clock is tightest, typically the Vault and the Underwriter. Open-source where the team has genuine capability, typically the Inspector and the Ledger. Mixed in the middle for the Redactor and the Courier. The Builder is a separate question — in-house versus external rather than commercial versus open-source — and most real deployments settle there as hybrid too. The architecture does not care how each layer is realized. It cares that each layer is realized.
 
-Pick the path that lets the pillar stand. The pillar is the point.
+Pick the path that lets the layer hold. The layer is the point.
 
 ## The series closes here
 
@@ -187,7 +202,7 @@ Part 1 was about the costs you can invoice, from tokens and APIs to infrastructu
 
 The bill arrives at every layer. Tokens at the developer layer. Judgment at the team layer. Architecture at the regulatory layer. The architecture is the only thing that travels with a decision when the decision ends up in an arbitration transcript, or a regulator's file, or a coroner's report.
 
-The work is specific, not theoretical. The vendors are real, not abstract. The six pillars are one practitioner's synthesis, which means they are incomplete by definition. What they are not is optional.
+The work is specific, not theoretical. The vendors are real, not abstract. The seven layers are one practitioner's synthesis, which means they are incomplete by definition. What they are not is optional.
 
 AI is not free. In regulated industries, the architecture is what buys you the right to deploy it.
 
@@ -216,6 +231,10 @@ This section catalogs every source, product, regulation, and factual claim refer
 - **Red Hat Chatterbox Labs acquisition (December 16, 2025)**: [Red Hat press release](https://www.redhat.com/en/about/press-releases/red-hat-accelerates-ai-trust-and-security-chatterbox-labs-acquisition). Context for Red Hat's AI safety posture.
 - **Red Hat Open Source Assurance**: [Red Hat Open Source Assurance program page](https://www.redhat.com/en/about/open-source-assurance). Covers IP claims against Red Hat software and AI models.
 - **IBM Granite model IP indemnification**: [IBM watsonx.ai foundation models page](https://www.ibm.com/products/watsonx-ai/foundation-models). Details on IBM's standard IP indemnification for Granite and Slate.
+
+### The Builder — design and deployment capability
+
+- **In-house capability or external systems integrator.** The Builder is not a product category with a vendor list. It is the engineering, architecture, and operations practice that owns design and delivery of the other six layers. Most deployments realize the Builder as a hybrid — in-house ownership of architecture and operations, external help on specific technical layers where the team lacks depth.
 
 ### The Vault — sovereign infrastructure
 
