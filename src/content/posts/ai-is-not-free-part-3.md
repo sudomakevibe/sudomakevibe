@@ -1,6 +1,6 @@
 ---
 title: "AI is not free — the architecture regulated industries cannot skip"
-description: "Seven layers that decide whether regulated AI deploys or sits on the shelf. Indemnity covers the model's provenance. Insurance covers the model's performance. Regulated AI needs both."
+description: "R7 — the Carrier-Grade AI Stack. Seven layers for regulated AI deployment. Indemnity covers provenance. Insurance covers performance. Regulated AI needs both."
 pubDate: 2026-05-06T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
 draft: true
@@ -40,13 +40,13 @@ The question is what carries the risk the model cannot carry alone. That is an a
 
 ## Why the seven layers
 
-When I went looking for a complete reference architecture for regulated AI, I did not find one. That may be the limit of what I have personally encountered in the vendor landscape. It may also be that the landscape itself is fragmented — no single vendor owns the complete AI stack, and no single source assembles the full picture. The AI stack has become deep and layered: model providers, inference platforms, governance, privacy, federation, decision trace, insurance. A Telco executive under pressure to deploy has to make a coherent decision across all of that on a timeline measured in quarters. Either way, I did not find what I needed. So I worked through the architecture one scenario at a time, asking what could fail and what the business could not afford to let fail.
+When I went looking for a complete reference architecture for regulated AI, I did not find one. That may be the limit of what I have personally encountered in the vendor landscape. It may also be that the landscape itself is fragmented — no single vendor owns the complete AI stack, and no single source assembles the full picture. The AI stack has become deep and layered: model providers, inference platforms, governance, privacy, federation, decision trace, insurance. A Telco executive under pressure to deploy has to make a coherent decision across all of that on a timeline measured in quarters. Either way, I did not find what I needed. So I worked through the architecture one scenario at a time, asking what could fail and what the business could not afford to let fail. What came out is what I now call **R7 — the Carrier-Grade AI Stack**, seven layers built to the reliability and audit-survival bar that regulated industries actually need.
 
 The framing comes from networking. I spent years working with the seven-layer OSI model, which organized data communications as a stack of dependent abstractions — each layer solving one problem, built on the layer below, abstracting away from the layer above. That model made a complex system legible. When I looked at the regulated-AI deployment problem and saw the same kind of vertical dependency, the same kind of layer-by-layer separation of concerns, I drew on the same organizing principle.
 
 ## The architecture, in seven layers
 
-The architecture has seven layers, none of them optional. Each layer is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each layer has a technical name and a one-line function. Miss a layer and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
+R7 has seven layers, none of them optional. Each layer is one answer to one question a regulator, an auditor, or opposing counsel will eventually ask. Each layer has a technical name and a one-line function. Miss a layer and the architecture either fails compliance or transfers catastrophic risk onto the balance sheet.
 
 1. **The Builder** — design and deployment capability. Who designs, integrates, and operates the rest.
 2. **The Vault** — sovereign infrastructure. Where the model runs.
@@ -190,7 +190,7 @@ The commercial-versus-open-source question does not have one answer. It has thre
 
 **Indemnification posture.** Commercial vendors give you something to point at when a regulator or counterparty asks who stands behind this. Open-source requires the organization itself to stand behind it. Some organizations can. Many cannot. The question is not whether the open-source option is technically adequate; the question is whether the organization has the internal legal and engineering posture to defend it when challenged.
 
-Most real deployments end up hybrid. Commercial where the clock is tightest, typically the Vault and the Underwriter. Open-source where the team has genuine capability, typically the Inspector and the Ledger. Mixed in the middle for the Redactor and the Courier. The Builder is a separate question — in-house versus external rather than commercial versus open-source — and most real deployments settle there as hybrid too. The architecture does not care how each layer is realized. It cares that each layer is realized.
+Most real deployments end up hybrid. Commercial where the clock is tightest, typically the Vault and the Underwriter. Open-source where the team has genuine capability, typically the Inspector and the Ledger. Mixed in the middle for the Redactor and the Courier. The Builder is a separate question — in-house versus external rather than commercial versus open-source — and most real deployments settle there as hybrid too. R7 does not care how each layer is realized. It cares that each layer is realized.
 
 Pick the path that lets the layer hold. The layer is the point.
 
@@ -202,7 +202,7 @@ Part 1 was about the costs you can invoice, from tokens and APIs to infrastructu
 
 The bill arrives at every layer. Tokens at the developer layer. Judgment at the team layer. Architecture at the regulatory layer. The architecture is the only thing that travels with a decision when the decision ends up in an arbitration transcript, or a regulator's file, or a coroner's report.
 
-The work is specific, not theoretical. The vendors are real, not abstract. The seven layers are one practitioner's synthesis, which means they are incomplete by definition. What they are not is optional.
+The work is specific, not theoretical. The vendors are real, not abstract. R7 is one practitioner's synthesis, which means it is incomplete by definition. What it is not is optional.
 
 AI is not free. In regulated industries, the architecture is what buys you the right to deploy it.
 
