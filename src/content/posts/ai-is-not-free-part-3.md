@@ -204,6 +204,8 @@ The bill arrives at every layer. Tokens at the developer layer. Judgment at the 
 
 The work is specific, not theoretical. The vendors are real, not abstract. R7 is one practitioner's synthesis, which means it is incomplete by definition. What it is not is optional.
 
+The architecture is necessary. It is not, by itself, sufficient. The discipline of meaningful human oversight is its own subject — and a separate post.
+
 AI is not free. In regulated industries, the architecture is what buys you the right to deploy it.
 
 ---
