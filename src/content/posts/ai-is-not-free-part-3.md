@@ -138,7 +138,7 @@ Every AI-assisted decision produces a record. Inputs. Model version. Output. Tim
 
 Consider an AI layer transcribing a 911 caller's description and routing the dispatch, whether to paramedics, fire, or police, based on the transcript. Life-safety stakes are measured in minutes. When the inquest asks why the call was routed where it was routed, the Ledger is the only defensible answer. A decision that cannot be reconstructed is, in an inquest, a decision that should not have been made.
 
-On the commercial side, the market has several serious offerings: Credo AI, Arthur AI, Axonis.ai, Quantexa, Palantir, Integrate.ai. The point of naming them together is that this is a category, not a single pick. Different offerings emphasize different axes: some are stronger on the governance workflow, some on the immutability guarantees, some on the integration with existing SIEM and logging infrastructure.
+On the commercial side, Axonis is the strongest pure decision-trace fit — its Decision Intelligence platform sits directly in the execution path, capturing decision context, policy evaluation, and human attestations in a real-time system of record rather than reconstructing them post-hoc from logs. The broader category includes Credo AI (governance-led with audit trails), Arthur AI (monitoring-led with trace IDs), Quantexa (contextual decision intelligence with full lineage, strong in financial services), and Palantir (platform-and-lineage in defense and regulated industries). Different offerings emphasize different axes: some are stronger on the governance workflow, some on the immutability guarantees, some on the integration with existing SIEM and logging infrastructure.
 
 On the open-source side, the realization is typically a composition: OpenSearch for the searchable store, LlamaIndex or a similar layer for decision retrieval, and custom middleware to wire inputs and outputs into a consistent schema. This is a layer where the open-source path requires real engineering. The immutability guarantee, the tamper-proof part, is where the engineering gets most exacting. It is not enough for the logs to exist. They have to be provably unmodified, with a cryptographic chain of custody a regulator will accept.
 
@@ -258,7 +258,8 @@ This section catalogs every source, product, regulation, and factual claim refer
 
 ### The Ledger — immutable decision trace
 
-- **Commercial** (category; the post names these as examples rather than a pick): [Credo AI](https://www.credo.ai/), [Arthur AI](https://www.arthur.ai/), [Axonis.ai](https://www.axonis.ai/), [Quantexa](https://www.quantexa.com/), [Palantir](https://www.palantir.com/), [Integrate.ai](https://www.integrate.ai/).
+- **Commercial — strongest pure decision-trace fit**: [Axonis.ai](https://www.axonis.ai/) (Decision Intelligence — sits in the execution path, captures real-time decision traces, context, and human attestations in a system of record).
+- **Commercial — broader category**: [Credo AI](https://www.credo.ai/) (governance-led with audit trails), [Arthur AI](https://www.arthur.ai/) (monitoring-led with trace IDs), [Quantexa](https://www.quantexa.com/) (contextual decision intelligence with full lineage, strong in financial services), [Palantir](https://www.palantir.com/) (platform-and-lineage in defense and regulated industries).
 - **Open-source** (composition pattern, not a single project): [OpenSearch](https://opensearch.org/) for the searchable store, [LlamaIndex](https://www.llamaindex.ai/) for decision retrieval, plus custom middleware for the tamper-proof chain of custody.
 
 ### The Underwriter — third-party performance insurance
