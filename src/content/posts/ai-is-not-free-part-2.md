@@ -6,7 +6,7 @@ tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
 draft: true
 ---
 
-AI is a powerful accelerator, and like every new tool before it, it takes over work humans used to do. Think about the last time you checked the math your spreadsheet did, or the route your GPS picked, or the spelling your phone corrected. You probably cannot remember. That is fine. Those tools get things wrong in predictable ways, and we learned to live with it. The difference is that AI sounds right whether it is or not. That is what makes the human in the middle still essential. Not as a preference, but as the only part of the system that can tell. The hidden costs of AI are what happens when the human steps out of the loop.
+AI is a powerful accelerator, and like every new tool before it, it takes over work humans used to do. Think about the last time you checked the math your spreadsheet did, or the route your GPS picked, or the spelling your phone corrected. You probably cannot remember. That is fine. Those tools get things wrong in predictable ways, and we learned to live with it. The difference is that AI sounds right whether it is or not. That is what makes the human-in-the-loop still essential. Not as a preference, but as the only part of the system that can tell. The hidden costs of AI are what happens when the human steps out of the loop.
 
 Part one of this series covered the costs you can invoice: tokens, API fees, shadow infrastructure, compliance exposure. Those costs are painful but measurable. You can open a dashboard, see a number, and make a decision.
 
@@ -82,9 +82,9 @@ AI does not work that way. Its output varies between runs on the same input. Its
 
 That is what makes AI different from prior abstractions. Not that it replaces human judgment — every tool does that to some extent — but that it replaces human judgment with output that cannot be trusted without checking, while simultaneously looking like output that can. That is a new kind of abstraction, and it deserves a new kind of discipline.
 
-The human in the middle is not nostalgia for an older way of working. It is a response to what is actually new about this tool.
+The human-in-the-loop is not nostalgia for an older way of working. It is a response to what is actually new about this tool.
 
-## The discipline that keeps the human in the middle
+## The discipline that keeps the human-in-the-loop
 
 None of this is an argument against using AI. It is an argument for using it in a way that keeps the human where the human needs to be.
 
@@ -123,7 +123,7 @@ It costs money. It costs engineering time. It costs the discipline to review wha
 
 The developers who get the most value from AI are not the ones who use it the most. They are the ones who never stop being the authors of their own work. Who treat generated output as a proposal that a human still has to accept. Who understand that the speed AI gives them is only worth having if what survives the prompt window closing is something they can defend.
 
-Not the speed of generation. The quality of what the human in the middle decides to ship.
+Not the speed of generation. The quality of what the human-in-the-loop decides to ship.
 
 ---
 
@@ -147,4 +147,4 @@ If you want to go deeper into the research and thinking behind this post:
 
 > **Coming in part three**
 >
-> Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-middle discipline from a best practice into a non-negotiable. That post is coming.
+> Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-loop discipline from a best practice into a non-negotiable. That post is coming.
