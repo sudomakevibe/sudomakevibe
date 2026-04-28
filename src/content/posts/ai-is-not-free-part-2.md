@@ -145,6 +145,7 @@ If you want to go deeper into the research and thinking behind this post:
 
 ---
 
-> **Coming in part three**
->
-> Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-loop discipline from a best practice into a non-negotiable. That post is coming.
+<div class="callout">
+  <strong>Coming in part three</strong>
+  <p>Every cost in this series multiplies in regulated industries. Data residency, audit trails, and the obligations that come with operating in Telco, finance, or healthcare turn the human-in-the-loop discipline from a best practice into a non-negotiable. That post is coming.</p>
+</div>

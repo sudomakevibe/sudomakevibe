@@ -154,6 +154,24 @@ const blogPostingJsonLd = {
     border-radius: 0 6px 6px 0 !important;
   }
 
+  /* Callouts (no quotes, unlike blockquotes) */
+  :global(.callout) {
+    border-left: 4px solid var(--accent);
+    color: var(--text-secondary);
+    background-color: var(--bg-card);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.5rem 0;
+  }
+  :global(.callout) strong {
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  :global(.callout) p {
+    margin: 0;
+  }
+
   /* Tables */
   .prose table {
     color: var(--text-primary) !important;
