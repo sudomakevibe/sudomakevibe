@@ -196,15 +196,13 @@ Pick the path that lets the layer hold. The layer is the point.
 
 ## The series closes here
 
-Three posts in, the frame holds.
-
 Part 1 was about the costs you can invoice, from tokens and APIs to infrastructure and the compliance spend that shows up in the budget line. Part 2 was about the costs of human judgment: the technical debt, the false confidence, the dependency you do not see until you try to remove it. Part 3 is about the costs regulated industries cannot absorb without the architecture to carry them: the fines, the settlements, the inquests, the headlines.
 
 The bill arrives at every layer. Tokens at the developer layer. Judgment at the team layer. Architecture at the regulatory layer. The architecture is the only thing that travels with a decision when the decision ends up in an arbitration transcript, or a regulator's file, or a coroner's report.
 
 The work is specific, not theoretical. The vendors are real, not abstract. R7 is one practitioner's synthesis, which means it is incomplete by definition. What it is not is optional.
 
-The architecture is necessary. It is not, by itself, sufficient. The discipline of meaningful human oversight is its own subject — and a separate post.
+The architecture is necessary. It is not, by itself, sufficient. The discipline of HITL, human-in-the-loop, is its own subject. And a separate post.
 
 AI is not free. In regulated industries, the architecture is what buys you the right to deploy it.
 
