@@ -3,7 +3,7 @@ title: "AI is not free — the costs that never appear on your invoice"
 description: "Part two of the AI cost series. Technical debt, false confidence, and the quiet atrophy of engineering skill. The costs that determine whether AI pays off or breaks your systems."
 pubDate: 2026-04-29T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
-draft: true
+draft: false
 ---
 
 AI is a powerful accelerator, and like every new tool before it, it takes over work humans used to do. Think about the last time you checked the math your spreadsheet did, or the route your GPS picked, or the spelling your phone corrected. You probably cannot remember. That is fine. Those tools get things wrong in predictable ways, and we learned to live with it. The difference is that AI sounds right whether it is or not. That is what makes the human-in-the-loop still essential. Not as a preference, but as the only part of the system that can tell. The hidden costs of AI are what happens when the human steps out of the loop.
