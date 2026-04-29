@@ -3,14 +3,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import NewsletterForm from "../components/NewsletterForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
-
 function calculateReadingTime(text: string): string {
   const wordsPerMinute = 200;
   const words = text.trim().split(/\s+/).length;
   const minutes = Math.ceil(words / wordsPerMinute);
   return `${minutes} min read`;
 }
-
 const posts = await getCollection("posts");
 const latestPosts = await Promise.all(
   posts
@@ -22,7 +20,6 @@ const latestPosts = await Promise.all(
       return { ...post, readingTime };
     })
 );
-
 const projects = [
   {
     title: "sudo make vibe",
@@ -67,20 +64,17 @@ const projects = [
     slug: null,
   },
 ];
-
 const statusConfig: Record<string, { label: string; dot: string; text: string }> = {
   "active":      { label: "active",      dot: "#3d8ab5", text: "#3d8ab5" },
   "in-progress": { label: "in progress", dot: "#d49436", text: "#d49436" },
   "planned":     { label: "planned",     dot: "#7a9bb5", text: "#7a9bb5" },
 };
 ---
-
 <BaseLayout
   title="sudo make vibe — where the command line meets the creative line"
   description="A working lab documenting what happens when AI-generated ideas meet production systems. Real hardware, real failures, real lessons."
 >
   <main class="max-w-5xl mx-auto px-4 py-12">
-
     <!-- Hero -->
     <div class="mb-16">
       <h1 class="text-4xl font-bold mb-2 font-mono" style="color: var(--accent);">/home</h1>
@@ -110,7 +104,6 @@ const statusConfig: Record<string, { label: string; dot: string; text: string }>
         </a>
       </div>
     </div>
-
     <!-- Latest posts -->
     <div class="mb-16">
       <div class="flex items-baseline justify-between mb-6 pb-2" style="border-bottom: 1px solid var(--border);">
@@ -130,7 +123,6 @@ const statusConfig: Record<string, { label: string; dot: string; text: string }>
         ))}
       </div>
     </div>
-
     <!-- Projects -->
     <div class="mb-16">
       <div class="flex items-baseline justify-between mb-6 pb-2" style="border-bottom: 1px solid var(--border);">
@@ -192,24 +184,24 @@ const statusConfig: Record<string, { label: string; dot: string; text: string }>
         })}
       </div>
     </div>
-
     <!-- Newsletter -->
     <div
       class="rounded-lg p-6"
       style="background-color: var(--bg-card); border: 1px solid var(--border);"
     >
       <h2 class="text-lg font-bold font-mono mb-1" style="color: var(--text-primary);">
-        sudo get updates
+        <span style="color: var(--text-secondary);">$</span> sudo get updates
       </h2>
+      <p class="text-sm mb-1 font-mono" style="color: var(--accent);">
+        longer reads <span style="color: var(--text-secondary);">|</span> deeper breaths <span style="color: var(--text-secondary);">|</span> sudo make calm
+      </p>
       <p class="text-sm mb-4 font-mono" style="color: var(--text-secondary);">
         New posts, project updates, and the occasional post-mortem.
       </p>
       <NewsletterForm />
     </div>
-
   </main>
 </BaseLayout>
-
 <style>
   .cta-btn:hover {
     border-color: var(--accent) !important;
