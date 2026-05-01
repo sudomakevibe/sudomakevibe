@@ -198,7 +198,7 @@ Pick the path that lets the layer hold. The layer is the point.
 
 Part 1 was about the costs you can invoice, from tokens and APIs to infrastructure and the compliance spend that shows up in the budget line. Part 2 was about the costs of human judgment: the technical debt, the false confidence, the dependency you do not see until you try to remove it. Part 3 is about the costs regulated industries cannot absorb without the architecture to carry them: the fines, the settlements, the inquests, the headlines.
 
-The bill arrives at every layer. Tokens at the developer layer. Judgment at the team layer. Architecture at the regulatory layer. The architecture is the only thing that travels with a decision when the decision ends up in an arbitration transcript, or a regulator's file, or a coroner's report.
+The bill arrives at every layer. Tokens at the developer layer. Technical debt at the team layer. Architecture at the regulatory layer. The architecture is the only thing that travels with a decision when the decision ends up in an arbitration transcript, or a regulator's file, or a coroner's report.
 
 The work is specific, not theoretical. The vendors are real, not abstract. R7 is one practitioner's synthesis, which means it is incomplete by definition. What it is not is optional.
 
@@ -248,13 +248,13 @@ This section catalogs every source, product, regulation, and factual claim refer
 
 ### The Courier — federated learning orchestration
 
-- **Commercial**: [Integrate.ai](https://www.integrate.ai/) (Toronto), [Devron](https://www.devron.ai/), [Flower Labs Enterprise](https://flower.ai/enterprise/) (the commercial offering from the team that maintains the open-source Flower framework).
+- **Commercial**: [Integrate.ai](https://www.integrate.ai/) (Toronto), [Devron](https://www.linkedin.com/company/devron), [Flower Labs Enterprise](https://flower.ai/enterprise/) (the commercial offering from the team that maintains the open-source Flower framework).
 - **Open-source**: [Flower](https://flower.ai/) (the open-source federated learning framework, maintained by Flower Labs), [NVIDIA FLARE](https://nvidia.github.io/NVFlare/), [PySyft](https://github.com/OpenMined/PySyft).
 
 ### The Inspector — model governance
 
 - **Commercial**: [IBM watsonx.governance](https://www.ibm.com/products/watsonx-governance)
-- **Open-source**: [MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html), [AIF360](https://aif360.res.ibm.com/) (AI Fairness 360, IBM Research), [Evidently](https://www.evidentlyai.com/) (ML monitoring and drift detection), [Radicalbit](https://radicalbit.io/) (AI observability).
+- **Open-source**: [MLflow Model Registry](https://mlflow.org/docs/latest/model-registry.html), [AIF360](https://ai-fairness-360.org/) (AI Fairness 360, originally IBM Research, now Linux Foundation AI), [Evidently](https://www.evidentlyai.com/) (ML monitoring and drift detection), [Radicalbit](https://radicalbit.io/) (AI observability).
 
 ### The Ledger — immutable decision trace
 
