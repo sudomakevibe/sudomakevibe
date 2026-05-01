@@ -94,7 +94,7 @@ Not "is your training data licensed." That is the provenance question the Vault 
 
 The Redactor is the layer that moves de-identification upstream of the training pipeline. PII detection at the ingestion boundary. Redaction, pseudonymization, or synthetic substitution before any data reaches the model. The output of the Redactor is anonymous intelligence. Data that preserves the statistical signal the model needs while stripping the identity the law protects.
 
-On the commercial side, Private AI (Toronto-based) is a strong reference. Fifty-plus entity types across text, audio, image, and video. On-premises deployment. Support for non-English and region-specific PII that general-purpose services often miss, including Canadian Social Insurance Numbers, provincial health card numbers, and the variants of address formatting that foreign models routinely mis-tag.
+On the commercial side, Limina (formerly Private AI), Toronto-based, is a strong reference. Fifty-plus entity types across text, audio, image, and video. On-premises deployment. Support for non-English and region-specific PII that general-purpose services often miss, including Canadian Social Insurance Numbers, provincial health card numbers, and the variants of address formatting that foreign models routinely mis-tag.
 
 On the open-source side, Microsoft Presidio is the obvious starting point. Apache 2.0, actively maintained, integrates cleanly with spaCy for named entity recognition. Microsoft itself recommends running Presidio in parallel with a commercial service such as Azure AI Language when accuracy matters.
 
@@ -243,7 +243,7 @@ This section catalogs every source, product, regulation, and factual claim refer
 
 ### The Redactor — privacy layer
 
-- **Commercial**: [Private AI](https://www.private-ai.com/)
+- **Commercial**: [Limina](https://www.getlimina.ai/)
 - **Open-source**: [Microsoft Presidio](https://microsoft.github.io/presidio/). Microsoft's own documentation recommends running Presidio in parallel with a commercial service when accuracy is critical: [Presidio FAQ](https://microsoft.github.io/presidio/faq/).
 
 ### The Courier — federated learning orchestration
