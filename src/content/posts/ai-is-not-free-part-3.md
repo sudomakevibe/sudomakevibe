@@ -1,7 +1,7 @@
 ---
 title: "AI is not free — the architecture regulated industries cannot skip"
 description: "R7 — the Carrier-Grade AI Stack. Seven layers for regulated AI deployment. Indemnity covers provenance. Insurance covers performance. Regulated AI needs both."
-pubDate: 2026-05-06T00:00:00-04:00
+pubDate: 2026-05-01T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
 draft: true
 ---
