@@ -1,7 +1,7 @@
 ---
 title: "sudo make vibe: how it was built"
 description: "The build log for sudomakevibe.com — stack decisions, six things that broke, and what a corrupted disk taught me about deployment pipelines."
-pubDate: 2026-04-28T00:00:00-04:00
+pubDate: 2026-05-06T00:00:00-04:00
 tags: ["vibecoding", "astro", "linux", "homelab", "webdev", "selfhosted"]
 draft: true
 ---
@@ -103,7 +103,7 @@ No contractions in body prose — contractions are allowed in titles and descrip
 
 The tone target: practitioner in the trenches, not expert on a mountain. The homelab exists, the failures happened, the patches are real. Nothing is shipped as finished output from a single AI prompt pass. Everything goes through review, iteration, and a final read.
 
-"High-fidelity documentation" rather than "high-quality content" — the distinction matters. High-quality content is what a YouTuber promises. High-fidelity documentation is what a systems architect produces. Fidelity means accuracy to the source. In Linux, Kubernetes, and security work, one misplaced character breaks the reproduction. The word earns its place.
+"High-fidelity documentation" rather than "high-quality content" — the distinction matters. High-quality content is what a YouTuber promises. High-fidelity documentation is what a systems architect produces. Fidelity means accuracy to the source. In Linux, Kubernetes, and security work, one misplaced character breaks the reproduction.
 
 ---
 
@@ -128,9 +128,9 @@ Four themes exist because no single palette serves every reader and every enviro
 
 ## launch
 
-The site went live April 20, 2026 with three posts: the welcome post, the manifesto, and *why your terminal doesn't care about my voice*. Two more — *AI is not free* parts one and two — were written and queued.
+The site went live April 20, 2026 with three posts: the welcome post, the manifesto, and *why your terminal doesn't care about my voice*. Two more were written and queued — *AI is not free* parts one and two, with part three planned to close the series.
 
-LinkedIn day-one: 1,028 impressions. X: minimal, as expected for a new account. Reddit posts were scheduled for day two to reach communities where the content is relevant rather than where the audience already knows me.
+The launch was deliberately small. No countdown, no soft-launch period, no early-access list. The site existed, then the site was public. The first post and the manifesto were the welcome mat — anyone who landed on the homepage had something to read immediately, and a stated reason for why this site exists. That mattered more than the launch event itself.
 
 ---
 
@@ -144,6 +144,8 @@ The content roadmap follows the project card naming convention:
 - `sudo make homelab observe` — Prometheus, Grafana, AIOps
 
 Technical debt still on the list: Shiki `css-variables` implementation for real syntax highlighting in code-heavy posts, mobile table overflow fix, OG image conversion from SVG to PNG, Giscus comments, and eventually an Astro 5 to 6 upgrade when it becomes relevant to production.
+
+The site template will eventually go public for others to fork. `sudo make it forkable` — coming, not yet.
 
 The longer-term picture is the closed loop: the site documents the homelab, the homelab runs the AI, the AI informs the content. This post is the first place that loop is visible end to end.
 
