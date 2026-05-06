@@ -3,7 +3,7 @@ title: "sudo make vibe: how it was built"
 description: "The build log for sudomakevibe.com — stack decisions, six things that broke, and what a corrupted disk taught me about deployment pipelines."
 pubDate: 2026-05-06T00:00:00-04:00
 tags: ["vibecoding", "astro", "linux", "homelab", "webdev", "selfhosted"]
-draft: true
+draft: false
 ---
 
 This post is slightly absurd. It is a blog post, published on a blog, describing how that blog was built, using the same workflow the blog is about. The loop is intentional.
