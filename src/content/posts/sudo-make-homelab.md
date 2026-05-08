@@ -3,6 +3,7 @@ title: "sudo make homelab"
 description: "What is actually running in my homelab — the hardware, the network, the platform, and the honest gap between what is here and what is planned."
 pubDate: 2026-05-08
 tags: ["homelab", "kubernetes", "k3s", "raspberry-pi", "lenovo", "thinkpad", "linux"]
+readingTime: "5 min read"
 ---
 
 This site names the lab as a core asset. K3s, Kali, observability stacks, and security hardening. That positioning is accurate — eventually. Right now the lab is five Lenovo laptops of varying vintage, two Raspberry Pi 5s, and a mesh router. Most of the nodes are running their current operating systems with no lab-specific configuration applied. K3s is planned, not running. The security stack is a separate project, not yet started.
