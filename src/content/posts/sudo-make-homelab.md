@@ -27,7 +27,7 @@ homelab/
 │                 role: dev node · local models · K8s workshop
 │
 ├── thinkpads/
-│   ├── tp-01     T430 · 16GB RAM · SSD             currently: Kali (to be repurposed)
+│   ├── tp-01     T430 · 16GB RAM · SSD             currently: Kali
 │   │             role: K3s worker
 │   │
 │   ├── tp-02     X1 Carbon 4th Gen · 8GB RAM · SSD currently: Fedora
@@ -91,12 +91,12 @@ Win11 with WSL, kept as a Windows node for workflows that require it.
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="680" height="662" fill="#0A1622"/>
+  <rect x="0" y="0" width="680" height="662" fill="var(--bg-primary)"/>
 
-  <rect x="14" y="80" width="652" height="280" rx="8" fill="#0C1A28" stroke="#4A8A4A" stroke-width="0.5" stroke-dasharray="4 3" stroke-opacity="0.5"/>
+  <rect x="14" y="80" width="652" height="280" rx="8" fill="var(--bg-secondary)" stroke="#4A8A4A" stroke-width="0.5" stroke-dasharray="4 3" stroke-opacity="0.5"/>
   <text x="26" y="96" font-family="JetBrains Mono, monospace" font-size="11" fill="#4A8A4A" opacity="0.8">Basement</text>
 
-  <rect x="14" y="380" width="652" height="196" rx="8" fill="#0C1A28" stroke="#4A8A4A" stroke-width="0.5" stroke-dasharray="4 3" stroke-opacity="0.5"/>
+  <rect x="14" y="380" width="652" height="196" rx="8" fill="var(--bg-secondary)" stroke="#4A8A4A" stroke-width="0.5" stroke-dasharray="4 3" stroke-opacity="0.5"/>
   <text x="26" y="396" font-family="JetBrains Mono, monospace" font-size="11" fill="#4A8A4A" opacity="0.8">Top floor</text>
 
   <line x1="340" y1="64" x2="340" y2="100" stroke="#4A8A4A" stroke-width="1.5"/>
@@ -163,20 +163,20 @@ Win11 with WSL, kept as a Windows node for workflows that require it.
   <text x="285" y="479" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#8BBFD4">tp-04</text>
   <text x="285" y="497" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">WiFi</text>
 
-  <rect x="14" y="582" width="652" height="72" rx="6" fill="#0C1A28" stroke="#318BBF" stroke-width="0.5" stroke-opacity="0.5"/>
-  <text x="28" y="602" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#8BBFD4">Legend</text>
+  <rect x="14" y="582" width="652" height="72" rx="6" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5" stroke-opacity="0.5"/>
+  <text x="28" y="602" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="var(--text-primary)">Legend</text>
 
   <line x1="28" y1="620" x2="68" y2="620" stroke="#4A8A4A" stroke-width="1.5"/>
-  <text x="76" y="624" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Wired ethernet</text>
+  <text x="76" y="624" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Wired ethernet</text>
   <line x1="230" y1="620" x2="270" y2="620" stroke="#4A8A4A" stroke-width="1.2" stroke-dasharray="4 3"/>
-  <text x="278" y="624" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">WiFi</text>
+  <text x="278" y="624" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">WiFi</text>
 
   <rect x="28" y="634" width="12" height="12" rx="2" fill="#1E2A2E" stroke="#4A7A8A" stroke-width="0.8"/>
-  <text x="46" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">External</text>
+  <text x="46" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">External</text>
   <rect x="128" y="634" width="12" height="12" rx="2" fill="#1A2E1A" stroke="#4A8A4A" stroke-width="0.8"/>
-  <text x="146" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Network infra</text>
+  <text x="146" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Network infra</text>
   <rect x="278" y="634" width="12" height="12" rx="2" fill="#1A3A52" stroke="#318BBF" stroke-width="0.8"/>
-  <text x="296" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Compute node</text>
+  <text x="296" y="645" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Compute node</text>
 </svg>
 
 | Node | Hardware | OS today |
@@ -204,12 +204,12 @@ The network is a wired star centered on Router-P in the basement. Router-P conne
     </marker>
   </defs>
 
-  <rect x="0" y="0" width="680" height="720" fill="#0A1622"/>
+  <rect x="0" y="0" width="680" height="720" fill="var(--bg-primary)"/>
 
-  <rect x="14" y="20" width="652" height="240" rx="8" fill="#0C1A28" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect x="14" y="20" width="652" height="240" rx="8" fill="var(--bg-secondary)" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="5 3"/>
   <text x="26" y="38" font-family="JetBrains Mono, monospace" font-size="11" fill="#318BBF">K3s cluster</text>
 
-  <rect x="254" y="46" width="172" height="54" rx="6" fill="#318BBF" stroke="#0A1622" stroke-width="0.5"/>
+  <rect x="254" y="46" width="172" height="54" rx="6" fill="#318BBF" stroke="var(--bg-primary)" stroke-width="0.5"/>
   <text x="340" y="66" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#0A1622">pi5-02</text>
   <text x="340" y="86" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#0D1F30">K3s control plane</text>
 
@@ -224,7 +224,7 @@ The network is a wired star centered on Router-P in the basement. Router-P conne
   <text x="504" y="180" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#8BBFD4">tp-03</text>
   <text x="504" y="200" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">K3s worker</text>
 
-  <rect x="14" y="280" width="652" height="110" rx="8" fill="#0C1A28" stroke="#2A9D8F" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect x="14" y="280" width="652" height="110" rx="8" fill="var(--bg-secondary)" stroke="#2A9D8F" stroke-width="0.8" stroke-dasharray="5 3"/>
   <text x="26" y="298" font-family="JetBrains Mono, monospace" font-size="11" fill="#2A9D8F">DevOps pipeline</text>
 
   <rect x="30" y="306" width="172" height="68" rx="6" fill="#1E1A3A" stroke="#6B5FD4" stroke-width="1"/>
@@ -241,12 +241,12 @@ The network is a wired star centered on Router-P in the basement. Router-P conne
 
   <line x1="440" y1="340" x2="506" y2="340" stroke="#2A9D8F" stroke-width="1.2" marker-end="url(#arrow)"/>
 
-  <rect x="506" y="306" width="148" height="68" rx="6" fill="#0C1A28" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="4 3"/>
+  <rect x="506" y="306" width="148" height="68" rx="6" fill="var(--bg-secondary)" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="4 3"/>
   <text x="580" y="326" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#8BBFD4">K3s cluster</text>
   <text x="580" y="344" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">pull from registry</text>
   <text x="580" y="362" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">deploy workload</text>
 
-  <rect x="14" y="410" width="330" height="150" rx="8" fill="#0C1A28" stroke="#6B5FD4" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect x="14" y="410" width="330" height="150" rx="8" fill="var(--bg-secondary)" stroke="#6B5FD4" stroke-width="0.8" stroke-dasharray="5 3"/>
   <text x="26" y="428" font-family="JetBrains Mono, monospace" font-size="11" fill="#6B5FD4">tb-01 · KVM</text>
 
   <rect x="26" y="436" width="140" height="54" rx="6" fill="#1A1630" stroke="#6B5FD4" stroke-width="1"/>
@@ -261,7 +261,7 @@ The network is a wired star centered on Router-P in the basement. Router-P conne
   <text x="175" y="520" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="12" font-weight="500" fill="#5ACFE0">Ollama</text>
   <text x="175" y="538" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#2A9DBF">Local model host · large models</text>
 
-  <rect x="362" y="410" width="304" height="150" rx="8" fill="#0C1A28" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="5 3"/>
+  <rect x="362" y="410" width="304" height="150" rx="8" fill="var(--bg-secondary)" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="5 3"/>
   <text x="374" y="428" font-family="JetBrains Mono, monospace" font-size="11" fill="#318BBF">Standalone</text>
 
   <rect x="374" y="436" width="130" height="54" rx="6" fill="#0D2E3A" stroke="#2A9DBF" stroke-width="1"/>
@@ -279,28 +279,28 @@ The network is a wired star centered on Router-P in the basement. Router-P conne
   <rect x="14" y="580" width="652" height="40" rx="6" fill="#1A2E1A" stroke="#4A8A4A" stroke-width="0.8" stroke-dasharray="3 3"/>
   <text x="340" y="600" text-anchor="middle" dominant-baseline="central" font-family="JetBrains Mono, monospace" font-size="11" fill="#80C080">Tailscale overlay — all nodes · remote access from anywhere</text>
 
-  <rect x="14" y="638" width="652" height="68" rx="6" fill="#0C1A28" stroke="#318BBF" stroke-width="0.5" stroke-opacity="0.5"/>
-  <text x="28" y="658" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="#8BBFD4">Legend</text>
+  <rect x="14" y="638" width="652" height="68" rx="6" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5" stroke-opacity="0.5"/>
+  <text x="28" y="658" font-family="JetBrains Mono, monospace" font-size="13" font-weight="500" fill="var(--text-primary)">Legend</text>
 
   <line x1="28" y1="676" x2="68" y2="676" stroke="#318BBF" stroke-width="1.5" marker-end="url(#arrow)"/>
-  <text x="76" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Logical flow</text>
+  <text x="76" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Logical flow</text>
   <line x1="200" y1="676" x2="240" y2="676" stroke="#318BBF" stroke-width="0.8" stroke-dasharray="5 3"/>
-  <text x="248" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Cluster boundary</text>
+  <text x="248" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Cluster boundary</text>
   <line x1="390" y1="676" x2="430" y2="676" stroke="#4A8A4A" stroke-width="0.8" stroke-dasharray="3 3"/>
-  <text x="438" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Tailscale overlay</text>
+  <text x="438" y="680" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Tailscale overlay</text>
 
   <rect x="28" y="690" width="12" height="12" rx="2" fill="#318BBF"/>
-  <text x="46" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Control plane</text>
+  <text x="46" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Control plane</text>
   <rect x="158" y="690" width="12" height="12" rx="2" fill="#1A3A52" stroke="#318BBF" stroke-width="0.8"/>
-  <text x="176" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Worker</text>
+  <text x="176" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Worker</text>
   <rect x="248" y="690" width="12" height="12" rx="2" fill="#0D3D3D" stroke="#2A9D8F" stroke-width="0.8"/>
-  <text x="266" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">DevOps</text>
+  <text x="266" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">DevOps</text>
   <rect x="348" y="690" width="12" height="12" rx="2" fill="#1A1630" stroke="#6B5FD4" stroke-width="0.8"/>
-  <text x="366" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Dev / VM</text>
+  <text x="366" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Dev / VM</text>
   <rect x="458" y="690" width="12" height="12" rx="2" fill="#0D2E3A" stroke="#2A9DBF" stroke-width="0.8"/>
-  <text x="476" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">AI inference</text>
+  <text x="476" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">AI inference</text>
   <rect x="578" y="690" width="12" height="12" rx="2" fill="#1E2A30" stroke="#4A6A7A" stroke-width="0.8"/>
-  <text x="596" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="#5A8FA8">Windows</text>
+  <text x="596" y="700" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">Windows</text>
 </svg>
 
 | Node | Platform role |
