@@ -14,4 +14,29 @@
   --selection-bg: #2aa198;
   --selection-text: #002b36;
   --cursor: #2aa198;
+
+  --diagram-infra: #4A9A6A;
+  --diagram-infra-fill: #0A2E20;
+  --diagram-infra-text: #70C090;
+  --diagram-compute: #2AA8C8;
+  --diagram-compute-fill: #0A2A38;
+  --diagram-compute-text: #70C8D8;
+  --diagram-compute-sub: #4A98A8;
+  --diagram-ai: #20A8C0;
+  --diagram-ai-fill: #082830;
+  --diagram-ai-text: #50C8D8;
+  --diagram-devops: #2AA198;
+  --diagram-devops-fill: #0A3030;
+  --diagram-devops-text: #50C8C0;
+  --diagram-dev: #7868C8;
+  --diagram-dev-fill: #201838;
+  --diagram-dev-text: #A898E8;
+  --diagram-dev-sub: #7868C0;
+  --diagram-windows: #4A6878;
+  --diagram-windows-fill: #102028;
+  --diagram-windows-text: #7898A8;
+  --diagram-external: #3A6878;
+  --diagram-external-fill: #0A1E28;
+  --diagram-external-text: #7898A8;
+  --diagram-tailscale: #4A9A6A;
 }
