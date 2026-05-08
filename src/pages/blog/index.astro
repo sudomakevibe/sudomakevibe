@@ -5,7 +5,12 @@ import { getCollection } from "astro:content";
 
 function calculateReadingTime(text: string): string {
   const wordsPerMinute = 200;
-  const words = text.trim().split(/\s+/).length;
+  // Strip HTML/SVG blocks and code blocks before counting
+  const stripped = text
+    .replace(/<[^>]*>/g, " ")
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ");
+  const words = stripped.trim().split(/\s+/).filter(w => w.length > 0).length;
   const minutes = Math.ceil(words / wordsPerMinute);
   return `${minutes} min read`;
 }

@@ -3,6 +3,7 @@ title: "sudo make vibe: how it was built"
 description: "The build log for sudomakevibe.com — stack decisions, six things that broke, and what a corrupted disk taught me about deployment pipelines."
 pubDate: 2026-05-06T00:00:00-04:00
 tags: ["vibecoding", "astro", "linux", "homelab", "webdev", "selfhosted"]
+readingTime: "7 min read"
 draft: false
 ---
 

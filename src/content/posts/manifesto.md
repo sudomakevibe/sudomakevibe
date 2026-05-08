@@ -3,6 +3,7 @@ title: "Manifesto"
 description: "Correctness, reliability, security, maintainability — these are not features. They are disciplines. AI doesn't ship them. You do."
 pubDate: 2026-04-09T00:00:00-04:00
 tags: ["vibecoding", "linux", "open-source", "philosophy", "manifesto", "raspberry-pi", "cybersecurity", "kubernetes"]
+readingTime: "3 min read"
 draft: false
 ---
 

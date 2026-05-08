@@ -3,6 +3,7 @@ title: "Welcome to sudo make vibe"
 description: "This is not another AI hype blog. It is a working lab — documenting what actually happens when AI-generated ideas meet production systems."
 pubDate: 2026-04-01T12:00:00-04:00
 tags: ["introduction", "vibecoding", "linux", "raspberry-pi", "kubernetes", "homelab", "ai", "open-source"]
+readingTime: "2 min read"
 draft: false
 ---
 

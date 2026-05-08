@@ -3,6 +3,7 @@ title: "AI is not free — the real cost of tokens, APIs, and cloud AI"
 description: "Everyone talks about how fast AI lets you build. Few talk about what it actually costs. Part one — the costs that show up on your invoice."
 pubDate: 2026-04-22T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
+readingTime: "7 min read"
 draft: false
 ---
 

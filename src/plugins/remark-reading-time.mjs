@@ -1,21 +1,26 @@
 // src/plugins/remark-reading-time.mjs
-// Install the dependency first:
-//   npm install remark-reading-time --save-dev
-//
-// Then register in astro.config.mjs:
-//   import remarkReadingTime from "./src/plugins/remark-reading-time.mjs";
-//   markdown: { remarkPlugins: [remarkReadingTime] }
-//
-// Reading time is then available in post.data.readingTime as a string like "4 min read".
-
-import { toString } from "mdast-util-to-string";
+// Counts prose words only — strips HTML, SVG, code blocks, and tables
+// before calculating reading time to avoid inflation from markup.
 import getReadingTime from "reading-time";
+const READING_SPEED = { wordsPerMinute: 265 };
+
+function extractText(node) {
+  // Skip HTML blocks (includes inline SVG), code blocks, and tables
+  if (["html", "code", "inlineCode", "table"].includes(node.type)) {
+    return "";
+  }
+  // Recurse into children
+  if (node.children) {
+    return node.children.map(extractText).join(" ");
+  }
+  // Return text value for leaf nodes
+  return node.value || "";
+}
 
 export function remarkReadingTime() {
   return function (tree, { data }) {
-    const textOnPage = toString(tree);
-    const readingTime = getReadingTime(textOnPage);
-    // Rounds to nearest minute, e.g. "4 min read"
+    const textOnPage = extractText(tree);
+    const readingTime = getReadingTime(textOnPage, READING_SPEED);
     data.astro.frontmatter.readingTime = readingTime.text;
   };
 }

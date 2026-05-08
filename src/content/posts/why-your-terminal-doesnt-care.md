@@ -3,6 +3,7 @@ title: "Why Your Terminal Doesn't Care About My Voice"
 description: "High-fidelity work requires high-fidelity documentation. Here is why this site exists as a blog and not a two-hour podcast."
 pubDate: 2026-04-10T00:00:00-04:00
 tags: ["vibecoding", "linux", "kubernetes", "homelab", "philosophy", "open-source", "ai"]
+readingTime: "4 min read"
 draft: false
 ---
 

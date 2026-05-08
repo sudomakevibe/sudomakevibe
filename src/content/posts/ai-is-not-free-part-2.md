@@ -3,6 +3,7 @@ title: "AI is not free — the costs that never appear on your invoice"
 description: "Part two of the AI cost series. Technical debt, false confidence, and the quiet atrophy of engineering skill. The costs that determine whether AI pays off or breaks your systems."
 pubDate: 2026-04-29T00:00:00-04:00
 tags: ["ai", "vibecoding", "llm", "open-source", "philosophy", "cybersecurity"]
+readingTime: "8 min read"
 draft: false
 ---
 
