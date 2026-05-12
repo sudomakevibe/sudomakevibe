@@ -40,7 +40,6 @@ export default {
             h1: { color: "var(--accent)" },
             h2: { color: "var(--accent)" },
             h3: { color: "var(--text-secondary)" },
-            strong: { color: "var(--text-primary)" },
             blockquote: {
               color: "var(--text-secondary)",
               borderLeftColor: "var(--accent)",
