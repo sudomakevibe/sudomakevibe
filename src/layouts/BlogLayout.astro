@@ -98,47 +98,20 @@ const blogPostingJsonLd = {
   </main>
 </BaseLayout>
 <style>
+  /* ─────────────────────────────────────────────────────────────────
+     BlogLayout-specific styles only.
+     ─────────────────────────────────────────────────────────────────
+     Prose-element styling (.prose h1-h4, .prose a, .prose strong,
+     .prose code, .prose pre, .prose blockquote, .prose table, .prose hr)
+     is authoritative in src/styles/global.css. Do not add prose-element
+     overrides here — they will compete with global.css and cause the
+     same kind of cascade conflicts that consumed the May 12 session.
+     This block is for layout components (.post-tag, .callout) only.
+     ────────────────────────────────────────────────────────────────── */
+  /* Post tag hover */
   .post-tag span:hover {
     border-color: var(--accent) !important;
     color: var(--accent) !important;
-  }
-  /* Code blocks — match site theme */
-  .prose pre {
-    background-color: var(--bg-card) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px !important;
-    color: var(--accent) !important;
-    font-family: var(--font-mono, monospace) !important;
-    padding: 1rem 1.25rem !important;
-  }
-  .prose code {
-    background-color: var(--bg-card) !important;
-    color: var(--accent) !important;
-    border-radius: 4px !important;
-    padding: 0.1em 0.4em !important;
-    font-size: 0.9em !important;
-  }
-  .prose pre code {
-    background: none !important;
-    padding: 0 !important;
-    font-size: inherit !important;
-    color: inherit !important;
-  }
-  /* Headings */
-  .prose h1, .prose h2, .prose h3, .prose h4 {
-    color: var(--accent) !important;
-  }
-  /* Links */
-  .prose a {
-    color: var(--accent) !important;
-  }
-  /* Blockquotes */
-  .prose blockquote {
-    border-left-color: var(--accent) !important;
-    color: var(--text-secondary) !important;
-    background-color: var(--bg-card) !important;
-    padding: 0.75rem 1rem !important;
-    border-radius: 0 6px 6px 0 !important;
   }
   /* Callouts (no quotes, unlike blockquotes) */
   :global(.callout) {
@@ -156,26 +129,5 @@ const blogPostingJsonLd = {
   }
   :global(.callout) p {
     margin: 0;
-  }
-  /* Tables */
-  .prose table {
-    color: var(--text-primary) !important;
-  }
-  .prose thead {
-    border-bottom-color: var(--border) !important;
-  }
-  .prose thead th {
-    color: var(--text-secondary) !important;
-  }
-  .prose tbody tr {
-    border-bottom-color: var(--border) !important;
-  }
-  /* Horizontal rule */
-  .prose hr {
-    border-color: var(--border) !important;
-  }
-  /* Strong */
-  .prose strong {
-    color: var(--text-primary) !important;
   }
 </style>

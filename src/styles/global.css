@@ -115,7 +115,13 @@
     }
   }
 }
-/* Markdown content styling - ensures all blog post content uses theme colors */
+/* ─────────────────────────────────────────────────────────────────
+   Markdown content styling — single source of truth for .prose
+   ─────────────────────────────────────────────────────────────────
+   This block is authoritative for prose-element styling inside blog
+   posts. BlogLayout.astro should only contain layout-component styles
+   (.post-tag, .callout), not prose-element overrides.
+   ────────────────────────────────────────────────────────────────── */
 .prose {
   color: var(--text-primary);
 }
@@ -126,8 +132,7 @@
   color: var(--accent);
 }
 .prose p,
-.prose li,
-.prose blockquote {
+.prose li {
   color: var(--text-primary);
 }
 .prose strong {
@@ -139,6 +144,15 @@
 .prose a:hover {
   color: var(--accent-hover);
 }
+/* Blockquote — full styling lives here (moved from BlogLayout) */
+.prose blockquote {
+  border-left: 4px solid var(--accent);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  border-radius: 0 6px 6px 0;
+}
+/* Tables */
 .prose table {
   color: var(--text-primary);
   border-color: var(--border);
@@ -148,22 +162,46 @@
   border-color: var(--border);
   color: var(--text-primary);
 }
+.prose thead {
+  border-bottom-color: var(--border);
+}
+.prose thead th {
+  color: var(--text-secondary);
+}
+.prose tbody tr {
+  border-bottom-color: var(--border);
+}
+/* Horizontal rule */
+.prose hr {
+  border-color: var(--border);
+}
+/* Code blocks (Option B): code-bg background, code-text color.
+   Distinct from prose, semantically clear, follows the convention
+   used across technical docs (GitHub, Stripe, Hacker News). */
 .prose code {
-  color: var(--code-text) !important;
-  background-color: var(--code-bg) !important;
+  color: var(--code-text);
+  background-color: var(--code-bg);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.9em;
 }
 .prose pre {
-  background-color: var(--code-bg) !important;
-  border: 1px solid var(--border) !important;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  color: var(--code-text);
 }
 .prose pre code {
-  color: var(--code-text) !important;
-  background-color: transparent !important;
+  background-color: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
 }
 /* Kill any syntax highlighting spans inside prose code blocks */
 .prose pre code span,
 .prose pre span {
-  color: var(--code-text) !important;
+  color: var(--code-text);
 }
 /* Plain text code blocks — matches start-here page style */
 .code-block-plain {
