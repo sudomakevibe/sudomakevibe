@@ -10,9 +10,11 @@ Last updated: 2026-05-12.
 
 Items here are not blocking, but they are maintenance traps that will cost time later if left alone. Each is a session of focused work.
 
-(All previously-listed items shipped 2026-05-12 — see Recently shipped.)
+- [x] **Deduplicate `.prose strong` styling.** 2026-05-12, `2a843b6`. Removed the rule from `tailwind.config.mjs` typography extend. `global.css` is now the cascade-level source of truth (with `BlogLayout.astro` cleanup landing in the next commit).
 
-- [ ] *(no open items at this time — surface new ones as they appear)*
+- [x] **Deduplicate `.prose h3` styling.** 2026-05-12, `9834d99` + `025f920`. The dedup itself landed in `9834d99` (consolidated all `.prose`-element rules into `global.css`, removed `BlogLayout.astro` overrides). The h3 was also restyled in `025f920` to text-secondary color at 1.15em weight 600 so `###` produces a real subsection treatment rather than an accent-blue near-clone of `##`. Three-tier hierarchy (h2 → h3 → body) now works.
+
+- [x] **Fix `remark-reading-time` plugin.** 2026-05-12, no commit. Investigated and determined the plugin was never broken. The original TODO entry was wrong on two counts: it claimed the plugin used 150 wpm (actually 265, calibrated against Medium) and that it did not strip non-prose tokens (actually it already strips html, code, inlineCode, table). Verified via diagnostic script that stripping link URLs would change zero words. Entry kept checked-off for the record so future-me does not relitigate. Related open decision moved to "Site features and styling" below.
 
 ---
 
@@ -108,12 +110,14 @@ Speculative items, not committed work. Move to a section above if and when they 
 
 ## Recently shipped (last 30 days)
 
-Kept for context. Prune anything older than 90 days.
+Longer-form context for what landed recently. Kept here as a changelog companion to the inline `[x]` checkmarks above. Prune anything older than 90 days.
 
-### 2026-05-12 — architectural cleanup pass (three commits)
+### 2026-05-12 — architectural cleanup pass
+
+Three commits resolved the duplicated prose-styling that consumed the May 12 debug session.
 
 - **`2a843b6`** refactor: remove duplicate `.prose strong` rule from tailwind config. First step in the dedup work — eliminated the simplest of three competing definitions.
-- **`9834d99`** refactor: consolidate prose styling in global.css, switch code to Option B. The structural commit. Removed all `.prose`-element overrides from `BlogLayout.astro` (kept only layout-component rules: `.post-tag` hover, `.callout` family). Moved full blockquote styling into global.css. Switched code block styling from `bg-card` + accent text to `bg-card`-distinct `code-bg` + `code-text`. global.css is now the single source of truth for prose-element styling.
+- **`9834d99`** refactor: consolidate prose styling in global.css, switch code to Option B. The structural commit. Removed all `.prose`-element overrides from `BlogLayout.astro` (kept only layout-component rules: `.post-tag` hover, `.callout` family). Moved full blockquote styling into global.css. Switched code block styling from `bg-card` + accent text to `code-bg` + `code-text`, making code visually distinct from prose treatments (callouts and blockquotes share `bg-card`) and freeing accent blue to mean "link or section header" without ambiguity.
 - **`025f920`** style: restyle `.prose h3` as real subheading, convert post labels to use it. Made h3 visibly distinct from h2 (text-secondary color, 1.15em, weight 600 versus h2's accent-blue 1.5em). Converted the three cost labels in the new post from bold-on-own-line back to `###` headers, which now look correct. Three-tier hierarchy is real and usable.
 
 ### 2026-05-12 — earlier same day
@@ -121,9 +125,9 @@ Kept for context. Prune anything older than 90 days.
 - Site-wide bold-as-accent experiment shipped and then reverted same day. Cost labels in the new post settled as bold-on-own-line (later changed again in `025f920`). See commits `455d441` (revert) and `1acbcc1` (original attempt).
 - New post: "AI Is Not Free. Inaction Has an Invoice Too" — coda to the AI-is-not-free trilogy. Live at `https://sudomakevibe.com/blog/ai-is-not-free-inaction-has-an-invoice-too`.
 
-### Items removed from cleanup section because they were not actual bugs
+### Investigated, not actually a bug
 
-- **`remark-reading-time` plugin "fix"** — investigated 2026-05-12, no fix needed. The plugin was always working correctly (already stripped HTML/code/inlineCode/table; calibrated to 265 wpm against Medium). The TODO entry that called for "200 wpm and strip link URLs" was based on a mistaken understanding. Removed from cleanup; the open question of "drop manual readingTime overrides" lives in Site features and styling.
+- **`remark-reading-time` plugin "fix"** — investigated 2026-05-12, no fix needed. The plugin was always working correctly (already stripped HTML/code/inlineCode/table; calibrated to 265 wpm against Medium). The original TODO entry that called for "200 wpm and strip link URLs" was based on a mistaken understanding. Diagnostic script confirmed word counts identical with or without link URL stripping. Entry stays checked-off in the cleanup section for the record. The open question of "drop manual readingTime overrides" lives in Site features and styling.
 
 ### 2026-04-20
 
