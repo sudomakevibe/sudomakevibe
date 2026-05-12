@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
-
 export interface Props {
   title: string;
   description: string;
@@ -10,13 +9,10 @@ export interface Props {
   image?: string;
   readingTime?: string;
 }
-
 const { title, description, pubDate, updatedDate, tags = [], image, readingTime } = Astro.props;
-
 const siteUrl = "https://sudomakevibe.com";
 const canonicalURL = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageURL = new URL(image || "/og-default.png", siteUrl).toString();
-
 const blogPostingJsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -43,7 +39,6 @@ const blogPostingJsonLd = {
   },
 };
 ---
-
 <BaseLayout
   title={`${title} | sudo make vibe`}
   description={description}
@@ -96,20 +91,17 @@ const blogPostingJsonLd = {
           )}
         </div>
       </header>
-
       <div class="prose max-w-none" style="color: var(--text-primary);">
         <slot />
       </div>
     </article>
   </main>
 </BaseLayout>
-
 <style>
   .post-tag span:hover {
     border-color: var(--accent) !important;
     color: var(--accent) !important;
   }
-
   /* Code blocks — match site theme */
   .prose pre {
     background-color: var(--bg-card) !important;
@@ -119,7 +111,6 @@ const blogPostingJsonLd = {
     font-family: var(--font-mono, monospace) !important;
     padding: 1rem 1.25rem !important;
   }
-
   .prose code {
     background-color: var(--bg-card) !important;
     color: var(--accent) !important;
@@ -127,24 +118,20 @@ const blogPostingJsonLd = {
     padding: 0.1em 0.4em !important;
     font-size: 0.9em !important;
   }
-
   .prose pre code {
     background: none !important;
     padding: 0 !important;
     font-size: inherit !important;
     color: inherit !important;
   }
-
   /* Headings */
   .prose h1, .prose h2, .prose h3, .prose h4 {
     color: var(--accent) !important;
   }
-
   /* Links */
   .prose a {
     color: var(--accent) !important;
   }
-
   /* Blockquotes */
   .prose blockquote {
     border-left-color: var(--accent) !important;
@@ -153,7 +140,6 @@ const blogPostingJsonLd = {
     padding: 0.75rem 1rem !important;
     border-radius: 0 6px 6px 0 !important;
   }
-
   /* Callouts (no quotes, unlike blockquotes) */
   :global(.callout) {
     border-left: 4px solid var(--accent);
@@ -171,31 +157,21 @@ const blogPostingJsonLd = {
   :global(.callout) p {
     margin: 0;
   }
-
   /* Tables */
   .prose table {
     color: var(--text-primary) !important;
   }
-
   .prose thead {
     border-bottom-color: var(--border) !important;
   }
-
   .prose thead th {
     color: var(--text-secondary) !important;
   }
-
   .prose tbody tr {
     border-bottom-color: var(--border) !important;
   }
-
   /* Horizontal rule */
   .prose hr {
     border-color: var(--border) !important;
-  }
-
-  /* Strong */
-  .prose strong {
-    color: var(--text-primary) !important;
   }
 </style>
