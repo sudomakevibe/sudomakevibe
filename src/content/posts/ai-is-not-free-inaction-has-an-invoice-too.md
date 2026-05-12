@@ -45,7 +45,7 @@ This is the move the standard strategic posture gets wrong. In regulated industr
 
 A bank that defers AI adoption is not preserving its position. It is paying for that deferral with knowledge, velocity, and optionality on a meter that runs continuously and accelerates over time. The invoice does not arrive in a single quarter. It arrives in the cumulative gap between where the organization is and where it would have been on a deliberate-action path.
 
-The real alternative to inaction is not action. It is **deliberate action**, on a timeline fast enough to outrun the compounding inaction costs but disciplined enough to satisfy the regulatory bar. [Part three](/blog/ai-is-not-free-part-3) describes what that architecture looks like in concrete terms. The R7 stack is not the only valid answer, but it is a complete one. A reader who has not yet read it should.
+The real alternative to inaction is not action. It is deliberate action, on a timeline fast enough to outrun the compounding inaction costs but disciplined enough to satisfy the regulatory bar. [Part three](/blog/ai-is-not-free-part-3) describes what that architecture looks like in concrete terms. The R7 stack is not the only valid answer, but it is a complete one. A reader who has not yet read it should.
 
 ## The bill comes either way
 

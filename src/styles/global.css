@@ -131,8 +131,7 @@
   color: var(--text-primary);
 }
 .prose strong {
-  color: var(--accent);
-  font-weight: 700;
+  color: var(--text-primary);
 }
 .prose a {
   color: var(--accent);
