@@ -19,15 +19,15 @@ That series argued that careless adoption is expensive. This post argues the inv
 
 Inaction does not feel like a decision. It feels like prudence. In regulated industries, where the consequences of moving wrong are larger than in most sectors, that feeling is reinforced by every quarterly risk review. It is also the most expensive posture currently available. Adopt or wait is a doctrine taught in many business schools as a serious strategic posture: first-mover versus fast-follower, pioneer versus settler. It is usually defensible. For AI in regulated industries, it is the wrong frame, because the wait side of the binary has costs the framework does not price.
 
-**Knowledge cost**
+### Knowledge cost
 
 The senior engineers who built the current generation of banking core systems, hospital records platforms, and telco operations stacks are retiring. The mid-career engineers who would have inherited their work are leaving for organizations where AI is already part of the stack. Junior engineers are choosing AI-first startups over publicly traded incumbents before their second promotion cycle. Every generation is walking out the same door, for the same reason. I have seen this within my own family: my children have made the same calculation, weighing established employers against AI-first work and choosing the latter. These engineers are taking with them the tacit knowledge that no Confluence page captured: why a particular service was deployed the way it was, which assumptions are load-bearing, what failure modes have already been seen and quietly mitigated. AI tooling, used responsibly, is one of the few mechanisms that can extract and preserve that knowledge before it walks out the door. Organizations that wait are not preserving optionality. They are watching the archive close.
 
-**Velocity cost**
+### Velocity cost
 
 Every quarter without AI tooling is a quarter where competitors who have it ship faster, debug faster, and onboard engineers faster. The gap does not stay linear. A team that adopts AI tooling well in year one is a team that has rebuilt its development culture around it by year three; at which point the organization that waited is not behind on tooling, it is behind on culture. The first is a procurement problem. The second is not.
 
-**Optionality cost**
+### Optionality cost
 
 Executives often frame inaction as preserving optionality. In AI, inaction closes options. Vendor formats lock in. Regulators set precedents based on the practices of early adopters. Open weights that are freely licensed today may be subject to export controls or commercial terms tomorrow. The longer an organization waits to build sovereign AI capability, the fewer compliant paths remain open to it. Waiting does not buy time. It spends it.
 

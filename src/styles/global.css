@@ -125,9 +125,20 @@
 .prose {
   color: var(--text-primary);
 }
+/* h1 and h2 — high-contrast section headers in accent color */
 .prose h1,
-.prose h2,
-.prose h3,
+.prose h2 {
+  color: var(--accent);
+}
+/* h3 — third-tier subheading in secondary color at 1.15em.
+   Visually distinct from h2 so ### in markdown produces a real
+   subsection treatment, not an accent-blue near-clone of ##. */
+.prose h3 {
+  color: var(--text-secondary);
+  font-size: 1.15em;
+  font-weight: 600;
+}
+/* h4 stays in accent for now — rarely used, can revisit if needed */
 .prose h4 {
   color: var(--accent);
 }
