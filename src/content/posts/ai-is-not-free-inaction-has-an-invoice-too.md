@@ -4,7 +4,7 @@ slug: "ai-is-not-free-inaction-has-an-invoice-too"
 description: "A coda to the AI-is-not-free series. The architecture is the right answer. Inaction is the more expensive failure mode."
 pubDate: 2026-05-12
 readingTime: "5 min read"
-tags: ["AI", "Enterprise", "Regulated Industries", "Self Hosted", "Open Source"]
+tags: ["AI", "Enterprise", "Regulated Industries", "Telco", "Engineering Leadership"]
 ---
 
 For a bank, a hospital, or a telco, the most expensive AI decision is the one not made.
