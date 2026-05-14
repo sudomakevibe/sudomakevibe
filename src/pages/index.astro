@@ -21,8 +21,8 @@ const latestPosts = await Promise.all(
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .slice(0, 2)
     .map(async (post) => {
-      const readingTime = post.data.readingTime || calculateReadingTime(post.body);
-      return { ...post, readingTime };
+      const readingTime = post.data.readingTime ?? "5 min read";
+      const slug = post.id.replace(/\.mdx?$/, ''); return { ...post, slug, readingTime };
     })
 );
 const projects = [
@@ -122,7 +122,7 @@ const statusConfig: Record<string, { label: string; dot: string; text: string }>
             description={post.data.description}
             pubDate={post.data.pubDate}
             tags={post.data.tags}
-            slug={post.slug}
+            slug={post.id.replace(/\.mdx?$/, '')}
             readingTime={post.readingTime}
           />
         ))}
