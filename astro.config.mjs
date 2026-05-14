@@ -9,7 +9,8 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: "shiki",
     shikiConfig: {
-      theme: "dracula",
+      theme: "css-variables",
+      defaultLang: "bash",
       wrap: true,
     },
     remarkPlugins: [remarkReadingTime],

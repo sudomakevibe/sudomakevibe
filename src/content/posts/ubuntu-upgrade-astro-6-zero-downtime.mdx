@@ -1,0 +1,185 @@
+---
+title: "171+ CVEs, Astro 4 to 6, Zero Downtime"
+description: "A homelab publishing stack audit on Ubuntu 24.04 — what a routine CVE patch revealed about Node versioning and Astro version debt."
+pubDate: 2026-05-14T12:00:00-04:00
+tags: ["linux", "homelab", "astro", "webdev", "kubernetes", "open-source"]
+readingTime: "7 min read"
+draft: false
+---
+
+I opened the terminal to patch CVEs. I ended up migrating from Astro 4 to Astro 6, pinning Node to a new LTS release, and shipping a cleaner stack than the one I started the day with. The site never went down.
+
+This is what that actually looked like.
+
+## The CVE that started it
+
+On May 11, 2026, Canonical pushed a significant kernel patch batch for Ubuntu 24.04 LTS — 171+ CVEs addressed in a single update cycle. One of them was CVE-2025-38352, a local privilege escalation vulnerability being actively exploited in the wild.
+
+On a homelab machine running Kali tooling alongside a web development environment, that is not an advisory to read and file. It is something to patch the same day.
+
+The intent was simple: `sudo apt update && sudo apt upgrade`, verify nothing broke, move on. But good practice says you audit before you touch anything. So before running the upgrade, I checked the current state of the stack.
+
+That audit is where things got interesting.
+
+## The three-layer model
+
+Before getting into what was found, it helps to understand how Ubuntu, Node.js, and an Astro project actually relate to each other on a development machine. Most developers treat these as one interconnected system. They are not.
+
+They are three independent layers with a single, narrow bridge between them.
+
+**Layer 1 — Ubuntu system packages.** Managed by `apt`. Lives in `/usr/`, `/lib/`, `/etc/`. Covers the kernel, firmware, system libraries, desktop environment, and anything installed via `sudo apt install`. An `apt upgrade` can only touch what `apt` owns.
+
+**Layer 2 — Node.js runtime.** When installed via nvm (Node Version Manager), Node lives entirely in `~/.nvm/` under your user account. The `apt` package manager has no visibility into it. A kernel patch cannot touch your Node version. The only bridge between Layer 1 and Layer 2 is you, running `nvm install` or `nvm use` deliberately.
+
+**Layer 3 — Project dependencies.** Everything in `node_modules/` inside your project directory. Managed by `npm`, locked to `package-lock.json`. Node.js is the only runtime that executes these packages. `apt` cannot reach them. The only bridge between Layer 2 and Layer 3 is the Node version — specifically whether your Node version satisfies the peer dependency requirements of your framework.
+
+
+<svg width="100%" viewBox="0 0 680 440" role="img" style="margin: 2rem 0; display: block;">
+  <title>Three-layer isolation model</title>
+  <desc>Three independent layers: Ubuntu system packages, Node.js runtime, and project dependencies, each managed by separate tools with narrow bridges between them.</desc>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect x="40" y="40" width="600" height="90" rx="12" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="0.5"/>
+  <text x="340" y="75" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="500" fill="var(--accent)">Layer 1 — Ubuntu system packages</text>
+  <text x="340" y="102" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--text-secondary)">apt · kernel, firmware, glibc, system libs · /usr/ /lib/ /etc/</text>
+  <text x="430" y="152" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">only bridge: nvm install</text>
+  <line x1="340" y1="132" x2="340" y2="168" stroke="var(--border)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <rect x="40" y="170" width="600" height="90" rx="12" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="0.5"/>
+  <text x="340" y="205" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="500" fill="var(--accent)">Layer 2 — Node.js runtime</text>
+  <text x="340" y="232" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--text-secondary)">nvm · ~/.nvm/ · apt has zero visibility here</text>
+  <text x="430" y="282" text-anchor="start" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">only bridge: Node version compatibility</text>
+  <line x1="340" y1="262" x2="340" y2="298" stroke="var(--border)" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <rect x="40" y="300" width="600" height="90" rx="12" fill="var(--bg-card)" stroke="var(--accent)" stroke-width="0.5"/>
+  <text x="340" y="335" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="500" fill="var(--accent)">Layer 3 — Project dependencies</text>
+  <text x="340" y="362" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--text-secondary)">npm · node_modules/ · locked to package-lock.json</text>
+  <text x="340" y="418" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--text-secondary)">apt upgrade cannot reach Layer 2 or Layer 3 — isolation is structural, not configured</text>
+</svg>
+
+This model matters because it tells you exactly what an `apt upgrade` can and cannot break. It cannot touch your Astro version. It cannot touch your npm packages. It can only affect system-level components. If your project builds clean before the upgrade and Node is managed via nvm, the upgrade is safe by design.
+
+The pre-upgrade audit confirmed the isolation was intact. But it also surfaced two things that had nothing to do with the Ubuntu patch.
+
+## What the audit found
+
+Running the pre-upgrade checks:
+
+```bash
+node --version
+# v25.9.0
+
+cat package.json | grep '"astro"'
+# "astro": "^4.16.18"
+
+npm run build
+# 40 page(s) built in 2.33s — Complete!
+```
+
+Two issues, neither caused by Ubuntu.
+
+**Node v25.9.0 is not an LTS release.** The v25 line is Node's "current" release track — end-of-life around October 2026. Running a non-LTS Node version on a production publishing machine is quiet technical debt. The current LTS is v24, supported until April 2028.
+
+**Astro 4.16.18 is two major versions behind.** Astro 6 went stable on February 10, 2026. The site launched April 20, 2026 — built on Astro 4, which was already behind at launch. Not broken, but not current. Astro 6 ships a mandatory Content Layer API migration, a Zod major version bump, and Shiki v4. None of these were blocking the site, but all of them would need to be resolved eventually.
+
+The CVE patch became a full stack audit. Three sessions, one sitting.
+
+## Session 1 — patch the system
+
+```bash
+sudo apt update && sudo apt upgrade
+```
+
+25 packages upgraded. The notable ones: `linux-firmware`, `gnome-shell`, `thermald`, `iproute2`, `google-chrome-stable`, and the full `remmina` suite.
+
+The kernel itself did not update. The kernel at `6.17.0-23-generic` was already current — the May 11 batch was a firmware and userspace patch cycle, not a kernel swap. The initramfs regenerated against the existing kernel as expected.
+
+Post-upgrade build verification:
+
+```bash
+npm run build
+# 40 page(s) built in 2.14s — Complete!
+```
+
+Faster than the baseline. Isolation confirmed.
+
+## Session 2 — pin Node to LTS
+
+```bash
+nvm install 24
+nvm alias default 24
+nvm use 24
+node --version
+# v24.15.0
+```
+
+Node v24.15.0 installed, set as nvm default. npm bumped to 11.12.1 as part of the Node upgrade. A `.nvmrc` file committed to the repo root pins the version for future sessions and documents the expectation in version control.
+
+Post-upgrade build verification:
+
+```bash
+npm run build
+# 40 page(s) built in 2.21s — Complete!
+```
+
+Clean on v24.
+
+## Session 3 — migrate to Astro 6
+
+This was the session with actual work. Astro 6 removes the backwards compatibility grace period that Astro 5 had introduced for the Content Layer API. Migration is mandatory, not optional.
+
+The full change inventory:
+
+- `@astrojs/tailwind` removed — not compatible with Astro 6. Replaced with direct PostCSS configuration; Tailwind v3 continues running unchanged.
+- `src/content/config.ts` moved to `src/content.config.ts` — file moved to project root inside `src/`, collection definition rewritten with the new `glob()` loader.
+- `defineCollection` stays imported from `astro:content`. `z` moves to `astro/zod`.
+- `entry.render()` replaced with `render(entry)` with named import throughout all dynamic route files.
+- `post.slug` replaced with `post.id.replace(/\.md$/, '')` — the Content Layer API returns file-based IDs with extensions rather than clean slugs. A simple replace preserves existing URL structure exactly.
+- `post.body` removed — no longer available in the Content Layer API. Reading time falls back to the `readingTime` frontmatter field, set manually on every post.
+- `autoprefixer` added as an explicit dev dependency — was previously bundled inside `@astrojs/tailwind`.
+
+One note for anyone running a Wayland session: heredoc file writes are unreliable when your terminal has a Markdown copy button. Clipboard corruption strips HTML tags mid-block silently — the write appears to succeed but the file is broken. The reliable alternative is Python targeted replacements, always followed by a `grep` verification:
+
+```bash
+python3 -c "
+content = open('src/pages/blog/index.astro').read()
+content = content.replace('old string', 'new string')
+open('src/pages/blog/index.astro', 'w').write(content)
+print('done')
+"
+```
+
+The migration ran on a dedicated branch — `astro-v6-upgrade` — merged to main only after a clean local build. Vercel auto-deploys on push to main. The branch discipline is not optional.
+
+Post-migration build verification:
+
+```bash
+npm run build
+# 40 page(s) built in 2.31s — Complete!
+```
+
+## The full picture
+
+| State | Node | Astro | Pages | Build time |
+|---|---|---|---|---|
+| Pre-upgrade baseline | v25.9.0 | 4.16.18 | 40 | 2.33s |
+| Post apt upgrade | v25.9.0 | 4.16.18 | 40 | 2.14s |
+| Post Node v24 pin | v24.15.0 | 4.16.18 | 40 | 2.21s |
+| Post Astro 6 migration | v24.15.0 | 6.3.3 | 40 | 2.31s |
+
+Three state changes. Build time stable throughout. Zero regressions. The isolation model worked exactly as the theory predicted.
+
+## What this means for your homelab publishing stack
+
+If you run a static site on a Linux development machine, the three-layer model is worth internalising before your next patch cycle.
+
+`apt upgrade` is safe to run without checking your project dependencies first — as long as Node is managed via nvm and not installed via `apt`. If you installed Node through `apt`, the bridge between Layer 1 and Layer 2 collapses and an upgrade can silently change your Node version mid-project.
+
+Check your Node version against the LTS schedule before every major patch cycle. The Node release calendar is at nodejs.org/en/about/releases. If your version shows EOL within six months, migrate now rather than during an incident.
+
+Run a build verification before and after every system upgrade. Not to check the upgrade — to establish a known-good baseline. If something breaks three weeks later, you want to know the last confirmed clean state.
+
+The version you launch on is not the version you stay on. Astro 4 was a reasonable choice in April. Astro 6 is the current production line. The gap between those two states accumulates quietly until a CVE patch day forces the audit.
+
+That is the real value of treating a routine security update as a full stack review. The CVEs get patched. The debt gets surfaced. The stack ends up cleaner than it started.

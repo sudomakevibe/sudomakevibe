@@ -197,11 +197,11 @@
   font-size: 0.9em;
 }
 .prose pre {
-  background-color: var(--code-bg);
+  background-color: var(--astro-code-background, var(--code-bg));
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem 1.25rem;
-  color: var(--code-text);
+  color: var(--astro-code-foreground, var(--code-text));
 }
 .prose pre code {
   background-color: transparent;
@@ -209,11 +209,7 @@
   font-size: inherit;
   color: inherit;
 }
-/* Kill any syntax highlighting spans inside prose code blocks */
-.prose pre code span,
-.prose pre span {
-  color: var(--code-text);
-}
+/* Shiki token colours handled via css-variables theme */
 /* Plain text code blocks — matches start-here page style */
 .code-block-plain {
   background-color: var(--bg-card);

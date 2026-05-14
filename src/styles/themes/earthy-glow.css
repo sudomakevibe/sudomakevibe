@@ -39,4 +39,16 @@
   --diagram-external-fill: #0A1E28;
   --diagram-external-text: #7898A8;
   --diagram-tailscale: #4A9A6A;
+
+  /* Shiki syntax highlighting */
+  --astro-code-background: #073642;
+  --astro-code-foreground: #c9d1d9;
+  --astro-code-token-keyword: #2aa198;
+  --astro-code-token-string: #859900;
+  --astro-code-token-comment: #586e75;
+  --astro-code-token-constant: #cb4b16;
+  --astro-code-token-function: #2aa8c8;
+  --astro-code-token-string-expression: #859900;
+  --astro-code-token-punctuation: #8b949e;
+  --astro-code-token-link: #2aa198;
 }
