@@ -1,7 +1,8 @@
-import { defineCollection, z } from 'astro:content';
-
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob } from 'astro/loaders';
 const posts = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -10,11 +11,7 @@ const posts = defineCollection({
     tags: z.array(z.string()),
     image: z.string().optional(),
     draft: z.boolean().default(false),
-    // Populated by remark-reading-time plugin at build time.
-    // Add to package.json devDependencies: "remark-reading-time": "^2.0.0"
-    // and register in astro.config.mjs: markdown: { remarkPlugins: [remarkReadingTime] }
     readingTime: z.string().optional(),
   }),
 });
-
 export const collections = { posts };

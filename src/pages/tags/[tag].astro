@@ -57,7 +57,7 @@ const { tag, posts } = Astro.props;
           description={post.data.description}
           pubDate={post.data.pubDate}
           tags={post.data.tags}
-          slug={post.slug}
+          slug={post.id.replace(/\.md$/, '')}
           readingTime={post.data.readingTime}
         />
       ))}

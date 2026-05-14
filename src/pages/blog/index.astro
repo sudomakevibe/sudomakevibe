@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BlogCard from "../../components/BlogCard.astro";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 
 function calculateReadingTime(text: string): string {
   const wordsPerMinute = 200;
@@ -21,9 +21,10 @@ const sortedPosts = await Promise.all(
     .filter((post) => !post.data.draft)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .map(async (post) => {
-      const { Content } = await post.render();
-      const readingTime = post.data.readingTime || calculateReadingTime(post.body);
-      return { ...post, readingTime };
+      await render(post);
+      const slug = post.id.replace(/\.md$/, '');
+      const readingTime = post.data.readingTime ?? "5 min read";
+      return { ...post, slug, readingTime };
     })
 );
 
