@@ -190,3 +190,7 @@ All @sudomakevibe:
 - Reading time remark plugin not propagating to `post.data` — fixed by calculating from `post.body` directly
 - FOUC on theme switching — fixed in BaseLayout with inline theme script
 - Homepage newsletter card had gradient — removed, now flat consistent with site design
+
+## Reading time calculation
+
+WordsPerMinute standard: 265 wpm. Based on Medium audience comparison for technical content. All posts use manual readingTime frontmatter override. calculateReadingTime() is a fallback only.

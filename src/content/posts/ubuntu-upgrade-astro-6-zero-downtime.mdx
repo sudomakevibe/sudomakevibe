@@ -183,3 +183,34 @@ Run a build verification before and after every system upgrade. Not to check the
 The version you launch on is not the version you stay on. Astro 4 was a reasonable choice in April. Astro 6 is the current production line. The gap between those two states accumulates quietly until a CVE patch day forces the audit.
 
 That is the real value of treating a routine security update as a full stack review. The CVEs get patched. The debt gets surfaced. The stack ends up cleaner than it started.
+
+
+## One more thing: the slug bug
+
+The build was green. The Vercel deploy showed Ready. The post was live. Then the homepage showed every post card linking to `/blog/undefined`.
+
+This was not caught by the build because Astro's static build does not validate that prop values are defined — it just renders whatever it receives. `undefined` is a valid JavaScript value, so the build succeeds and the HTML contains `href="/blog/undefined"` silently.
+
+The root cause is a breaking change in Astro 6's Content Layer API. In Astro 4, every collection entry had a `slug` property derived automatically from the filename. In Astro 6 that property is gone. Entries now have an `id` property that includes the file extension — `my-post.md` instead of `my-post`.
+
+Any component or page that passes `post.slug` to a link will silently produce `undefined` URLs. The fix is a one-line replacement everywhere `post.slug` is used:
+
+```bash
+post.slug
+# becomes
+post.id.replace(/\.mdx?$/, '')
+```
+
+The migration had patched `[...slug].astro` and `blog/index.astro` correctly. But three other files had the same pattern and were missed:
+
+- `src/pages/index.astro` — homepage latest posts section
+- `src/pages/tags/[tag].astro` — tag listing pages
+- `src/pages/rss.xml.js` — RSS feed
+
+The lesson: when migrating to the Content Layer API, do a full codebase search for `post.slug` before declaring the migration complete:
+
+```bash
+grep -rn "post\.slug" src/
+```
+
+Any result that is not inside a Markdown content file is a bug waiting to ship.

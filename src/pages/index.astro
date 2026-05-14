@@ -4,7 +4,7 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
 function calculateReadingTime(text: string): string {
-  const wordsPerMinute = 200;
+  const wordsPerMinute = 265;
   // Strip HTML/SVG blocks and code blocks before counting
   const stripped = text
     .replace(/<[^>]*>/g, " ")
