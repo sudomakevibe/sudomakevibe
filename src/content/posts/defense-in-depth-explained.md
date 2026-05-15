@@ -4,14 +4,14 @@ description: "Why the vulnerability treadmill is broken, what defense in depth a
 pubDate: 2026-05-15T09:00:00-04:00
 tags: ["defense-in-depth", "kubernetes", "linux", "ai-security", "homelab", "cybersecurity"]
 readingTime: "7 min read"
-draft: true
+draft: false
 ---
 
 ## The Treadmill
 
 Most security teams today are stuck on a treadmill. Automated scanners surface an overwhelming flood of vulnerabilities in their code and infrastructure. Teams scramble to patch them. New ones appear faster than old ones close. The backlog grows faster than teams can clear it.
 
-This is the **vulnerability treadmill**, and it is the dominant security operating model at most organizations. It treats every flagged defect as urgent, regardless of whether an attacker could actually exploit it. It measures success by how fast you patch, not whether you are actually safer. It is exhausting, expensive, and, increasingly, the wrong model entirely.
+This is the **vulnerability treadmill**, and it is the dominant security operating model at most organizations. It treats most flagged defects as urgent, regardless of whether an attacker could actually exploit them. It measures success by how fast you patch, not whether you are actually safer. It is exhausting, expensive, and increasingly the wrong model entirely.
 
 There is a better model, and it has existed for decades in physical security. We just have not applied it rigorously enough to software.
 
@@ -28,41 +28,41 @@ The same logic applies to software. A well-defended system has four distinct lay
 | House component | Software equivalent | What it does |
 |---|---|---|
 | External perimeter | Minimal, hardened images | Reduces the size of the attack surface |
-| Building materials | Compiler hardening (ASLR, stack protection) | Makes individual binaries expensive to exploit |
+| Building materials | Compiler hardening + ASLR (stack canaries, PIE, FORTIFY_SOURCE) | Makes individual binaries expensive to exploit |
 | Interior door locks | Mandatory Access Control (SELinux, AppArmor) | Confines compromised processes |
-| Walls between rooms | Container isolation, Pod Security Standards | Limits how far an attacker can spread |
+| Walls + cameras | Container isolation, Pod Security Standards, runtime monitoring | Limits how far an attacker can spread, and catches them when prevention fails |
 
 The middle of this document walks through each layer. But first, the reason it matters more now than it did five years ago.
 
 ## The AI Shift
 
-In early 2026, Anthropic and Mozilla collaborated on what is now the clearest public demonstration of the shift. In February, Anthropic's Claude Opus 4.6 model identified 22 security-sensitive bugs in Firefox. This was more than were reported through all other channels in any single month of the previous year. Two months later, a newer model called Claude Mythos found 271 additional vulnerabilities in the same codebase. Mozilla's own CTO described the feeling as "vertigo." Notably, Mozilla observed that none of the bugs found were beyond what an elite human researcher could have discovered. The difference was speed and scale, not capability.
+In early 2026, Anthropic and Mozilla collaborated on what is now the clearest public demonstration of the shift. In February, Anthropic's Claude Opus 4.6 model identified 22 security-sensitive bugs in Firefox. These were not exotic discoveries. They were human-discoverable defects, found at machine speed. Two months later, a newer model called Claude Mythos Preview found 271 additional vulnerabilities in the same codebase. Mozilla's own CTO described the feeling as "vertigo." Notably, Mozilla observed that none of the bugs found were beyond what an elite human researcher could have discovered. The difference was speed and scale, not capability.
 
 The implications cascade:
 
 **Finding bugs just got cheap.** Historically, discovering a previously-unknown vulnerability (a "zero-day") required months of elite human research. That scarcity made each one valuable. AI collapses that cost toward almost zero.
 
-**Both sides have the tools.** The same AI techniques are available to defenders and attackers. The gap between "a bug exists" and "someone notices it" is closing fast.
+**Both sides have access to AI-assisted discovery.** The same techniques are available to defenders and attackers. The gap between "a bug exists" and "someone notices it" is closing fast.
 
-**The reservoir is finite.** Software has only so many bugs in it. As AI drains that pool at exponential speed, the strategic question shifts from "how do we find more bugs faster" to "how do we make the bugs that exist not matter when they are found."
+**The reservoir is finite.** Software has only so many bugs in it. As AI drains that pool at machine speed, the strategic question shifts from "how do we find more bugs faster" to "how do we make the bugs that exist not matter when they are found."
 
 That last shift is the whole point of Defense in Depth. The four layers below are how you make bugs not matter.
 
 ## Layer 1: Shrink the Attack Surface
 
-Most container images are bloated. The packaged units that modern applications ship as include shells, package managers, debugging tools, and libraries the application will never use. Every one of those components is potential attack surface.
+Most container images are bloated. These are the packaged units that modern applications ship in. They typically include shells, package managers, debugging tools, and libraries the application will never use. Every one of those components is potential attack surface.
 
 A **minimal image** strips this down to only what the application actually needs to run. No shell, no package manager, no extras. Open source projects like Wolfi, Chainguard Images, and Google's distroless make this practical.
 
-The win is not just fewer bugs in the image. It is dramatically less noise. When scanners flag a vulnerability in a tool your application never executes, that finding is technically true and operationally useless. Minimal images make that noise disappear.
+Minimal images deliver two wins at once: fewer CVEs in the image and dramatically less scanner noise. When scanners flag a vulnerability in a tool your application never executes, that finding is technically true and operationally useless. Minimal images make that noise disappear.
 
 ## Layer 2: Harden the Walls
 
-Even after you strip the image, the code itself can be made expensive to exploit. Modern compilers offer a set of protections that make memory-corruption bugs significantly harder to weaponize. These bugs are still the most common class of serious vulnerability:
+Even after you strip the image, the code itself can be made expensive to exploit. Modern compilers and operating systems offer a set of protections that make memory-corruption bugs significantly harder to weaponize. These bugs are still the most common class of serious vulnerability:
 
-- **ASLR (Address Space Layout Randomization)** scrambles where code lives in memory each time it runs, so an attacker cannot reliably predict where to aim.
-- **Stack protection** detects when an attacker is trying to overwrite a function's return address, the classic buffer overflow technique.
-- **FORTIFY_SOURCE** adds runtime checks to common functions that have historically been exploited.
+- **ASLR (Address Space Layout Randomization)** is an operating system feature that randomizes the base addresses of memory regions (stack, heap, libraries) each time a program runs, so an attacker cannot reliably predict where to aim.
+- **Stack protection (stack canaries)** is a compiler feature that detects when an attacker is trying to overwrite a function's return address, the classic buffer overflow technique.
+- **FORTIFY_SOURCE** is a compiler feature that adds runtime checks to common functions that have historically been exploited.
 
 On an unhardened system, a single buffer overflow can lead to full system compromise. On a hardened system, the same bug typically requires the attacker to chain together multiple rare vulnerabilities just to bypass the protections. Most attackers will not bother. The walls do not need to be unbreakable. They need to be expensive.
 
@@ -70,17 +70,17 @@ On an unhardened system, a single buffer overflow can lead to full system compro
 
 If an attacker does get code running inside a process, the next question is: what can that process do?
 
-**Mandatory Access Control** systems like SELinux and AppArmor answer that question by confining each process to a specific security context. The web server can read its own configuration files and write its own logs. It cannot read /etc/shadow, cannot bind to arbitrary ports, cannot execute a shell. Even with full code execution inside the process, the attacker hits walls everywhere they turn.
+**Mandatory Access Control** systems like SELinux and AppArmor answer that question by confining every process to a specific security context by default. The web server can read its own configuration files and write its own logs. It cannot read /etc/shadow, cannot bind to arbitrary ports, cannot execute a shell. Even with full code execution inside the process, the attacker hits walls everywhere they turn.
 
 This is the difference between "attacker compromised a process" and "attacker compromised the system." That gap is the difference between an incident and a breach.
 
 ## Layer 4: Isolate the Blast Radius
 
-In modern infrastructure, applications run inside **containers**. These are isolated units enforced by the Linux kernel. Containers share the host but cannot, by default, see each other's files or processes.
+In container-based infrastructure, applications run inside **containers**. These are isolated units enforced by the Linux kernel. Containers share the host but cannot, by default, see each other's files or processes.
 
-In Kubernetes (the dominant system for orchestrating containers), the **Pod Security Standards** define three tiers of isolation, with the "Restricted" tier blocking the dangerous defaults. **Network Policies** prevent compromised pods from talking to anything they should not. Tools like **Falco** watch the running system for suspicious behavior and alert when, for example, a shell appears inside a container that should not have one.
+In Kubernetes (the dominant system for orchestrating containers), the **Pod Security Standards** define three tiers of isolation, with the "Restricted" tier blocking the dangerous defaults. **Network Policies** define which connections are allowed between pods; anything not explicitly allowed is blocked. Tools like **Falco** watch the running system for suspicious behavior and alert when, for example, a shell appears inside a container that should not have one.
 
-A compromise in one container, with these controls in place, stays in one container.
+A compromise in one container, with these controls in place, has a very hard time spreading without being caught.
 
 ## The Open Source Advantage
 
@@ -88,8 +88,8 @@ Every tool named in this primer is open source. That is not an accident.
 
 When AI can read every line of code in a system, transparency stops being optional. A proprietary vendor sees 271 bugs as a reputational risk to hide. An open source project sees them as a roadmap. Linus's Law ("given enough eyeballs, all bugs are shallow") now applies with millions of virtual eyeballs reading at machine speed.
 
-You cannot patch your way out of machine-speed discovery. The vulnerability treadmill does not end. It accelerates. The way off the treadmill is not faster patching. It is building systems where individual bugs do not matter.
+You cannot patch your way out of machine-speed discovery. The way off the treadmill is not faster patching. It is building systems where individual bugs do not matter.
 
-That is what these four layers do. They turn "we found a bug" into "we found a bug that cannot escape this container, cannot read that file, cannot execute in this context." 
+That is what these four layers do. They turn "we found a bug" into "we found a bug that cannot escape this container, cannot read that file, cannot execute in this context."
 
-The house is either defended in depth, or it is not defended at all. Which one are you running?
+Defense in depth is not a luxury. In the age of AI, it is the minimum viable architecture.
