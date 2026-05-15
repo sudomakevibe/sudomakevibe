@@ -4,7 +4,7 @@ description: "Why the vulnerability treadmill is broken, what defense in depth a
 pubDate: 2026-05-15T09:00:00-04:00
 tags: ["defense-in-depth", "kubernetes", "linux", "ai-security", "homelab", "cybersecurity"]
 readingTime: "7 min read"
-draft: true
+draft: false
 ---
 
 ## The Treadmill
