@@ -1,0 +1,101 @@
+---
+// ThemeHint — bottom-right toast hint about theme palettes.
+// Shows once per browser session via sessionStorage flag.
+// Slides in from bottom-right after 2s delay on first page load of session.
+---
+<div id="theme-hint" class="theme-hint" role="status" aria-live="polite">
+  <button
+    id="theme-hint-close"
+    class="theme-hint-close"
+    aria-label="Dismiss themes hint"
+    type="button"
+  >&times;</button>
+  <div class="theme-hint-content">
+    <span class="theme-hint-prompt">$ ls ~/palettes</span>
+    <span class="theme-hint-text">four themes available, switch at the footer &darr;</span>
+  </div>
+</div>
+<style>
+  .theme-hint {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    max-width: 360px;
+    padding: 0.75rem 2.25rem 0.75rem 1rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    transform: translateY(calc(100% + 40px));
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    pointer-events: none;
+  }
+  .theme-hint.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .theme-hint-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .theme-hint-prompt {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .theme-hint-text {
+    color: var(--text-secondary);
+  }
+  .theme-hint-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .theme-hint-close:hover {
+    color: var(--accent);
+    background-color: var(--bg-secondary);
+  }
+  .theme-hint-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  @media (max-width: 480px) {
+    .theme-hint {
+      bottom: 16px;
+      right: 16px;
+      left: 16px;
+      max-width: none;
+    }
+  }
+</style>
+<script>
+  (function () {
+    const HINT_KEY = "themesHintSeen";
+    if (sessionStorage.getItem(HINT_KEY) === "true") return;
+    const hint = document.getElementById("theme-hint");
+    const closeBtn = document.getElementById("theme-hint-close");
+    if (!hint || !closeBtn) return;
+    const dismiss = () => {
+      hint.classList.remove("visible");
+      sessionStorage.setItem(HINT_KEY, "true");
+    };
+    closeBtn.addEventListener("click", dismiss);
+    setTimeout(() => hint.classList.add("visible"), 2000);
+  })();
+</script>
