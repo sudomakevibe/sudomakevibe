@@ -230,3 +230,26 @@ html.theme-transitioning *::after {
     border-color 0.2s ease,
     color 0.2s ease !important;
 }
+
+html.theme-transitioning-cross,
+html.theme-transitioning-cross *,
+html.theme-transitioning-cross *::before,
+html.theme-transitioning-cross *::after {
+  transition:
+    background-color 0.5s ease-in-out,
+    border-color 0.5s ease-in-out,
+    color 0.5s ease-in-out !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after,
+  html.theme-transitioning-cross,
+  html.theme-transitioning-cross *,
+  html.theme-transitioning-cross *::before,
+  html.theme-transitioning-cross *::after {
+    transition: none !important;
+  }
+}

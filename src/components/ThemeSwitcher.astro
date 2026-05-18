@@ -55,8 +55,13 @@
     "solar-bloom":  "#fdf6e3",
   };
 
+  const isLight: Record<string, boolean> = {"sudo-dark": false, "sudo-light": true, "arctic-frost": false, "solar-bloom": true};
   function applyTheme(themeName: string) {
-    document.documentElement.classList.add("theme-transitioning");
+    const previous = document.documentElement.getAttribute("data-theme") || "sudo-dark";
+    const crossLuminance = isLight[previous] !== isLight[themeName];
+    const transitionClass = crossLuminance ? "theme-transitioning-cross" : "theme-transitioning";
+    const transitionDuration = crossLuminance ? 550 : 250;
+    document.documentElement.classList.add(transitionClass);
     document.documentElement.setAttribute("data-theme", themeName);
     document.documentElement.style.backgroundColor = backgrounds[themeName] || "#0b1623";
     localStorage.setItem("blog-theme", themeName);
@@ -72,8 +77,8 @@
     document.getElementById(`theme-${themeName}`)?.classList.add("active");
 
     window.setTimeout(() => {
-      document.documentElement.classList.remove("theme-transitioning");
-    }, 250);
+      document.documentElement.classList.remove(transitionClass);
+    }, transitionDuration);
   }
 
   // Apply saved theme on load
