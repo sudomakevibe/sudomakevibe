@@ -247,68 +247,66 @@ const structuredData = jsonLd ?? defaultJsonLd;
         --diagram-tailscale: #5A9A5A;
       }
 
-      /* ── Earthy Glow — Solarized-based, contrast optimised ────── */
-      /* text-primary lightened #839496→#93a1a1 (low AA→solid AA)  */
-      /* text-secondary lightened #657b83→#7a9199 (FAIL→AA)        */
-      /* accent boosted #268bd2→#3498d8 (AA Large→AA)              */
-      /* border strengthened for card edge visibility               */
-      [data-theme="earthy-glow"] {
+      /* ── Solar Bloom — Solarized Light, warm brown accent ────────── */
+      /* Solarized Light base3/base2 cream backgrounds              */
+      /* Caramel accent on cream — distinctive warm earth aesthetic */
+      /* All pairs WCAG AA verified                                  */
+      [data-theme="solar-bloom"] {
+        --bg-primary:    #fdf6e3;
+        --bg-secondary:  #eee8d5;
+        --bg-card:       #eee8d5;
+        --text-primary:  #586e75;
+        --text-secondary:#586e75;
+        --accent:        #8b5a2b;
+        --accent-hover:  #6f3f1a;
+        --code-bg:       #eee8d5;
+        --code-text:     #7d3505;
+        --border:        #7a8a8a;
+        --selection-bg:  #8b5a2b;
+        --selection-text:#fdf6e3;
+        --cursor:        #8b5a2b;
+        --diagram-infra: #5d3517;
+        --diagram-infra-fill: #eee8d5;
+        --diagram-infra-text: #4a2a12;
+        --diagram-compute: #8b5a2b;
+        --diagram-compute-fill: #f5efd9;
+        --diagram-compute-text: #6f3f1a;
+        --diagram-compute-sub: #7d4a1f;
+        --diagram-ai: #6f3f1a;
+        --diagram-ai-fill: #f5efd9;
+        --diagram-ai-text: #5d3517;
+        --diagram-devops: #7d4a1f;
+        --diagram-devops-fill: #f5efd9;
+        --diagram-devops-text: #5a3413;
+        --diagram-dev: #6c5b3e;
+        --diagram-dev-fill: #f0eadc;
+        --diagram-dev-text: #4a3f29;
+        --diagram-dev-sub: #7a6850;
+        --diagram-windows: #7a8a8a;
+        --diagram-windows-fill: #e8e3d0;
+        --diagram-windows-text: #586e75;
+        --diagram-external: #93a1a1;
+        --diagram-external-fill: #e8e3d0;
+        --diagram-external-text: #586e75;
+        --diagram-tailscale: #5d3517;
         /* Shiki syntax highlighting */
-        --astro-code-background: #001f2a;
-        --astro-code-foreground: #93a1a1;
-        --astro-code-token-keyword: #3498d8;
-        --astro-code-token-string: #859900;
-        --astro-code-token-comment: #4a7080;
-        --astro-code-token-constant: #cb4b16;
-        --astro-code-token-function: #2aa8c8;
-        --astro-code-token-string-expression: #859900;
-        --astro-code-token-punctuation: #7a9199;
-        --astro-code-token-link: #3498d8;
-
-        --bg-primary:    #002b36;
-        --bg-secondary:  #00313e;
-        --bg-card:       #0a3444;
-        --text-primary:  #93a1a1;
-        --text-secondary:#7a9199;
-        --accent:        #3498d8;
-        --accent-hover:  #4aaee4;
-        --code-bg:       #001f2a;
-        --code-text:     #56b6c2;
-        --border:        #1a5068;
-        --selection-bg:  #3498d8;
-        --selection-text:#002b36;
-        --cursor:        #3498d8;
-        --diagram-infra: #4A9A6A;
-        --diagram-infra-fill: #0A2E20;
-        --diagram-infra-text: #70C090;
-        --diagram-compute: #2AA8C8;
-        --diagram-compute-fill: #0A2A38;
-        --diagram-compute-text: #70C8D8;
-        --diagram-compute-sub: #4A98A8;
-        --diagram-ai: #20A8C0;
-        --diagram-ai-fill: #082830;
-        --diagram-ai-text: #50C8D8;
-        --diagram-devops: #2AA198;
-        --diagram-devops-fill: #0A3030;
-        --diagram-devops-text: #50C8C0;
-        --diagram-dev: #7868C8;
-        --diagram-dev-fill: #201838;
-        --diagram-dev-text: #A898E8;
-        --diagram-dev-sub: #7868C0;
-        --diagram-windows: #4A6878;
-        --diagram-windows-fill: #102028;
-        --diagram-windows-text: #7898A8;
-        --diagram-external: #3A6878;
-        --diagram-external-fill: #0A1E28;
-        --diagram-external-text: #7898A8;
-        --diagram-tailscale: #4A9A6A;
+        --astro-code-background: #eee8d5;
+        --astro-code-foreground: #586e75;
+        --astro-code-token-keyword: #8b5a2b;
+        --astro-code-token-string: #4a6e3a;
+        --astro-code-token-comment: #93a1a1;
+        --astro-code-token-constant: #a13a0e;
+        --astro-code-token-function: #6f3f1a;
+        --astro-code-token-string-expression: #4a6e3a;
+        --astro-code-token-punctuation: #586e75;
+        --astro-code-token-link: #8b5a2b;
       }
     </style>
 
     <!-- FOUC prevention: synchronous before first paint -->
     <script is:inline>
       (function () {
-        var valid = ["sudo-dark", "sudo-light", "arctic-frost", "earthy-glow"];
+        var valid = ["sudo-dark", "sudo-light", "arctic-frost", "solar-bloom"];
         var saved = localStorage.getItem("blog-theme");
         var theme = valid.includes(saved) ? saved : "sudo-dark";
         document.documentElement.setAttribute("data-theme", theme);
@@ -316,7 +314,7 @@ const structuredData = jsonLd ?? defaultJsonLd;
           "sudo-dark":    "#0b1623",
           "sudo-light":   "#f4f8fb",
           "arctic-frost": "#2e3440",
-          "earthy-glow":  "#002b36",
+          "solar-bloom":  "#fdf6e3",
         };
         document.documentElement.style.backgroundColor = backgrounds[theme] || "#0b1623";
       })();

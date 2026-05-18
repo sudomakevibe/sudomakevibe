@@ -29,30 +29,30 @@
       aria-label="Arctic Frost theme"
     ></button>
     <button
-      id="theme-earthy-glow"
+      id="theme-solar-bloom"
       class="theme-btn"
-      style="background-color: #002b36;"
-      title="Earthy Glow"
-      aria-label="Earthy Glow theme"
+      style="background-color: #fdf6e3; border-color: #d4c8ae;"
+      title="Solar Bloom"
+      aria-label="Solar Bloom theme"
     ></button>
   </div>
 </div>
 
 <script>
-  const valid = ["sudo-dark", "sudo-light", "arctic-frost", "earthy-glow"];
+  const valid = ["sudo-dark", "sudo-light", "arctic-frost", "solar-bloom"];
 
   const themeNames: Record<string, string> = {
     "sudo-dark":    "sudo dark",
     "sudo-light":   "sudo light",
     "arctic-frost": "arctic frost",
-    "earthy-glow":  "earthy glow",
+    "solar-bloom":  "solar bloom",
   };
 
   const backgrounds: Record<string, string> = {
     "sudo-dark":    "#0b1623",
     "sudo-light":   "#f4f8fb",
     "arctic-frost": "#2e3440",
-    "earthy-glow":  "#002b36",
+    "solar-bloom":  "#fdf6e3",
   };
 
   function applyTheme(themeName: string) {
