@@ -2,7 +2,7 @@
 
 Living backlog for the sudomakevibe.com site. Parked work, durable rules learned through experience, and future ideas. Update as items land or new ones surface.
 
-Last updated: 2026-05-12.
+Last updated: 2026-05-17.
 
 ---
 
@@ -37,12 +37,13 @@ Items here are not blocking, but they are maintenance traps that will cost time 
 - [ ] **Detailed lab diagram.** Visual of the homelab: Raspberry Pi 5s and Lenovo laptops running K3s, full K8s, Kali, observability stacks, hardened Linux. Brand-color SVG.
 
 - [ ] **HITL (human-in-the-loop) post.** Flagged in part 3 of the AI-is-not-free series as a separate subject. The architecture is necessary but not sufficient; HITL is the missing discipline.
+- [ ] **"Why theme switches flash" post.** Raw material captured 2026-05-17. The story: theme switcher felt smooth within same-luminance pairs (light↔light, dark↔dark) but jarring across light↔dark. Three obvious fixes failed (slower global transition, opacity dip, smoother opacity dip). Real fix was surgical — detect cross-luminance switches in JS and apply a longer 0.5s transition only for those cases. The bug along the way: clipboard corruption produced invalid CSS that the browser silently dropped, making the broken state feel right. Lesson: motion that ignores luminance topology fails. The eye adapts to ambient luminance, and transitions that violate that adaptation register as flashes regardless of timing.
 
 ---
 
 ## Site features and styling
 
-- [ ] **Shiki `css-variables` theme for syntax highlighting.** Replaces the current plain-text code block treatment with real syntax highlighting that respects the four-theme palette.
+- [x] **Shiki `css-variables` theme for syntax highlighting.** 2026-05-14, `75b13c8`. Wired css-variables theme in astro.config.mjs with bash as defaultLang. Added --astro-code-* variables to all four theme blocks in BaseLayout.astro. Code blocks now show proper syntax colours that respect the active palette.
 
 - [ ] **Decide whether to drop manual `readingTime` overrides in frontmatter.** The `remark-reading-time` plugin works correctly (calibrated to 265 wpm against Medium, strips html/code/inlineCode/table from word count). Posts currently override the auto-calc manually in frontmatter. Manual workflow has a real cost (remember to set it, recalibrate when content changes); auto-calc may be close enough to trust. Decision deferred. Not urgent.
 
@@ -112,6 +113,19 @@ Speculative items, not committed work. Move to a section above if and when they 
 
 Longer-form context for what landed recently. Kept here as a changelog companion to the inline `[x]` checkmarks above. Prune anything older than 90 days.
 
+### 2026-05-14 — full stack refresh (Ubuntu, Node, Astro 4→6, Shiki, solar-bloom, ThemeHint)
+Three intensive sessions across May 14-17, capturing infrastructure refresh, theme system polish, and two published posts.
+- **`f1088e0`** Node v24.15.0 LTS pinned via nvm. `.nvmrc` committed to repo root. Migrated from non-LTS v25.9.0 (EOL Oct 2026).
+- **`d3218b6`** Astro 4.16.18 → 6.3.3 migration. Content Layer API: `src/content/config.ts` moved to `src/content.config.ts` with glob loader. `defineCollection` stays in astro:content; `z` moved to astro/zod. `entry.render()` → `render(entry)` throughout dynamic routes. `post.slug` → `post.id.replace(/\.mdx?$/, '')` everywhere it was referenced. `@astrojs/tailwind` removed (incompatible with Astro 6); replaced with direct PostCSS config + autoprefixer. Tailwind v3 stays. Migration done on `astro-v6-upgrade` branch, merged only after clean local build.
+- **`75b13c8`** Shiki css-variables theme with bash as defaultLang. Theme-aware syntax highlighting across all four palettes. Ubuntu CVE post published (`/blog/ubuntu-upgrade-astro-6-zero-downtime`).
+- **`5cf9d6b`, `57d9472`, `1e336d0`** Slug undefined fixes. Three pages still referenced `post.slug` after the Astro 6 migration — blog index, homepage latest posts, RSS feed. All fixed.
+- **`e03f5c7`** Slug bug addendum added to Ubuntu post. 265 wpm standard documented in DECISIONS.md.
+- **`ede4296`, `0816dc4`** Two custom SVG diagrams added to Ubuntu post (three-layer isolation model, practitioner upgrade flowchart). Inline code background removed for prose readability — kept transparent with accent colour, only code blocks retain bg fill.
+- **`cf802a8`** Replaced earthy-glow (Solarized Dark) with solar-bloom (Solarized Light cream + warm caramel accent #8b5a2b). All four themes now pass WCAG AA. Note: canonical Solarized Light fails AA out of the box — caramel was chosen as a custom accent that hits 5.42:1 against cream.
+- **`dc3eccc`** ThemeHint toast added. Bottom-right hint, slides in after 2s, dismissible. Session-scoped via sessionStorage. Returning visitors see it again the next session.
+- **`8d23a43`, `80d715d`** Theme updates post published (`/blog/theme-updates-solar-bloom`). Documents solar-bloom replacement and ThemeHint discoverability work.
+- **`c7225d0`** Smooth cross-luminance theme switches. 0.5s ease-in-out for light↔dark transitions, snappy 0.2s preserved within same-luminance pairs. `prefers-reduced-motion` respected.
+
 ### 2026-05-12 — architectural cleanup pass
 
 Three commits resolved the duplicated prose-styling that consumed the May 12 debug session.
@@ -131,4 +145,4 @@ Three commits resolved the duplicated prose-styling that consumed the May 12 deb
 
 ### 2026-04-20
 
-- Site launched. Astro, Tailwind, Vercel, GitHub auto-deploy, self-hosted JetBrains Mono, four brand-aligned themes (sudo-dark, sudo-light, arctic-frost, earthy-glow), all WCAG AA compliant with FOUC prevention.
+- Site launched. Astro, Tailwind, Vercel, GitHub auto-deploy, self-hosted JetBrains Mono, four brand-aligned themes (originally sudo-dark, sudo-light, arctic-frost, earthy-glow — earthy-glow replaced by solar-bloom on 2026-05-14, see Recently shipped), all WCAG AA compliant with FOUC prevention.
