@@ -4,7 +4,7 @@ description: "A multi-day clipboard corruption mystery on a Wayland Ubuntu deskt
 pubDate: 2026-05-26T16:00:00-04:00
 tags: ["linux", "homelab", "wayland", "debugging", "ubuntu"]
 readingTime: "6 min read"
-draft: true
+draft: false
 ---
 
 For several days, my ThinkBook lied to me.
