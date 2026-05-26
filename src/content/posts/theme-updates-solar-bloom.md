@@ -3,7 +3,7 @@ title: "Theme Updates: Solar Bloom and a Discoverability Toast"
 description: "Two small changes to sudomakevibe.com: a new warm light palette replacing earthy glow, and a session-scoped hint about the theme switcher."
 pubDate: 2026-05-17T23:30:00-04:00
 tags: ["design", "webdev", "homelab", "open-source"]
-readingTime: "3 min read"
+readingTime: "2 min read"
 draft: false
 ---
 

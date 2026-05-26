@@ -3,7 +3,7 @@ title: "Defense in Depth Explained: Security in the Age of AI"
 description: "Why the vulnerability treadmill is broken, what defense in depth actually means, and how to build systems where individual bugs don't matter."
 pubDate: 2026-05-15T09:00:00-04:00
 tags: ["defense-in-depth", "kubernetes", "linux", "ai-security", "homelab", "cybersecurity"]
-readingTime: "7 min read"
+readingTime: "5 min read"
 draft: false
 ---
 
