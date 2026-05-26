@@ -1,6 +1,6 @@
 ---
 title: "Why My Terminal Ate My HTML"
-description: "A multi-day clipboard corruption mystery on a Wayland Ubuntu desktop, traced through five wrong diagnoses to ibus, the input method framework most users do not know is running."
+description: "A multi-day clipboard corruption mystery on a Wayland Ubuntu desktop, traced through five dead ends to ibus, the input method framework most users do not know is running."
 pubDate: 2026-05-26T16:00:00-04:00
 tags: ["linux", "homelab", "wayland", "debugging", "ubuntu"]
 readingTime: "6 min read"
