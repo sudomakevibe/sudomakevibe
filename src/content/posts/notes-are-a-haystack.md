@@ -1,7 +1,7 @@
 ---
 title: "Your Notes Are Not a Second Brain. They Are a Haystack!"
 description: "After months in Joplin, I went looking for the needle under pressure and found out which retrieval features actually matter at 11pm."
-pubDate: 2026-06-02
+pubDate: 2026-06-03
 readingTime: "6 min read"
 tags: ["pkm", "obsidian", "joplin", "homelab", "workflow"]
 draft: false
