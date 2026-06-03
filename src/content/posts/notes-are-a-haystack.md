@@ -4,7 +4,7 @@ description: "After months in Joplin, I went looking for the needle under pressu
 pubDate: 2026-06-02
 readingTime: "6 min read"
 tags: ["pkm", "obsidian", "joplin", "homelab", "workflow"]
-draft: true
+draft: false
 ---
 
 It is 11pm. A Kubernetes cluster is down. You know you have seen this exact symptom before, maybe six months ago, on a different cluster, and you know you wrote it down. So you open your notes, type the symptom into search, and get three results. None of them link to each other. You start reading all three. Twenty minutes later you find the one line that matters, apply it, and the cluster recovers.
