@@ -1,6 +1,6 @@
 ---
-title: "sudo make brain"
-description: "Building a five-device PKM system on plain Markdown: Obsidian, Neovim, PARA, and the ghost folder that kept coming back."
+title: "sudo make second-brain"
+description: "Building a five-device second brain on plain Markdown: Obsidian, Neovim, PARA, and the ghost folder that kept coming back."
 pubDate: 2026-06-05T12:00:00-04:00
 tags: ["obsidian", "neovim", "pkm", "linux", "workflow", "homelab"]
 readingTime: "6 min read"
