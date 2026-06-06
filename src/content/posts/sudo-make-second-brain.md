@@ -1,6 +1,6 @@
 ---
 title: "sudo make second-brain"
-description: "Building a five-device second brain on plain Markdown: Obsidian, Neovim, PARA, and the ghost folder that kept coming back."
+description: "Building a cross-platform second brain on plain Markdown: Obsidian, Neovim, PARA, and the ghost folder that kept coming back."
 pubDate: 2026-06-05T12:00:00-04:00
 tags: ["obsidian", "neovim", "pkm", "linux", "workflow", "homelab"]
 readingTime: "6 min read"
@@ -22,7 +22,7 @@ Joplin served its purpose. It is a solid, open-source note-taking application wi
 
 When the time came to move those notes somewhere, the migration path was scripted cleanup, location metadata stripping, and broken image references. That is not a Joplin problem specifically. It is what happens when notes live in any format that is not plain files on a filesystem.
 
-The requirement for the replacement was simple: every note is a `.md` file in a folder. No database, no proprietary format, no vendor lock-in. The tool that reads the files is replaceable. The files are not.
+The requirement for the replacement was simple. A cross-platform second brain (Ubuntu ThinkBook, Mac, Win 11 ThinkPad, iPad, iPhone) built on plain Markdown, Obsidian, and Neovim. Every note is a plain `.md` file on a filesystem. No proprietary format, no vendor lock-in. The tool that reads the files is replaceable. The files are not.
 
 ---
 
@@ -36,9 +36,9 @@ One deliberate decision: this vault is a knowledge repository, not a project man
 
 ---
 
-## Five devices and a 9-byte file
+## Five platforms, one vault
 
-Installing Obsidian on Ubuntu 24.04 revealed the first failure path. The standard curl one-liner for the latest release:
+Installing Obsidian on Ubuntu 24.04 ThinkBook revealed the first failure path. The standard curl one-liner for the latest release:
 
 ```bash
 curl -LO https://github.com/obsidianmd/obsidian-releases/releases/latest/download/obsidian_amd64.deb
@@ -52,7 +52,7 @@ curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/lates
 
 That returns the versioned URL. Download it, verify the file is a real Debian package with `file`, install with `apt`. The pattern applies to any GitHub release that bakes a version number into the asset filename, which is most of them.
 
-The other four devices (Mac, Windows 11, iPad, iPhone) install from their respective stores and connect to the same remote vault through Obsidian Sync. The vault is end-to-end encrypted with a password that lives in a password manager, not a sticky note.
+The other four devices (Mac, Win 11 ThinkPad, iPad, iPhone) install from their respective stores and connect to the same remote vault through Obsidian Sync. The vault is end-to-end encrypted with a password that lives in a password manager, not a sticky note.
 
 ---
 
@@ -154,7 +154,13 @@ Obsidian owns what Neovim cannot do: the Bases dashboards, the visual graph, Can
 
 Neovim owns what Obsidian does poorly: terminal-native editing, Vim motions on long-form writing, staying in the shell during a coding session without switching applications. For someone who spends most of their day in a terminal, context-switching to a GUI to write a note is friction. `nvim ~/Documents/my_2nd_brain/Home.md` is not.
 
-The capture rule is the same regardless of tool: every new note lands in `00_Inbox`. Both `Ctrl+N` in Obsidian and `Space o c` in Neovim deposit to the same folder. Triage happens during the weekly review, not in the moment of capture. The weekly review is ten minutes: open the Inbox dashboard, file or delete every note, drag finished projects to `40_Archive`.
+Both `Ctrl+N` in Obsidian and `Space o c` in Neovim deposit to the same folder. The weekly review is ten minutes: open the Inbox dashboard, file or delete every note, drag finished projects to `40_Archive`.
+
+---
+
+## The golden rule
+
+Capture fast, file later. Every new note lands in `00_Inbox` regardless of which tool creates it. Triage happens during the weekly review, not in the moment of capture. The system compounds from there.
 
 ---
 
@@ -174,6 +180,6 @@ The capture rule is the same regardless of tool: every new note lands in `00_Inb
 
 ## What comes next
 
-The vault runs on Obsidian Sync. That is the right call for now: five devices, cross-platform, no infrastructure to maintain while the K3s cluster is still being built. But plain Markdown files synced through a self-hosted CouchDB instance via the Self-hosted LiveSync plugin is the end state. The dependency on a paid service exists by choice, not by necessity.
+The vault runs on Obsidian Sync. That is the right call for now: cross-platform, no infrastructure to maintain while the K3s cluster is still being built. But plain Markdown files synced through a self-hosted CouchDB instance via the Self-hosted LiveSync plugin is the end state. The dependency on a paid service exists by choice, not by necessity.
 
 That migration is its own post.
