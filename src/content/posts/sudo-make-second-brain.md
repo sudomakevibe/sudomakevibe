@@ -182,4 +182,4 @@ Capture fast, file later. Every new note lands in `00_Inbox` regardless of which
 
 The vault runs on Obsidian Sync. That is the right call for now: cross-platform, no infrastructure to maintain while the K3s cluster is still being built. But plain Markdown files synced through a self-hosted CouchDB instance via the Self-hosted LiveSync plugin is the end state. The dependency on a paid service exists by choice, not by necessity.
 
-That migration is its own post!
+That migration is its own post.
