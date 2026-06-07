@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+i#!/usr/bin/env node
 
 import fs from 'fs';
 import path from 'path';
@@ -86,10 +86,8 @@ async function sendBroadcast(broadcastData) {
     // Now schedule the broadcast
     if (response.broadcast?.id) {
       const schedulePayload = {
-        broadcast: {
-          public: true,
-          send_at: broadcastData.scheduled_at,
-        },
+        public: true,
+        send_at: broadcastData.scheduled_at,
       };
       await kitApiRequest('PUT', `/broadcasts/${response.broadcast.id}`, schedulePayload);
       console.log(`✅ Broadcast scheduled`);
