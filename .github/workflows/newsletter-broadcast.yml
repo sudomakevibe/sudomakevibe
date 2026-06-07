@@ -69,6 +69,8 @@ jobs:
         env:
           KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
           KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
+          TEST_EMAIL: farooq@ganai.me
+
         run: |
           node scripts/send-to-kit.js broadcasts/*.json
           
