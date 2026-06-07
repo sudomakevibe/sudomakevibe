@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Update broadcast log
@@ -16,10 +20,8 @@ async function main() {
 
   const logFile = 'broadcasts/BROADCASTS.log';
 
-  // Ensure broadcasts directory exists
   fs.mkdirSync('broadcasts', { recursive: true });
 
-  // Read existing log or create new one
   let logContent = '';
   if (fs.existsSync(logFile)) {
     logContent = fs.readFileSync(logFile, 'utf-8');
@@ -33,7 +35,6 @@ Log of all scheduled newsletter broadcasts.
 `;
   }
 
-  // Process each broadcast file
   for (const file of broadcastFiles) {
     try {
       const content = fs.readFileSync(file, 'utf-8');
@@ -68,7 +69,6 @@ Log of all scheduled newsletter broadcasts.
 
 `;
 
-      // Prepend new entry to log (most recent first)
       const lines = logContent.split('\n');
       const headerEndIndex = lines.findIndex(
         (line, idx) =>
@@ -90,7 +90,6 @@ Log of all scheduled newsletter broadcasts.
     }
   }
 
-  // Write updated log
   fs.writeFileSync(logFile, logContent);
   console.log(`\n✅ Broadcast log updated: ${logFile}`);
 }

@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Parse YAML frontmatter from a markdown file
@@ -18,17 +22,14 @@ function parseFrontmatter(content) {
   yaml.split('\n').forEach(line => {
     if (!line.trim()) return;
 
-    // Handle simple key: value pairs
     const colonIndex = line.indexOf(':');
     if (colonIndex === -1) return;
 
     const key = line.substring(0, colonIndex).trim();
     let value = line.substring(colonIndex + 1).trim();
 
-    // Remove quotes
     value = value.replace(/^["']|["']$/g, '');
 
-    // Handle arrays: ["item1", "item2"]
     if (value.startsWith('[') && value.endsWith(']')) {
       value = value
         .slice(1, -1)
@@ -48,20 +49,6 @@ function parseFrontmatter(content) {
 function generateSubjectLine(title) {
   const base = `new post: ${title}`.toLowerCase();
   return base.length <= 40 ? base : base.substring(0, 37) + '...';
-}
-
-/**
- * Convert markdown to HTML (basic)
- */
-function markdownToHtml(markdown) {
-  let html = markdown
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-    .replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*([^\*]+)\*/g, '<em>$1</em>')
-    .replace(/\n\n+/g, '</p><p>')
-    .replace(/\n/g, '<br/>');
-
-  return `<p>${html}</p>`;
 }
 
 /**
@@ -135,30 +122,23 @@ async function main() {
   }
 
   try {
-    // Read files
     const postContent = fs.readFileSync(postFile, 'utf-8');
     const noteContent = fs.readFileSync(noteFile, 'utf-8');
 
-    // Parse frontmatter
     const frontmatter = parseFrontmatter(postContent);
 
-    // Generate subject line
     const subjectLine = generateSubjectLine(frontmatter.title);
 
-    // Build email content
     const emailHtml = buildEmailContent(frontmatter, noteContent);
 
-    // Calculate scheduled time: Saturday 9 AM ET
     const now = new Date();
-    const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7; // 0 = Sunday, so adjust for Saturday = 6
+    const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7;
     const scheduledAt = new Date(now);
     scheduledAt.setDate(scheduledAt.getDate() + daysUntilSaturday);
     scheduledAt.setHours(9, 0, 0, 0);
 
-    // Adjust for ET timezone offset
     const scheduledAtISO = scheduledAt.toISOString();
 
-    // Build broadcast object
     const broadcast = {
       slug: frontmatter.slug,
       subject: subjectLine,
@@ -170,7 +150,6 @@ async function main() {
       compiled_at: new Date().toISOString(),
     };
 
-    // Write output
     fs.mkdirSync(path.dirname(outputFile), { recursive: true });
     fs.writeFileSync(outputFile, JSON.stringify(broadcast, null, 2));
 
