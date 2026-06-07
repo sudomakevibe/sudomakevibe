@@ -1,0 +1,18 @@
+# Newsletter Broadcasts
+
+Log of all scheduled newsletter broadcasts sent to Kit subscribers via the automated workflow.
+
+Format: one entry per broadcast, most recent first. Each entry includes the post metadata, Kit status, and send timestamp.
+
+---
+
+## 2026-06-06 | sudo make second-brain
+- Post: https://sudomakevibe.com/blog/sudo-make-second-brain
+- Broadcast: https://raw.githubusercontent.com/sudomakevibe/sudomakevibe/main/broadcasts/sudo-make-second-brain.json
+- Subject: "new post: sudo make second-brain"
+- Scheduled: 09:00 AM ET (Saturday)
+- Status: scheduled (awaiting automation workflow)
+
+---
+
+*This log is automatically updated by the GitHub Action whenever a new post triggers a broadcast.*
