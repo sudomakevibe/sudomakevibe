@@ -15,44 +15,51 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Get changed post files
-        id: changed_files
+      - name: Find posts with notes
+        id: find_posts
         run: |
-          # Get the list of changed .md files in src/content/posts/
-          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'src/content/posts/*.md' | grep -v '\.note\.md$' || true)
+          # Find all .md files that have matching .note.md files
+          POSTS=""
+          for post in src/content/posts/*.md; do
+            if [ -f "$post" ] && [[ "$post" != *".note.md" ]]; then
+              note_file="${post%.md}.note.md"
+              if [ -f "$note_file" ]; then
+                POSTS="$POSTS$post
+"
+              fi
+            fi
+          done
           
-          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
-          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "posts<<EOF" >> $GITHUB_OUTPUT
+          echo "$POSTS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Compile broadcasts
         id: compile
         run: |
           mkdir -p broadcasts
           
+          COMPILED=0
           while IFS= read -r post_file; do
             [ -z "$post_file" ] && continue
             
-            # Extract filename without extension
             filename=$(basename "$post_file" .md)
             note_file="src/content/posts/${filename}.note.md"
             
-            # Check if note file exists
-            if [ ! -f "$note_file" ]; then
-              echo "❌ ERROR: Missing note file for $filename"
-              echo "Expected: $note_file"
-              exit 1
-            fi
-            
-            # Run the compilation script
+            echo "Compiling: $filename"
             node scripts/compile-broadcast.js "$post_file" "$note_file" "broadcasts/${filename}.json"
             
             if [ $? -eq 0 ]; then
               echo "✅ Compiled: $filename"
+              COMPILED=$((COMPILED + 1))
             else
               echo "❌ Failed to compile: $filename"
               exit 1
             fi
-          done <<< "${{ steps.changed_files.outputs.changed_files }}"
+          done <<< "${{ steps.find_posts.outputs.posts }}"
+          
+          if [ $COMPILED -eq 0 ]; then
+            echo "ℹ️  No posts with notes found to compile"
+          fi
       - name: Send broadcasts to Kit
         id: kit
         env:
@@ -60,6 +67,12 @@ jobs:
           KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
           TEST_EMAIL: farooq@ganai.me
         run: |
+          # Only run if broadcasts were compiled
+          if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
+            echo "ℹ️  No broadcasts to send"
+            exit 0
+          fi
+          
           node scripts/send-to-kit.js broadcasts/*.json
           
           if [ $? -eq 0 ]; then
@@ -71,6 +84,12 @@ jobs:
       - name: Update broadcast log
         id: log
         run: |
+          # Only update log if broadcasts exist
+          if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
+            echo "ℹ️  No broadcasts to log"
+            exit 0
+          fi
+          
           node scripts/update-broadcast-log.js broadcasts/*.json
           
           if [ $? -eq 0 ]; then
@@ -84,7 +103,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          git add broadcasts/BROADCASTS.log broadcasts/*.json
+          git add broadcasts/BROADCASTS.log broadcasts/*.json 2>/dev/null || true
           
           if git diff --cached --quiet; then
             echo "No changes to commit"
@@ -97,8 +116,8 @@ jobs:
         run: |
           echo "## Newsletter Broadcast Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Status:** ✅ Broadcasts scheduled and logged" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Workflow completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Broadcasts sent to Kit and committed to \`broadcasts/\` directory." >> $GITHUB_STEP_SUMMARY
+          echo "Posts with notes were compiled and scheduled to Kit." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "View the broadcast log: [\`broadcasts/BROADCASTS.log\`](./broadcasts/BROADCASTS.log)" >> $GITHUB_STEP_SUMMARY
