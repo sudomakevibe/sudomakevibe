@@ -1,13 +1,11 @@
-cat > ~/Developer/sudomakevibe/scripts/compile-broadcast.js << 'ENDOFFILE'
 #!/usr/bin/env node
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-/**
- * Parse YAML frontmatter from a markdown file
- */
+
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---\n/);
   if (!match) {
@@ -32,16 +30,12 @@ function parseFrontmatter(content) {
   });
   return data;
 }
-/**
- * Generate subject line (lowercase, max 40 chars)
- */
+
 function generateSubjectLine(title) {
   const base = `new post: ${title}`.toLowerCase();
   return base.length <= 40 ? base : base.substring(0, 37) + '...';
 }
-/**
- * Build the email content from template
- */
+
 function buildEmailContent(frontmatter, noteContent) {
   const {
     title,
@@ -53,12 +47,10 @@ function buildEmailContent(frontmatter, noteContent) {
 <html>
 <body style="font-family: 'JetBrains Mono', monospace; color: #000; background-color: #fff; line-height: 1.6;">
 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-  <!-- Header -->
   <div style="text-align: center; margin-bottom: 40px;">
     <code style="color: #318BBF;">$ sudo get updates</code><br/>
     <small style="color: #666;">longer reads | deeper breaths | sudo make calm</small>
   </div>
-  <!-- Main content -->
   <div style="margin-bottom: 40px;">
     <h2 style="font-size: 20px; margin: 20px 0 10px 0;">${title}</h2>
     <p style="color: #666; margin: 0 0 15px 0;">${description}</p>
@@ -68,7 +60,6 @@ function buildEmailContent(frontmatter, noteContent) {
       </a>
     </p>
   </div>
-  <!-- Personal note -->
   <div style="background-color: #f9f9f9; padding: 20px; border-left: 3px solid #318BBF; margin-bottom: 40px;">
     <h3 style="font-size: 14px; margin: 0 0 10px 0;">A note from me</h3>
     <p style="margin: 0; font-size: 14px; color: #333;">
@@ -76,7 +67,6 @@ function buildEmailContent(frontmatter, noteContent) {
     </p>
     <p style="margin: 10px 0 0 0; font-size: 14px;">— Farooq</p>
   </div>
-  <!-- Footer -->
   <div style="border-top: 1px solid #eee; padding-top: 20px; text-align: center; font-size: 12px; color: #999;">
     <p style="margin: 5px 0;">sudomakevibe.com — where the command line meets the creative line</p>
     <p style="margin: 5px 0;">One email every two weeks.</p>
@@ -87,9 +77,7 @@ function buildEmailContent(frontmatter, noteContent) {
 `;
   return template.trim();
 }
-/**
- * Main
- */
+
 async function main() {
   const [, , postFile, noteFile, outputFile] = process.argv;
   if (!postFile || !noteFile || !outputFile) {
@@ -102,7 +90,6 @@ async function main() {
     const frontmatter = parseFrontmatter(postContent);
     const subjectLine = generateSubjectLine(frontmatter.title);
     const emailHtml = buildEmailContent(frontmatter, noteContent);
-    // TEST MODE: Schedule for 10 minutes from now instead of Saturday 9 AM
     const now = new Date();
     const scheduledAt = new Date(now.getTime() + 10 * 60 * 1000);
     const scheduledAtISO = scheduledAt.toISOString();
@@ -126,5 +113,5 @@ async function main() {
     process.exit(1);
   }
 }
+
 main();
-ENDOFFILE
