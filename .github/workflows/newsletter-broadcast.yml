@@ -57,7 +57,6 @@ jobs:
         env:
           KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
           KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
-          TEST_EMAIL: farooq@ganai.me
         run: |
           if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
             echo "ℹ️  No broadcasts to send"
@@ -84,22 +83,11 @@ jobs:
             echo "❌ Failed to update log"
             exit 1
           fi
-      - name: Commit changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add broadcasts/BROADCASTS.log 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: update broadcast log"
-            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
-          fi
       - name: Action summary
         if: always()
         run: |
           echo "## Newsletter Broadcast Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Status:** ✅ Workflow completed" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Broadcast sent to Kit" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Posts with notes were compiled and scheduled to Kit." >> $GITHUB_STEP_SUMMARY
+          echo "Your post has been compiled and scheduled to Kit for Saturday 9 AM ET." >> $GITHUB_STEP_SUMMARY
