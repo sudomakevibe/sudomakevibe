@@ -27,17 +27,10 @@ function extractFrontmatter(content) {
 function slugify(str) {
   return str.toLowerCase().replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '');
 }
-function generateEmailHtml(frontmatter, noteContent) {
+function generateEmailContent(frontmatter, noteContent) {
   const slug = slugify(frontmatter.title || 'post');
   const postUrl = `https://sudomakevibe.com/blog/${slug}`;
-  return `<html>
-<body style="font-family: 'JetBrains Mono', monospace; color: #000; background-color: #fff; line-height: 1.6;">
-<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="text-align: center; margin-bottom: 40px;">
-    <code style="color: #318BBF;">$ sudo get updates</code><br/>
-    <small style="color: #666;">longer reads | deeper breaths | sudo make calm</small>
-  </div>
-  <div style="margin-bottom: 40px;">
+  return `<div style="margin-bottom: 40px;">
     <h2 style="font-size: 20px; margin: 20px 0 10px 0;">${frontmatter.title}</h2>
     <p style="color: #666; margin: 0 0 15px 0;">${frontmatter.description}</p>
     <p style="margin: 15px 0;">
@@ -52,14 +45,7 @@ function generateEmailHtml(frontmatter, noteContent) {
       ${noteContent.trim()}<br/>
     </p>
     <p style="margin: 10px 0 0 0; font-size: 14px;">— Farooq</p>
-  </div>
-  <div style="border-top: 1px solid #eee; padding-top: 20px; text-align: center; font-size: 12px; color: #999;">
-    <p style="margin: 5px 0;">sudomakevibe.com — where the command line meets the creative line</p>
-    <p style="margin: 5px 0;">One email every two weeks.</p>
-  </div>
-</div>
-</body>
-</html>`;
+  </div>`;
 }
 async function compileBroadcast(postPath, notePath, outputPath) {
   const postContent = fs.readFileSync(postPath, 'utf-8');
@@ -68,7 +54,7 @@ async function compileBroadcast(postPath, notePath, outputPath) {
   const slug = slugify(frontmatter.title || 'post');
   const subject = `new post: ${frontmatter.title}`;
   const previewText = (frontmatter.description || '').substring(0, 100);
-  const htmlContent = generateEmailHtml(frontmatter, noteContent);
+  const htmlContent = generateEmailContent(frontmatter, noteContent);
   const now = new Date();
   const scheduledAt = new Date(now.getTime() + 2 * 60 * 1000);
   const scheduledAtISO = scheduledAt.toISOString();
@@ -77,7 +63,6 @@ async function compileBroadcast(postPath, notePath, outputPath) {
     preview_text: previewText,
     content: htmlContent,
     scheduled_at: scheduledAtISO,
-    form_id: 9259710,
     frontmatter,
     compiled_at: now.toISOString(),
   };
