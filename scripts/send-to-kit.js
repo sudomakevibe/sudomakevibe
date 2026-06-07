@@ -52,7 +52,7 @@ async function sendBroadcast(broadcastData) {
       broadcast: {
         subject: broadcastData.subject,
         preview_text: broadcastData.preview_text,
-        content: broadcastData.content,
+        message_content: broadcastData.content,
         public: false,
         published_at: now.toISOString(),
         email_template_id: 4627610,
