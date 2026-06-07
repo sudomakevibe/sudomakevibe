@@ -71,7 +71,6 @@ async function sendBroadcast(broadcastData) {
         preview_text: broadcastData.preview_text,
         content: broadcastData.content,
         scheduled_at: broadcastData.scheduled_at,
-        state: 'scheduled',
       },
     };
 
@@ -81,8 +80,17 @@ async function sendBroadcast(broadcastData) {
 
     const response = await kitApiRequest('POST', '/broadcasts', payload);
 
-    console.log(`✅ Sent successfully`);
+    console.log(`✅ Broadcast created`);
     console.log(`   Broadcast ID: ${response.broadcast?.id}`);
+
+    // Now schedule the broadcast
+    if (response.broadcast?.id) {
+      const schedulePayload = {
+        state: 'scheduled',
+      };
+      await kitApiRequest('PATCH', `/broadcasts/${response.broadcast.id}`, schedulePayload);
+      console.log(`✅ Broadcast scheduled`);
+    }
 
     return response;
   } catch (error) {
