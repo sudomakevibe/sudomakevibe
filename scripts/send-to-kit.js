@@ -70,7 +70,7 @@ async function sendBroadcast(broadcastData) {
         subject: broadcastData.subject,
         preview_text: broadcastData.preview_text,
         content: broadcastData.content,
-        scheduled_at: broadcastData.scheduled_at,
+        public: false,
       },
     };
 
@@ -86,9 +86,12 @@ async function sendBroadcast(broadcastData) {
     // Now schedule the broadcast
     if (response.broadcast?.id) {
       const schedulePayload = {
-        state: 'scheduled',
+        broadcast: {
+          public: true,
+          send_at: broadcastData.scheduled_at,
+        },
       };
-      await kitApiRequest('PATCH', `/broadcasts/${response.broadcast.id}`, schedulePayload);
+      await kitApiRequest('PUT', `/broadcasts/${response.broadcast.id}`, schedulePayload);
       console.log(`✅ Broadcast scheduled`);
     }
 
