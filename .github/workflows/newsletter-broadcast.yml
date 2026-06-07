@@ -18,18 +18,15 @@ jobs:
       - name: Find posts with notes
         id: find_posts
         run: |
-          # Find all .md files that have matching .note.md files
           POSTS=""
           for post in src/content/posts/*.md; do
             if [ -f "$post" ] && [[ "$post" != *".note.md" ]]; then
               note_file="${post%.md}.note.md"
               if [ -f "$note_file" ]; then
-                POSTS="$POSTS$post
-"
+                POSTS="$POSTS$post"$'\n'
               fi
             fi
           done
-          
           echo "posts<<EOF" >> $GITHUB_OUTPUT
           echo "$POSTS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -37,17 +34,13 @@ jobs:
         id: compile
         run: |
           mkdir -p broadcasts
-          
           COMPILED=0
           while IFS= read -r post_file; do
             [ -z "$post_file" ] && continue
-            
             filename=$(basename "$post_file" .md)
             note_file="src/content/posts/${filename}.note.md"
-            
             echo "Compiling: $filename"
             node scripts/compile-broadcast.js "$post_file" "$note_file" "broadcasts/${filename}.json"
-            
             if [ $? -eq 0 ]; then
               echo "✅ Compiled: $filename"
               COMPILED=$((COMPILED + 1))
@@ -56,7 +49,6 @@ jobs:
               exit 1
             fi
           done <<< "${{ steps.find_posts.outputs.posts }}"
-          
           if [ $COMPILED -eq 0 ]; then
             echo "ℹ️  No posts with notes found to compile"
           fi
@@ -67,14 +59,11 @@ jobs:
           KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
           TEST_EMAIL: farooq@ganai.me
         run: |
-          # Only run if broadcasts were compiled
           if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
             echo "ℹ️  No broadcasts to send"
             exit 0
           fi
-          
           node scripts/send-to-kit.js broadcasts/*.json
-          
           if [ $? -eq 0 ]; then
             echo "✅ All broadcasts scheduled with Kit"
           else
@@ -84,14 +73,11 @@ jobs:
       - name: Update broadcast log
         id: log
         run: |
-          # Only update log if broadcasts exist
           if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
             echo "ℹ️  No broadcasts to log"
             exit 0
           fi
-          
           node scripts/update-broadcast-log.js broadcasts/*.json
-          
           if [ $? -eq 0 ]; then
             echo "✅ Broadcast log updated"
           else
@@ -102,9 +88,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add broadcasts/BROADCASTS.log broadcasts/*.json 2>/dev/null || true
-          
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
@@ -119,5 +103,3 @@ jobs:
           echo "**Status:** ✅ Workflow completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Posts with notes were compiled and scheduled to Kit." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "View the broadcast log: [\`broadcasts/BROADCASTS.log\`](./broadcasts/BROADCASTS.log)" >> $GITHUB_STEP_SUMMARY
