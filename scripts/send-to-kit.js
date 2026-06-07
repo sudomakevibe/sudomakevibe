@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * Make HTTPS request to Kit API
@@ -69,6 +73,14 @@ async function sendBroadcast(broadcastData) {
         scheduled_at: broadcastData.scheduled_at,
       },
     };
+
+    // Add email filter if TEST_EMAIL env var is set
+    if (process.env.TEST_EMAIL) {
+      payload.broadcast.subscriber_filter = {
+        emails: [process.env.TEST_EMAIL],
+      };
+      console.log(`   (TEST MODE - sending only to: ${process.env.TEST_EMAIL})`);
+    }
 
     console.log(`📤 Sending to Kit: ${broadcastData.slug}`);
     console.log(`   Subject: "${broadcastData.subject}"`);
