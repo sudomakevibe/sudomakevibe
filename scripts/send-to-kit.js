@@ -47,16 +47,19 @@ function kitApiRequest(method, endpoint, body = null) {
 }
 async function sendBroadcast(broadcastData) {
   try {
+    const now = new Date();
     const payload = {
       broadcast: {
         subject: broadcastData.subject,
         preview_text: broadcastData.preview_text,
         content: broadcastData.content,
         public: false,
+        published_at: now.toISOString(),
+        email_template_id: 4627610,
       },
     };
-    console.log(`📤 Sending to Kit: ${broadcastData.slug}`);
-    console.log(`   Subject: "${broadcastData.subject}"`);
+    console.log(`📤 Sending to Kit: ${broadcastData.subject}`);
+    console.log(`   Template ID: 4627610`);
     console.log(`   Scheduled: ${broadcastData.scheduled_at}`);
     const response = await kitApiRequest('POST', '/broadcasts', payload);
     console.log(`✅ Broadcast created`);
