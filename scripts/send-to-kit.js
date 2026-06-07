@@ -1,4 +1,4 @@
-i#!/usr/bin/env node
+#!/usr/bin/env node
 
 import fs from 'fs';
 import path from 'path';
@@ -8,9 +8,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-/**
- * Make HTTPS request to Kit API
- */
 function kitApiRequest(method, endpoint, body = null) {
   return new Promise((resolve, reject) => {
     const apiKey = process.env.KIT_API_KEY;
@@ -60,9 +57,6 @@ function kitApiRequest(method, endpoint, body = null) {
   });
 }
 
-/**
- * Send broadcast to Kit
- */
 async function sendBroadcast(broadcastData) {
   try {
     const payload = {
@@ -83,7 +77,6 @@ async function sendBroadcast(broadcastData) {
     console.log(`✅ Broadcast created`);
     console.log(`   Broadcast ID: ${response.broadcast?.id}`);
 
-    // Now schedule the broadcast
     if (response.broadcast?.id) {
       const schedulePayload = {
         public: true,
@@ -100,9 +93,6 @@ async function sendBroadcast(broadcastData) {
   }
 }
 
-/**
- * Main
- */
 async function main() {
   const broadcastFiles = process.argv.slice(2);
 
