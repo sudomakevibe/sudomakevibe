@@ -1,0 +1,117 @@
+name: Newsletter Broadcast
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/content/posts/**'
+
+jobs:
+  broadcast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Get changed post files
+        id: changed_files
+        run: |
+          # Get the list of changed .md files in src/content/posts/
+          CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- 'src/content/posts/*.md' | grep -v '\.note\.md$' || echo "")
+          
+          if [ -z "$CHANGED" ]; then
+            # If no files changed on previous commit (e.g., initial push), get all posts
+            CHANGED=$(find src/content/posts -maxdepth 1 -name '*.md' ! -name '*.note.md' -type f)
+          fi
+          
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Compile broadcasts
+        id: compile
+        run: |
+          mkdir -p broadcasts
+          
+          while IFS= read -r post_file; do
+            [ -z "$post_file" ] && continue
+            
+            # Extract filename without extension
+            filename=$(basename "$post_file" .md)
+            note_file="src/content/posts/${filename}.note.md"
+            
+            # Check if note file exists
+            if [ ! -f "$note_file" ]; then
+              echo "❌ ERROR: Missing note file for $filename"
+              echo "Expected: $note_file"
+              exit 1
+            fi
+            
+            # Run the compilation script
+            node scripts/compile-broadcast.js "$post_file" "$note_file" "broadcasts/${filename}.json"
+            
+            if [ $? -eq 0 ]; then
+              echo "✅ Compiled: $filename"
+            else
+              echo "❌ Failed to compile: $filename"
+              exit 1
+            fi
+          done <<< "${{ steps.changed_files.outputs.changed_files }}"
+
+      - name: Send broadcasts to Kit
+        id: kit
+        env:
+          KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
+          KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
+        run: |
+          node scripts/send-to-kit.js broadcasts/*.json
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ All broadcasts scheduled with Kit"
+          else
+            echo "❌ Failed to send broadcasts to Kit"
+            exit 1
+          fi
+
+      - name: Update broadcast log
+        id: log
+        run: |
+          node scripts/update-broadcast-log.js broadcasts/*.json
+          
+          if [ $? -eq 0 ]; then
+            echo "✅ Broadcast log updated"
+          else
+            echo "❌ Failed to update log"
+            exit 1
+          fi
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add broadcasts/BROADCASTS.log broadcasts/*.json
+          
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: newsletter broadcasts scheduled"
+            git push
+          fi
+
+      - name: Action summary
+        if: always()
+        run: |
+          echo "## Newsletter Broadcast Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Broadcasts scheduled and logged" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Broadcasts sent to Kit and committed to \`broadcasts/\` directory." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "View the broadcast log: [\`broadcasts/BROADCASTS.log\`](./broadcasts/BROADCASTS.log)" >> $GITHUB_STEP_SUMMARY
