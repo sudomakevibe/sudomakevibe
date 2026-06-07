@@ -2,49 +2,35 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-function parseFrontmatter(content) {
-  const match = content.match(/^---\n([\s\S]*?)\n---\n/);
-  if (!match) {
-    throw new Error('No frontmatter found');
-  }
-  const yaml = match[1];
-  const data = {};
-  yaml.split('\n').forEach(line => {
-    if (!line.trim()) return;
-    const colonIndex = line.indexOf(':');
-    if (colonIndex === -1) return;
-    const key = line.substring(0, colonIndex).trim();
-    let value = line.substring(colonIndex + 1).trim();
-    value = value.replace(/^["']|["']$/g, '');
-    if (value.startsWith('[') && value.endsWith(']')) {
-      value = value
-        .slice(1, -1)
-        .split(',')
-        .map(v => v.trim().replace(/^["']|["']$/g, ''));
+function extractFrontmatter(content) {
+  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  const fm = match[1];
+  const obj = {};
+  const lines = fm.split('\n');
+  for (const line of lines) {
+    const [key, ...valueParts] = line.split(':');
+    if (!key || !valueParts.length) continue;
+    const value = valueParts.join(':').trim().replace(/^["']|["']$/g, '');
+    if (key.trim() === 'tags') {
+      obj.tags = value.split(',').map(t => t.trim());
+    } else if (key.trim() === 'pubDate') {
+      obj.pubDate = value;
+    } else {
+      obj[key.trim()] = value;
     }
-    data[key] = value;
-  });
-  return data;
+  }
+  return obj;
 }
-
-function generateSubjectLine(title) {
-  const base = `new post: ${title}`.toLowerCase();
-  return base.length <= 40 ? base : base.substring(0, 37) + '...';
+function slugify(str) {
+  return str.toLowerCase().replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '');
 }
-
-function buildEmailContent(frontmatter, noteContent) {
-  const {
-    title,
-    description,
-    slug,
-  } = frontmatter;
-  const readingTime = frontmatter.readingTime || '5 min read';
-  const template = `
-<html>
+function generateEmailHtml(frontmatter, noteContent) {
+  const slug = slugify(frontmatter.title || 'post');
+  const postUrl = `https://sudomakevibe.com/blog/${slug}`;
+  return `<html>
 <body style="font-family: 'JetBrains Mono', monospace; color: #000; background-color: #fff; line-height: 1.6;">
 <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
   <div style="text-align: center; margin-bottom: 40px;">
@@ -52,10 +38,10 @@ function buildEmailContent(frontmatter, noteContent) {
     <small style="color: #666;">longer reads | deeper breaths | sudo make calm</small>
   </div>
   <div style="margin-bottom: 40px;">
-    <h2 style="font-size: 20px; margin: 20px 0 10px 0;">${title}</h2>
-    <p style="color: #666; margin: 0 0 15px 0;">${description}</p>
+    <h2 style="font-size: 20px; margin: 20px 0 10px 0;">${frontmatter.title}</h2>
+    <p style="color: #666; margin: 0 0 15px 0;">${frontmatter.description}</p>
     <p style="margin: 15px 0;">
-      <a href="https://sudomakevibe.com/blog/${slug}" style="color: #318BBF; text-decoration: none; border-bottom: 1px solid #318BBF;">
+      <a href="${postUrl}" style="color: #318BBF; text-decoration: none; border-bottom: 1px solid #318BBF;">
         Read on the site →
       </a>
     </p>
@@ -63,7 +49,7 @@ function buildEmailContent(frontmatter, noteContent) {
   <div style="background-color: #f9f9f9; padding: 20px; border-left: 3px solid #318BBF; margin-bottom: 40px;">
     <h3 style="font-size: 14px; margin: 0 0 10px 0;">A note from me</h3>
     <p style="margin: 0; font-size: 14px; color: #333;">
-      ${noteContent.replace(/\n/g, '<br/>')}
+      ${noteContent.trim()}<br/>
     </p>
     <p style="margin: 10px 0 0 0; font-size: 14px;">— Farooq</p>
   </div>
@@ -73,45 +59,39 @@ function buildEmailContent(frontmatter, noteContent) {
   </div>
 </div>
 </body>
-</html>
-`;
-  return template.trim();
+</html>`;
 }
-
-async function main() {
-  const [, , postFile, noteFile, outputFile] = process.argv;
-  if (!postFile || !noteFile || !outputFile) {
-    console.error('Usage: compile-broadcast.js <post-file> <note-file> <output-file>');
-    process.exit(1);
-  }
-  try {
-    const postContent = fs.readFileSync(postFile, 'utf-8');
-    const noteContent = fs.readFileSync(noteFile, 'utf-8');
-    const frontmatter = parseFrontmatter(postContent);
-    const subjectLine = generateSubjectLine(frontmatter.title);
-    const emailHtml = buildEmailContent(frontmatter, noteContent);
-    const now = new Date();
-    const scheduledAt = new Date(now.getTime() + 10 * 60 * 1000);
-    const scheduledAtISO = scheduledAt.toISOString();
-    const broadcast = {
-      slug: frontmatter.slug,
-      subject: subjectLine,
-      preview_text: frontmatter.description.substring(0, 100),
-      content: emailHtml,
-      scheduled_at: scheduledAtISO,
-      form_id: parseInt(process.env.KIT_FORM_ID || '9259710'),
-      frontmatter: frontmatter,
-      compiled_at: new Date().toISOString(),
-    };
-    fs.mkdirSync(path.dirname(outputFile), { recursive: true });
-    fs.writeFileSync(outputFile, JSON.stringify(broadcast, null, 2));
-    console.log(`✅ Compiled: ${path.basename(outputFile)}`);
-    console.log(`   Subject: ${broadcast.subject}`);
-    console.log(`   Scheduled: ${scheduledAt.toLocaleString('en-US', { timeZone: 'America/New_York' })} ET`);
-  } catch (error) {
-    console.error(`❌ Error compiling broadcast: ${error.message}`);
-    process.exit(1);
-  }
+async function compileBroadcast(postPath, notePath, outputPath) {
+  const postContent = fs.readFileSync(postPath, 'utf-8');
+  const noteContent = fs.readFileSync(notePath, 'utf-8');
+  const frontmatter = extractFrontmatter(postContent);
+  const slug = slugify(frontmatter.title || 'post');
+  const subject = `new post: ${frontmatter.title}`;
+  const previewText = (frontmatter.description || '').substring(0, 100);
+  const htmlContent = generateEmailHtml(frontmatter, noteContent);
+  const now = new Date();
+  const scheduledAt = new Date(now.getTime() + 2 * 60 * 1000);
+  const scheduledAtISO = scheduledAt.toISOString();
+  const broadcast = {
+    subject,
+    preview_text: previewText,
+    content: htmlContent,
+    scheduled_at: scheduledAtISO,
+    form_id: 9259710,
+    frontmatter,
+    compiled_at: now.toISOString(),
+  };
+  fs.writeFileSync(outputPath, JSON.stringify(broadcast, null, 2));
+  console.log(`✅ Compiled: ${path.basename(outputPath)}`);
+  console.log(`   Subject: "${subject}"`);
+  console.log(`   Scheduled: ${scheduledAt.toLocaleString('en-US', { timeZone: 'America/New_York' })} ET`);
 }
-
-main();
+const args = process.argv.slice(2);
+if (args.length < 3) {
+  console.error('Usage: compile-broadcast.js <post-path> <note-path> <output-path>');
+  process.exit(1);
+}
+compileBroadcast(args[0], args[1], args[2]).catch(err => {
+  console.error(`❌ Compilation failed: ${err.message}`);
+  process.exit(1);
+});
