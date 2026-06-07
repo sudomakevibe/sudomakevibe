@@ -71,16 +71,9 @@ async function sendBroadcast(broadcastData) {
         preview_text: broadcastData.preview_text,
         content: broadcastData.content,
         scheduled_at: broadcastData.scheduled_at,
+        state: 'scheduled',
       },
     };
-
-    // Add email filter if TEST_EMAIL env var is set
-    if (process.env.TEST_EMAIL) {
-      payload.broadcast.subscriber_filter = {
-        emails: [process.env.TEST_EMAIL],
-      };
-      console.log(`   (TEST MODE - sending only to: ${process.env.TEST_EMAIL})`);
-    }
 
     console.log(`📤 Sending to Kit: ${broadcastData.slug}`);
     console.log(`   Subject: "${broadcastData.subject}"`);
