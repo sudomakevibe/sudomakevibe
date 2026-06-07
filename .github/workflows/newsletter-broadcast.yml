@@ -88,11 +88,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add broadcasts/BROADCASTS.log broadcasts/*.json 2>/dev/null || true
+          git add broadcasts/BROADCASTS.log 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: newsletter broadcasts scheduled"
+            git commit -m "chore: update broadcast log"
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
           fi
       - name: Action summary
