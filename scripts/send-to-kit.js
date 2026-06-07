@@ -52,13 +52,11 @@ async function sendBroadcast(broadcastData) {
         subject: broadcastData.subject,
         preview_text: broadcastData.preview_text,
         content: broadcastData.content,
-        form_id: broadcastData.form_id,
         public: false,
       },
     };
     console.log(`📤 Sending to Kit: ${broadcastData.slug}`);
     console.log(`   Subject: "${broadcastData.subject}"`);
-    console.log(`   Form ID: ${broadcastData.form_id}`);
     console.log(`   Scheduled: ${broadcastData.scheduled_at}`);
     const response = await kitApiRequest('POST', '/broadcasts', payload);
     console.log(`✅ Broadcast created`);
