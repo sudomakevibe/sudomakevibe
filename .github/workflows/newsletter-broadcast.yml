@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - 'src/content/posts/**'
+      - 'src/content/notes/**'
 jobs:
   broadcast:
     runs-on: ubuntu-latest
@@ -21,7 +22,8 @@ jobs:
           POSTS=""
           for post in src/content/posts/*.md; do
             if [ -f "$post" ] && [[ "$post" != *".note.md" ]]; then
-              note_file="${post%.md}.note.md"
+              filename=$(basename "$post" .md)
+              note_file="src/content/notes/${filename}.note.md"
               if [ -f "$note_file" ]; then
                 POSTS="$POSTS$post"$'\n'
               fi
@@ -38,7 +40,7 @@ jobs:
           while IFS= read -r post_file; do
             [ -z "$post_file" ] && continue
             filename=$(basename "$post_file" .md)
-            note_file="src/content/posts/${filename}.note.md"
+            note_file="src/content/notes/${filename}.note.md"
             echo "Compiling: $filename"
             node scripts/compile-broadcast.js "$post_file" "$note_file" "broadcasts/${filename}.json"
             if [ $? -eq 0 ]; then
