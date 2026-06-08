@@ -52,7 +52,9 @@ async function compileBroadcast(postPath, notePath, outputPath) {
   const noteContent = fs.readFileSync(notePath, 'utf-8');
   const frontmatter = extractFrontmatter(postContent);
   const slug = slugify(frontmatter.title || 'post');
-  const subject = `new post: ${frontmatter.title}`;
+  const subject = slug === 'welcome' 
+    ? frontmatter.title 
+    : `new post: ${frontmatter.title}`;
   const previewText = (frontmatter.description || '').substring(0, 100);
   const htmlContent = generateEmailContent(frontmatter, noteContent);
   const now = new Date();
