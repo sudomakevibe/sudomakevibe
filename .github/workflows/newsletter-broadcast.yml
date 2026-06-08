@@ -54,11 +54,18 @@ jobs:
           if [ $COMPILED -eq 0 ]; then
             echo "ℹ️  No posts with notes found to compile"
           fi
+      - name: Validate Kit template
+        id: validate
+        env:
+          KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
+          KIT_TEMPLATE_ID: 5270134
+        run: node scripts/validate-kit-template.js
       - name: Send broadcasts to Kit
         id: kit
         env:
           KIT_API_KEY: ${{ secrets.KIT_API_KEY }}
           KIT_FORM_ID: ${{ secrets.KIT_FORM_ID }}
+          KIT_TEMPLATE_ID: 5270134
         run: |
           if [ ! -d "broadcasts" ] || [ -z "$(ls -A broadcasts/*.json 2>/dev/null)" ]; then
             echo "ℹ️  No broadcasts to send"

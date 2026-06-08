@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import https from 'https';
 import { fileURLToPath } from 'url';
+import { validateTemplate } from './validate-kit-template.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,13 +61,13 @@ async function sendBroadcast(broadcastData) {
       subject: broadcastData.subject,
       preview_text: broadcastData.preview_text,
       content: broadcastData.content,
-      email_template_id: 5270134,
+      email_template_id: process.env.KIT_TEMPLATE_ID,
       public: false,
       published_at: now.toISOString(),
     };
 
     console.log(`📤 Sending to Kit: ${broadcastData.subject}`);
-    console.log(`   Template ID: 4627610`);
+    console.log(`   Template ID: ${process.env.KIT_TEMPLATE_ID}`);
     console.log(`   Scheduled: ${broadcastData.scheduled_at}`);
 
     // CREATE BROADCAST
@@ -104,6 +105,25 @@ async function sendBroadcast(broadcastData) {
 }
 
 async function main() {
+  // VALIDATE TEMPLATE BEFORE PROCESSING BROADCASTS
+  const apiKey = process.env.KIT_API_KEY;
+  const templateId = process.env.KIT_TEMPLATE_ID;
+  
+  if (!apiKey || !templateId) {
+    console.error('❌ Missing environment variables: KIT_API_KEY and/or KIT_TEMPLATE_ID');
+    process.exit(1);
+  }
+  
+  console.log('🔍 Validating Kit template...');
+  const validation = await validateTemplate(apiKey, templateId);
+  
+  if (!validation.valid) {
+    console.error('❌ Template validation failed — aborting broadcast');
+    process.exit(1);
+  }
+  
+  console.log('✅ Template validation passed\n');
+
   const broadcastFiles = process.argv.slice(2);
 
   if (broadcastFiles.length === 0) {
