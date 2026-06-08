@@ -56,24 +56,23 @@ async function sendBroadcast(broadcastData) {
   try {
     const now = new Date();
     
-    // FLAT PAYLOAD STRUCTURE - NO broadcast: {...} WRAPPER
+    // FLAT PAYLOAD STRUCTURE - ON-DEMAND (NO SCHEDULING)
     const payload = {
       subject: broadcastData.subject,
       preview_text: broadcastData.preview_text,
       content: broadcastData.content,
       email_template_id: process.env.KIT_TEMPLATE_ID,
       public: false,
-      published_at: now.toISOString(),
     };
 
-    console.log(`📤 Sending to Kit: ${broadcastData.subject}`);
+    console.log(`📤 Creating draft broadcast in Kit: ${broadcastData.subject}`);
     console.log(`   Template ID: ${process.env.KIT_TEMPLATE_ID}`);
-    console.log(`   Scheduled: ${broadcastData.scheduled_at}`);
 
-    // CREATE BROADCAST
+    // CREATE BROADCAST (as draft, not scheduled)
     const response = await kitApiRequest('POST', '/broadcasts', payload);
-    console.log(`✅ Broadcast created`);
+    console.log(`✅ Broadcast created (draft)`);
     console.log(`   Broadcast ID: ${response.broadcast?.id}`);
+    console.log(`   Kit URL: https://app.kit.com/broadcasts/${response.broadcast?.id}`);
 
     // VERIFY CONTENT WAS STORED
     if (response.broadcast?.id) {
@@ -84,22 +83,17 @@ async function sendBroadcast(broadcastData) {
         console.log(`✅ Content verified! Stored content length: ${verifyResponse.broadcast.content.length} characters`);
       } else {
         console.log(`⚠️  WARNING: Content not found in stored broadcast!`);
-        console.log(`   Stored broadcast structure:`, JSON.stringify(verifyResponse.broadcast, null, 2));
       }
 
-      // SCHEDULE THE BROADCAST
-      const schedulePayload = {
-        public: true,
-        send_at: broadcastData.scheduled_at,
-      };
-      
-      await kitApiRequest('PUT', `/broadcasts/${response.broadcast.id}`, schedulePayload);
-      console.log(`✅ Broadcast scheduled for: ${broadcastData.scheduled_at}`);
+      console.log(`\n📋 Next steps:`);
+      console.log(`   1. Go to: https://app.kit.com/broadcasts/${response.broadcast.id}`);
+      console.log(`   2. Review the draft broadcast`);
+      console.log(`   3. Click "Publish" to set send time or send immediately`);
     }
 
     return response;
   } catch (error) {
-    console.error(`❌ Failed to send broadcast: ${error.message}`);
+    console.error(`❌ Failed to create broadcast: ${error.message}`);
     throw error;
   }
 }
@@ -146,7 +140,7 @@ async function main() {
     }
   }
 
-  console.log(`\n📊 Summary: ${successCount} sent, ${failureCount} failed`);
+  console.log(`\n📊 Summary: ${successCount} draft(s) created, ${failureCount} failed`);
   if (failureCount > 0) {
     process.exit(1);
   }

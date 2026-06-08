@@ -56,20 +56,17 @@ async function compileBroadcast(postPath, notePath, outputPath) {
   const previewText = (frontmatter.description || '').substring(0, 100);
   const htmlContent = generateEmailContent(frontmatter, noteContent);
   const now = new Date();
-  const scheduledAt = new Date(now.getTime() + 2 * 60 * 1000);
-  const scheduledAtISO = scheduledAt.toISOString();
   const broadcast = {
     subject,
     preview_text: previewText,
     content: htmlContent,
-    scheduled_at: scheduledAtISO,
     frontmatter,
     compiled_at: now.toISOString(),
   };
   fs.writeFileSync(outputPath, JSON.stringify(broadcast, null, 2));
   console.log(`✅ Compiled: ${path.basename(outputPath)}`);
   console.log(`   Subject: "${subject}"`);
-  console.log(`   Scheduled: ${scheduledAt.toLocaleString('en-US', { timeZone: 'America/New_York' })} ET`);
+  console.log(`   Status: Ready for manual sending`);
 }
 const args = process.argv.slice(2);
 if (args.length < 3) {
