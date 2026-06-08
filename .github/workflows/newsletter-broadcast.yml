@@ -99,4 +99,4 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Status:** ✅ Broadcast sent to Kit" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Your post has been compiled and scheduled to Kit for Saturday 9 AM ET." >> $GITHUB_STEP_SUMMARY
+          echo "Your post has been compiled and created as a draft in Kit. Review and send when ready." >> $GITHUB_STEP_SUMMARY
