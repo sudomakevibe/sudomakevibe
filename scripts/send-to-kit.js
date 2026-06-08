@@ -57,6 +57,7 @@ async function sendBroadcast(broadcastData) {
     const now = new Date();
     
     // FLAT PAYLOAD STRUCTURE - ON-DEMAND (NO SCHEDULING)
+    console.log(`DEBUG send-to-kit: original subject="${broadcastData.subject}"`);
     const payload = {
       subject: broadcastData.subject,
       preview_text: broadcastData.preview_text,
