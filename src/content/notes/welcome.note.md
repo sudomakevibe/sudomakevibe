@@ -1,4 +1,4 @@
-Thanks for subscribing to sudomakevibe. Here's everything we've published across our site and Medium. It took me some time to setup the integration and automation for the publishing. Enjoy exploring, and look forward to sharing new insights every two weeks or sooner.
+Thanks for subscribing to sudo make vibe. Here's everything we've published across our site and Medium. It took me some time to setup the integration and automation for the publishing. Enjoy exploring, and look forward to sharing new insights every two weeks or sooner.
 
 <div style="margin-bottom: 40px;">
   <h3 style="font-size: 16px; margin: 20px 0 10px 0;">Featured on sudomakevibe</h3>
