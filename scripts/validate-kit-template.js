@@ -12,20 +12,14 @@ export async function validateTemplate(apiKey, templateId) {
       throw new Error(`Template validation failed: ${response.status}`);
     }
     
-    const template = await response.json();
+    const response_data = await response.json();
+    const template = response_data.email_template;
     
-    // Log the full response for debugging
-    console.log(`\n📋 Template response structure:`, JSON.stringify(template, null, 2));
-    
-    const templateName = template?.email_template?.name || template?.name || 'Unknown';
-    const templateContent = template?.email_template?.content || template?.content || '';
-    
-    console.log(`✅ Using template: "${templateName}" (ID: ${templateId})`);
-    
-    // Critical check: does template have the placeholder?
-    if (!templateContent.includes('{{ message_content }}')) {
-      console.warn('⚠️ Template missing {{ message_content }} variable — content may not render');
+    if (!template) {
+      throw new Error(`Invalid template response — no email_template field`);
     }
+    
+    console.log(`✅ Template validated: "${template.name}" (ID: ${template.id})`);
     
     return { valid: true, template };
   } catch (error) {
