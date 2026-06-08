@@ -13,10 +13,17 @@ export async function validateTemplate(apiKey, templateId) {
     }
     
     const template = await response.json();
-    console.log(`✅ Using template: "${template.name}" (ID: ${template.id})`);
+    
+    // Log the full response for debugging
+    console.log(`\n📋 Template response structure:`, JSON.stringify(template, null, 2));
+    
+    const templateName = template?.email_template?.name || template?.name || 'Unknown';
+    const templateContent = template?.email_template?.content || template?.content || '';
+    
+    console.log(`✅ Using template: "${templateName}" (ID: ${templateId})`);
     
     // Critical check: does template have the placeholder?
-    if (!template.content?.includes('{{ message_content }}')) {
+    if (!templateContent.includes('{{ message_content }}')) {
       console.warn('⚠️ Template missing {{ message_content }} variable — content may not render');
     }
     
