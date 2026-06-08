@@ -52,7 +52,6 @@ async function compileBroadcast(postPath, notePath, outputPath) {
   const noteContent = fs.readFileSync(notePath, 'utf-8');
   const frontmatter = extractFrontmatter(postContent);
   const slug = path.basename(postPath, '.md');
-  console.log(`DEBUG: slug="${slug}" for ${postPath}`);
   const subject = slug === 'welcome' 
     ? frontmatter.title 
     : `new post: ${frontmatter.title}`;
