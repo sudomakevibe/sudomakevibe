@@ -72,6 +72,28 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Step 0: Check if subscriber already exists
+    const checkResponse = await fetch(
+      `${API_URL}/subscribers?email_address=${encodeURIComponent(email)}`,
+      {
+        method: "GET",
+        headers: {
+          "X-Kit-Api-Key": API_KEY,
+        },
+      }
+    );
+    
+    if (checkResponse.ok) {
+      const checkData = await checkResponse.json();
+      if (checkData.subscribers && checkData.subscribers.length > 0) {
+        // Subscriber already exists
+        return res.status(200).json({ 
+          success: true, 
+          message: "You are already subscribed!" 
+        });
+      }
+    }
+    
     // Step 1: Create subscriber as inactive
     const createResponse = await fetch(`${API_URL}/subscribers`, {
       method: "POST",
