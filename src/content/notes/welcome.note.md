@@ -1,3 +1,10 @@
+# EMAIL-ONLY CONTENT
+# This file is used for the welcome email broadcast to new subscribers.
+# It is NOT published as a blog post.
+# See: scripts/send-to-kit.js for how this is used in the newsletter workflow.
+
+---
+
 Thanks for subscribing to sudo make vibe. Here's everything we've published across our site and Medium. It took me some time to setup the integration and automation for the publishing. Enjoy exploring, and look forward to sharing new insights every two weeks or sooner.
 
 <div style="margin-bottom: 40px;">
