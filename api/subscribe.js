@@ -92,7 +92,7 @@ export default async function handler(req, res) {
         const POSTMARK_API_KEY = process.env.POSTMARK_API_KEY;
         if (POSTMARK_API_KEY) {
           try {
-            await fetch('https://api.postmarkapp.com/email', {
+            const pmResponse = await fetch('https://api.postmarkapp.com/email', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -112,9 +112,14 @@ export default async function handler(req, res) {
                 TextBody: 'You are already subscribed to sudo make vibe newsletter. Check your spam folder for the confirmation email.',
               }),
             });
+            if (!pmResponse.ok) {
+              const pmError = await pmResponse.json();
+              console.error('Postmark API error:', pmResponse.status, pmError);
+            } else {
+              console.log('Postmark email sent successfully');
+            }
           } catch (error) {
-            console.error('Postmark error:', error.message);
-            // Continue even if email fails
+            console.error('Postmark fetch error:', error.message);
           }
         }
         return res.status(200).json({ 
