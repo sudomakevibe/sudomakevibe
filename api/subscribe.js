@@ -85,7 +85,9 @@ export default async function handler(req, res) {
     
     if (checkResponse.ok) {
       const checkData = await checkResponse.json();
+      console.log(`DEBUG: Checked for ${email}, found ${checkData.subscribers?.length || 0} subscribers`);
       if (checkData.subscribers && checkData.subscribers.length > 0) {
+        console.log(`DEBUG: Duplicate detected for ${email}, sending Postmark email`);
         // Subscriber already exists — send notification via Postmark
         const POSTMARK_API_KEY = process.env.POSTMARK_API_KEY;
         if (POSTMARK_API_KEY) {
