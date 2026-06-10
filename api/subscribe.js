@@ -86,7 +86,35 @@ export default async function handler(req, res) {
     if (checkResponse.ok) {
       const checkData = await checkResponse.json();
       if (checkData.subscribers && checkData.subscribers.length > 0) {
-        // Subscriber already exists
+        // Subscriber already exists — send notification via Postmark
+        const POSTMARK_API_KEY = process.env.POSTMARK_API_KEY;
+        if (POSTMARK_API_KEY) {
+          try {
+            await fetch('https://api.postmarkapp.com/email', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Postmark-Server-Token': POSTMARK_API_KEY,
+              },
+              body: JSON.stringify({
+                From: 'noreply@sudomakevibe.com',
+                To: email,
+                Subject: 'You're already subscribed to sudo make vibe!',
+                HtmlBody: `
+                  <p>Hey there!</p>
+                  <p>It looks like this email is already subscribed to our newsletter.</p>
+                  <p>If you didn't receive a confirmation email, check your spam folder.</p>
+                  <p>Can't find it? Just reply to this email and we'll send you a fresh confirmation link.</p>
+                  <p>— Farooq</p>
+                `,
+                TextBody: 'You are already subscribed to sudo make vibe newsletter. Check your spam folder for the confirmation email.',
+              }),
+            });
+          } catch (error) {
+            console.error('Postmark error:', error.message);
+            // Continue even if email fails
+          }
+        }
         return res.status(200).json({ 
           success: true, 
           message: "You are already subscribed!" 
