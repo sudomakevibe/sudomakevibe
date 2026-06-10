@@ -99,7 +99,7 @@ export default async function handler(req, res) {
               body: JSON.stringify({
                 From: 'noreply@sudomakevibe.com',
                 To: email,
-                Subject: 'You're already subscribed to sudo make vibe!',
+                Subject: 'You\'re already subscribed to sudo make vibe!',
                 HtmlBody: `
                   <p>Hey there!</p>
                   <p>It looks like this email is already subscribed to our newsletter.</p>
