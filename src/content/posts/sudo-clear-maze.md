@@ -7,7 +7,9 @@ readingTime: "6 min read"
 draft: false
 ---
 
-I have been building across 30+ focused builds. The work lives in four places: working session notes, my ThinkBook, scattered markdown files, and the unreliable backup of memory. When I needed to answer "what am I actually working on," the search took 20 minutes.
+Earlier this month I wrote about [building a second brain](/blog/sudo-make-second-brain/) to capture everything. This post is about what happened when I asked that brain a simple question and it could not answer.
+
+I have been building across 30+ focused builds: working sessions that each ended with a real deliverable. The work lives in four places: working session notes, my ThinkBook, scattered markdown files, and the unreliable backup of memory. When I needed to answer "what am I actually working on," the search took 20 minutes.
 
 I found the same project documented three different ways. One copy was current. Two were stale. I was not sure which was which.
 
