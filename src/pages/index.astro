@@ -4,13 +4,8 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 import BlogCard from "../components/BlogCard.astro";
 import { getCollection } from "astro:content";
 function calculateReadingTime(text: string): string {
-  const wordsPerMinute = 265;
-  // Strip HTML/SVG blocks and code blocks before counting
-  const stripped = text
-    .replace(/<[^>]*>/g, " ")
-    .replace(/```[\s\S]*?```/g, " ")
-    .replace(/`[^`]*`/g, " ");
-  const words = stripped.trim().split(/\s+/).filter(w => w.length > 0).length;
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
   const minutes = Math.ceil(words / wordsPerMinute);
   return `${minutes} min read`;
 }
@@ -21,8 +16,8 @@ const latestPosts = await Promise.all(
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .slice(0, 2)
     .map(async (post) => {
-      const readingTime = post.data.readingTime ?? "5 min read";
-      const slug = post.id.replace(/\.mdx?$/, ''); return { ...post, slug, readingTime };
+      const readingTime = post.data.readingTime || calculateReadingTime(post.body);
+      return { ...post, readingTime };
     })
 );
 const projects = [
@@ -36,9 +31,9 @@ const projects = [
   {
     title: "sudo make homelab",
     subtitle: "The physical and logical foundation everything runs on",
-    status: "active",
+    status: "in-progress",
     tags: ["raspberry-pi", "kubernetes", "homelab", "fedora", "ubuntu", "kali", "workstation-pro", "virtualbox", "virt-manager"],
-    slug: "sudo-make-homelab",
+    slug: null,
   },
   {
     title: "sudo make homelab secure",
@@ -122,7 +117,7 @@ const statusConfig: Record<string, { label: string; dot: string; text: string }>
             description={post.data.description}
             pubDate={post.data.pubDate}
             tags={post.data.tags}
-            slug={post.id.replace(/\.mdx?$/, '')}
+            slug={post.slug}
             readingTime={post.readingTime}
           />
         ))}

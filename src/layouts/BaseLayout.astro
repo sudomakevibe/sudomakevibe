@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import ContactPrompt from "../components/ContactPrompt.astro";
 import ThemeHint from "../components/ThemeHint.astro";
 import "../styles/global.css";
 
@@ -326,5 +327,6 @@ const structuredData = jsonLd ?? defaultJsonLd;
     <slot />
     {!noFooter && <Footer />}
     <ThemeHint />
+  <ContactPrompt />
   </body>
 </html>

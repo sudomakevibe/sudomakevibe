@@ -38,6 +38,12 @@ const navLinks = [
         </a>
       ))}
     </nav>
+    <button
+      id="cp-ask-btn"
+      class="ask-btn font-mono text-sm"
+      aria-label="Ask a question"
+      style="color: var(--accent); background: none; border: 1px solid rgba(61,138,181,0.5); border-radius: 20px; padding: 5px 14px; cursor: pointer; transition: border-color 0.15s, color 0.15s;"
+    >$ ask</button>
   </div>
 </header>
 
@@ -62,6 +68,11 @@ const navLinks = [
   }
 
   .nav-link[data-active="true"] {
+    color: var(--accent) !important;
+  }
+
+  .ask-btn:hover {
+    border-color: var(--accent) !important;
     color: var(--accent) !important;
   }
 </style>
