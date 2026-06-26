@@ -317,13 +317,9 @@
     sessionStorage.setItem(STORAGE_KEY, "1");
     setTimeout(() => {
       closePrompt();
-      if (fab) fab.style.display = "none";
     }, 3000);
   }
 
-  if (sessionStorage.getItem(STORAGE_KEY)) {
-    if (fab) fab.style.display = "none";
-  }
 
   fab?.addEventListener("click", openPrompt);
   btnYes?.addEventListener("click", () => {
